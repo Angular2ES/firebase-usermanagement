@@ -1,10 +1,19 @@
-import { Component } from '@angular/core';
+import { Component, Injectable } from '@angular/core';
+import { AngularFirestore } from '@angular/fire/firestore';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-root',
-  templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css']
+  templateUrl: 'app.component.html',
+  styleUrls: ['app.component.css']
 })
+
 export class AppComponent {
-  title = 'firebase-usermanagement';
+  items: Observable<any[]>;
+
+  constructor(db: AngularFirestore) {
+    this.items = db.collection("/Users", ref => ref.where('naam', '==', "Peet")).valueChanges();
+    // , ref => ref.where('naam', '==', "Peet")
+  }
 }
+
