@@ -22,33 +22,16 @@ export class LoginComponent {
   }
 
   loginUser(email: string, password: string) {
+    console.log(email, password);
     this.authService.loginWithEmailAndPassword(email, password);
-
-    this.isLogedIn();
   }
 
   isLogedIn() {
-    var user = this.authService.getUser();
+    var user = this.userService.getUser();
     console.log(user);
     if (user.email != null) {
       this.router.navigate(['home']);
     }
-
-    //firebase.auth().onAuthStateChanged(function (user) {
-    //  if (user) {
-    //    console.log('user is active: ' + user);
-    //    this.router.navigate('/home');
-    //  } else {
-    //    console.log('user is not logged in ' + user);
-    //  }
-    //})
-
-    //if (this.userService.getUser() != null) {
-    //  console.log('user is active: ' + this.userService.getUser());
-    //  this.router.navigateByUrl('/home');
-    //} else {
-    //  console.log('user is not loged in ' + this.userService.getUser());
-    //}
   }
 }
 

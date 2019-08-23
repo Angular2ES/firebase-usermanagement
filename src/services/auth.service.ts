@@ -17,16 +17,6 @@ export class AuthenticationService implements CanActivate {
   lists: Observable<any[]>;
   constructor(private angularFireAuth: AngularFireAuth, private router: Router, private config: UserModuleConfig) {
     this.authState$ = angularFireAuth.authState;
-    //this.uid$ =
-
-    //this.angularFireAuth.authState.subscribe(user => {
-    //  if (user) {
-    //    this.user = user;
-    //    localStorage.setItem('user', JSON.stringify(this.user));
-    //  } else {
-    //    localStorage.setItem('user', null);
-    //  }
-    //})
   }
 
   canActivate() {
@@ -37,10 +27,6 @@ export class AuthenticationService implements CanActivate {
     return this.authState$;
   }
 
-  getFirebaseAuth() {
-    return this.angularFireAuth;
-  }
-
   login() {
     return this.angularFireAuth.auth.signInWithPopup(new auth.GoogleAuthProvider());
   }
@@ -49,16 +35,11 @@ export class AuthenticationService implements CanActivate {
     console.log('click');
     try {
       await this.angularFireAuth.auth.signInWithEmailAndPassword(email, password);
-      //this.router.navigate(['home']);
+      this.router.navigate(['/home']);
     } catch (e) {
       alert("Error!" + e.message);
     }
   }
-
-  //get isLoggedIn(): boolean {
-  //  const user = JSON.parse(localStorage.getItem('user'));
-  //  return user !== null;
-  //}
 
   getUser() {
     return this.angularFireAuth.auth.currentUser;
@@ -73,12 +54,7 @@ export class AuthenticationService implements CanActivate {
       
       if (firebase.apps.length > 1) this.firebaseApp = firebase.app();
       else this.firebaseApp = firebase.initializeApp(this.config);
-        //firebase.initializeApp(this.config) : firebase.app();
     }
-    //console.log(firebase.app.length);
-    //console.log(firebase.app.name);
-    //console.log(firebase.app().name);
-    //console.log(this.firebaseApp);
 
     return this.firebaseApp;
   }

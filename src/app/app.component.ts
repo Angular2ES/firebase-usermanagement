@@ -6,7 +6,7 @@ import { Router } from '@angular/router';
 import { UserService } from 'src/services/user.service';
 
 @Component({
-  selector: 'app-root',
+  selector: 'app-home',
   templateUrl: 'app.component.html',
   styleUrls: ['app.component.css'],
   providers: [AuthenticationService, UserService]
@@ -16,15 +16,9 @@ export class AppComponent {
   items: Observable<any[]>;
 
   constructor(private db: AngularFirestore, authService: AuthenticationService, private userService: UserService, private router: Router) {
-    //authService.logout()
-    //  .then(() => this.router.navigateByUrl('/login'));
-    // this.items = authService.authState$.
-    // this.items = db.collection("/Users", ref => ref.where('naam', '==', "Peet")).valueChanges();
-    // , ref => ref.where('naam', '==', "Peet")
+    if (userService.getUser() != null) this.items = this.db.collection("/Users", ref => ref.where('naam', '==', "Peet")).valueChanges();
   }
 
-  ngOnInit() {
-    this.items = this.db.collection("/Users", ref => ref.where('naam', '==', "Peet")).valueChanges();
-  }
+  ngOnInit() {}
 }
 

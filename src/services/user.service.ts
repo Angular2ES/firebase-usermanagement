@@ -14,25 +14,7 @@ export class UserService {
   private uid;
 
   constructor(private db: AngularFirestore, authService: AuthenticationService) {
-    //authService.getFirebaseApp().auth().onAuthStateChanged((user) => {
-    //  if (user) {
-    //    // User logged in already or has just logged in.
-    //    console.log(user.uid);
-    //  } else {
-    //    // User not logged in or has just logged out.
-    //  }
-    //});
-
-    //this.userCollection = this.db.collection('user');
     this.uid = authService.uid$;
-
-    //firebase.auth().onAuthStateChanged(function (user) {
-    //  if (user) {
-    //    console.log(this.user$);
-    //    this.user$ = user;
-    //    // User is signed in.
-    //  }
-    //});
   }
 
   public getUserId() {
@@ -40,6 +22,6 @@ export class UserService {
   }
 
   getUser() {
-
+    return firebase.auth().currentUser;
   }
 }
