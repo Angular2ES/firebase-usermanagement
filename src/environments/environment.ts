@@ -4,6 +4,7 @@
 
 export const environment = {
   production: false,
+  loginRedirectUrl: 'http://localhost:4200',
   firebase: {
     apiKey: "AIzaSyD3jewQCobjtV6BwUvz7mycmd9xU8FFfWM",
     authDomain: "angulartest-70bea.firebaseapp.com",

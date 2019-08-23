@@ -1,0 +1,85 @@
+import { CanActivate, Router } from '@angular/router';
+import { AngularFireAuth } from '@angular/fire/auth';
+import { Injectable } from '@angular/core';
+import { User, auth } from 'firebase';
+import { Observable } from 'rxjs';
+import { UserModuleConfig } from '../users-module-config';
+import * as firebase from 'firebase';
+
+@Injectable()
+export class AuthenticationService implements CanActivate {
+  authState$: Observable<User>;
+  firebaseApp: firebase.app.App;
+  uid$: Observable<string>;
+  user: User;
+  user$: Observable<User>;
+
+  lists: Observable<any[]>;
+  constructor(private angularFireAuth: AngularFireAuth, private router: Router, private config: UserModuleConfig) {
+    this.authState$ = angularFireAuth.authState;
+    //this.uid$ =
+
+    //this.angularFireAuth.authState.subscribe(user => {
+    //  if (user) {
+    //    this.user = user;
+    //    localStorage.setItem('user', JSON.stringify(this.user));
+    //  } else {
+    //    localStorage.setItem('user', null);
+    //  }
+    //})
+  }
+
+  canActivate() {
+    return true;
+  }
+
+  getAuthState() {
+    return this.authState$;
+  }
+
+  getFirebaseAuth() {
+    return this.angularFireAuth;
+  }
+
+  login() {
+    return this.angularFireAuth.auth.signInWithPopup(new auth.GoogleAuthProvider());
+  }
+
+  async loginWithEmailAndPassword(email: string, password: string) {
+    console.log('click');
+    try {
+      await this.angularFireAuth.auth.signInWithEmailAndPassword(email, password);
+      //this.router.navigate(['home']);
+    } catch (e) {
+      alert("Error!" + e.message);
+    }
+  }
+
+  //get isLoggedIn(): boolean {
+  //  const user = JSON.parse(localStorage.getItem('user'));
+  //  return user !== null;
+  //}
+
+  getUser() {
+    return this.angularFireAuth.auth.currentUser;
+  }
+
+  logout() {
+    return this.angularFireAuth.auth.signOut();
+  }
+
+  getFirebaseApp() {
+    if (!this.firebaseApp) {
+      
+      if (firebase.apps.length > 1) this.firebaseApp = firebase.app();
+      else this.firebaseApp = firebase.initializeApp(this.config);
+        //firebase.initializeApp(this.config) : firebase.app();
+    }
+    //console.log(firebase.app.length);
+    //console.log(firebase.app.name);
+    //console.log(firebase.app().name);
+    //console.log(this.firebaseApp);
+
+    return this.firebaseApp;
+  }
+}
