@@ -5,57 +5,50 @@ import { User, auth } from 'firebase';
 import { Observable } from 'rxjs';
 import { UserModuleConfig } from '../users-module-config';
 import * as firebase from 'firebase';
+import { FirebaseApp } from '@angular/fire';
+import { map } from 'rxjs/operators';
+import { UserService } from './user.service';
 
 @Injectable()
 export class AuthenticationService implements CanActivate {
-  authState$: Observable<User>;
-  firebaseApp: firebase.app.App;
-  uid$: Observable<string>;
-  user: User;
-  user$: Observable<User>;
+  private authState$: Observable<User>;
+  private firebaseApp: firebase.app.App;
 
-  lists: Observable<any[]>;
   constructor(private angularFireAuth: AngularFireAuth, private router: Router, private config: UserModuleConfig) {
-    this.authState$ = angularFireAuth.authState;
   }
 
-  canActivate() {
+  //TODO create a guard or a new guardService
+  canActivate(): boolean {
     return true;
   }
 
-  getAuthState() {
-    return this.authState$;
+  getAuthState(): Observable<User> {
+    return this.angularFireAuth.authState;;
   }
 
-  login() {
-    return this.angularFireAuth.auth.signInWithPopup(new auth.GoogleAuthProvider());
+  getUid(): Observable<string> {
+    return this.getAuthState().pipe(map((user) => user ? user.uid : null));
   }
 
   async loginWithEmailAndPassword(email: string, password: string) {
-    console.log('click');
-    try {
-      await this.angularFireAuth.auth.signInWithEmailAndPassword(email, password);
-      this.router.navigate(['/home']);
-    } catch (e) {
-      alert("Error!" + e.message);
-    }
+    //try {
+    await this.angularFireAuth.auth.signInWithEmailAndPassword(email, password);
+      //this.router.navigate(['/home']);
+    //} catch (e) {
+    //  alert("Error!" + e.message);
+    //}
   }
 
-  getUser() {
-    return this.angularFireAuth.auth.currentUser;
-  }
-
-  logout() {
+  logout(): Promise<void> {
     return this.angularFireAuth.auth.signOut();
   }
 
-  getFirebaseApp() {
+  getFirebaseApp(): FirebaseApp {
     if (!this.firebaseApp) {
       
       if (firebase.apps.length > 1) this.firebaseApp = firebase.app();
       else this.firebaseApp = firebase.initializeApp(this.config);
     }
-
     return this.firebaseApp;
   }
 }

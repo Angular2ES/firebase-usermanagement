@@ -8,6 +8,6 @@
     "\\src\\models",
     "\\src\\services"
   ],
-  "SelectedNode": "\\src\\app\\app-routing.module.ts",
+  "SelectedNode": "\\src\\app\\components\\header.component.ts",
   "PreviewInSolutionExplorer": false
 }
