@@ -13,13 +13,8 @@ export class HeaderComponent {
 
 // TODO this is temp, just to make the front-end work
   async logout(): Promise<void> {
-    try {
-      await this.authService.logout();
-      // logout succes
-      this.router.navigate(['/']);
-      this.userService.logout();
-    } catch (error) {
-      console.log(error)
-    }
+    await this.authService.logout();
+    this.userService.logout();
+    this.router.navigate(['/']);
   }
 }

@@ -21,18 +21,8 @@ export class LoginComponent {
   async loginUser(email: string, password: string) {
     await this.authService.loginWithEmailAndPassword('test@123.nl', '123123');
 
-    await this.userService.setupModel();
+    this.userService.saveUser();
     this.router.navigate(['/home']);
-  }
-  
-
-  loginSucces(val): void {
-    this.userService.setupModel();
-    this.router.navigate(['/home']);
-  }
-
-  error(e): void {
-    console.log(e);
   }
 }
 

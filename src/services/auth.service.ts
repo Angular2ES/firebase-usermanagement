@@ -30,17 +30,17 @@ export class AuthenticationService implements CanActivate {
     return this.getAuthState().pipe(map((user) => user ? user.uid : null));
   }
 
-  async loginWithEmailAndPassword(email: string, password: string) {
+  async loginWithEmailAndPassword(email: string, password: string): Promise<auth.UserCredential>{
     //try {
-    await this.angularFireAuth.auth.signInWithEmailAndPassword(email, password);
+    return await this.angularFireAuth.auth.signInWithEmailAndPassword(email, password);
       //this.router.navigate(['/home']);
     //} catch (e) {
     //  alert("Error!" + e.message);
     //}
   }
 
-  logout(): Promise<void> {
-    return this.angularFireAuth.auth.signOut();
+  async logout(): Promise<void> {
+    return await this.angularFireAuth.auth.signOut();
   }
 
   getFirebaseApp(): FirebaseApp {
