@@ -7,6 +7,8 @@ import { HeaderComponent } from './components/header.component';
 
 import { UserModuleConfig } from '../users-module-config';
 
+import { MaterializeModule } from 'angular2-materialize';
+
 // firebase imports
 import { AngularFireModule } from '@angular/fire';
 import { AngularFirestoreModule } from '@angular/fire/firestore';
@@ -36,6 +38,7 @@ firebase.initializeApp(fireModuleConfig);
     BrowserModule,
     FormsModule,
     AppRoutingModule,
+    MaterializeModule,
 
     AngularFireModule.initializeApp(environment.firebase), // TODO remove app name
     AngularFirestoreModule, // imports firebase/firestore, only needed for database features

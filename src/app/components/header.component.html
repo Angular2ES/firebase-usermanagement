@@ -1,8 +1,24 @@
 <!DOCTYPE html>
+<html>
+  <body>
+    <nav>
+      <div class="nav-wrapper">
+        <a href="#" class="brand-logo">Logo</a>
+        <ul id="nav-mobile" class="right hide-on-med-and-down">
+          <li><a routerLink="/login" routerLinkActive="active">login</a></li>
+          <li><a routerLink="/home" routerLinkActive="active">home</a></li>
+          <li><a (click)="logout()" routerLinkActive="active">logout</a></li>
+        </ul>
+      </div>
+    </nav>
+            
+    <!-- <nav>
+      <a routerLink="/login" routerLinkActive="active">login </a>
+      <a routerLink="/home" routerLinkActive="active">home </a>
+      <a (click)="logout()" routerLinkActive="active">logout </a>
+    </nav> -->
 
-<h1>Angular Router</h1>
-<nav>
-  <a routerLink="/login" routerLinkActive="active">login </a>
-  <a routerLink="/home" routerLinkActive="active">home </a>
-  <a (click)="logout()" routerLinkActive="active">logout </a>
-</nav>
+  </body>
+</html>
+
+

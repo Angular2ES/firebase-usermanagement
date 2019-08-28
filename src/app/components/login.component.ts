@@ -7,7 +7,7 @@ import { UserService } from 'src/services/user.service';
 import { auth } from 'firebase';
 
 @Component({
-  selector: 'app-root',
+  selector: 'app-login',
   templateUrl: 'login.component.html',
   styleUrls: ['login.component.css']
 })
