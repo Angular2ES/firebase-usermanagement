@@ -1,6 +1,6 @@
 <!--The content below is only a placeholder and can be replaced.-->
 <ul>
-  <li class="text" *ngFor="let item of items">
-    <pre>{{ item | json }}</pre>
+  <li class="text" >
+    <pre>{{ items | async | json }}</pre>
   </li>
 </ul>

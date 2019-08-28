@@ -17,6 +17,12 @@
     "lib": [
       "es2018",
       "dom"
+    ],
+    "plugins": [
+      {
+        "name": "typescript-lit-html-plugin",
+        "tags": [ "html", "svg", "raw" ]
+      }
     ]
   },
   "angularCompilerOptions": {

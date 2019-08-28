@@ -31,12 +31,7 @@ export class AuthenticationService implements CanActivate {
   }
 
   async loginWithEmailAndPassword(email: string, password: string): Promise<auth.UserCredential>{
-    //try {
     return await this.angularFireAuth.auth.signInWithEmailAndPassword(email, password);
-      //this.router.navigate(['/home']);
-    //} catch (e) {
-    //  alert("Error!" + e.message);
-    //}
   }
 
   async logout(): Promise<void> {

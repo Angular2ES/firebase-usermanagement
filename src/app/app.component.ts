@@ -1,8 +1,11 @@
-import { Component, Injectable } from '@angular/core';
+import { Component, Injectable, OnInit, OnDestroy } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { AuthenticationService } from 'src/services/auth.service';
 import { Router } from '@angular/router';
 import { UserService } from 'src/services/user.service';
+import { Observable } from 'rxjs';
+import { UserModel } from 'src/models/user.model';
+import { filter } from 'rxjs/operators';
 
 @Component({
   selector: 'app-home',
@@ -10,16 +13,21 @@ import { UserService } from 'src/services/user.service';
   styleUrls: ['app.component.css'],
 })
 
-export class AppComponent {
-  items: any[];
+export class AppComponent implements OnInit, OnDestroy {
 
-  constructor(private db: AngularFirestore, authService: AuthenticationService, userService: UserService, private router: Router) {
-    if (userService.getUser() != null) {
-      //todo do i need to subscribe here?
-      userService.getUser().subscribe((res) => this.items = [res.name, res.uid, res.age]);
-    }
-    else this.items = null;
+  items: Observable<UserModel>;
+
+  constructor(private db: AngularFirestore, authService: AuthenticationService, private userService: UserService, private router: Router) {
   }
 
+  ngOnInit(): void {
+    this.items = this.userService.getUser().pipe(
+      filter(u => !!u)
+    );
+
+  }
+
+  ngOnDestroy(): void {
+  }
 }
 
