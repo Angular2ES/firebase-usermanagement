@@ -2,8 +2,9 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { AppComponent } from './app.component';
-import { LoginComponent } from './components/login.component';
+import { LoginComponent } from './email-pass-login/login.component';
 import { HeaderComponent } from './components/header.component';
+import { LoginTestComponent } from './login.test.component';
 
 import { UserModuleConfig } from '../users-module-config';
 
@@ -23,14 +24,13 @@ import { MaterializeModule } from 'angular2-materialize';
 
 const fireModuleConfig: UserModuleConfig = environment.firebase;
 
-// Not ideal
-//firebase.initializeApp(fireModuleConfig);
-
 @NgModule({
   declarations: [
     LoginComponent,
     AppComponent,
     HeaderComponent,
+
+    LoginTestComponent,
   ],
   imports: [
     BrowserModule,
