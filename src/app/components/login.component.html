@@ -1,14 +1,13 @@
 <html>
-  <head>
-    
-  </head>
-
+  
   <body>
-
-       
-    <input type="text" class="form-control mb-2" placeholder="Email" #userEmail required autofocus>
-    <input type="password" class="form-control mb-2" placeholder="Password" #userPassword required>
-    <button class="waves-effect waves-light btn" (click)="loginUser(userEmail.value, userPassword.value)">Login</button>
-</body>
+    <div class="login-collection">
+      <form method="POST">
+        <input type="text" class="form-control mb-2" placeholder="Email" #userEmail required autofocus>
+        <input type="password" class="form-control mb-2" placeholder="Password" #userPassword required>
+        <button class="waves-effect waves-light btn" (click)="loginUser(userEmail.value, userPassword.value)">Login</button>
+      </form>
+    </div>
+  </body>
 </html>
 

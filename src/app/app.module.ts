@@ -7,32 +7,30 @@ import { HeaderComponent } from './components/header.component';
 
 import { UserModuleConfig } from '../users-module-config';
 
-import { MaterializeModule } from 'angular2-materialize';
-
 // firebase imports
 import { AngularFireModule } from '@angular/fire';
 import { AngularFirestoreModule } from '@angular/fire/firestore';
 import { AngularFireStorageModule } from '@angular/fire/storage';
 import { AngularFireAuthModule } from '@angular/fire/auth';
-import * as firebase from 'firebase';
 import { environment } from '../environments/environment';
 
 // services
 import { AuthenticationService } from 'src/services/auth.service';
 import { UserService } from 'src/services/user.service';
+// modules
 import { AppRoutingModule } from './app-routing.module';
+import { MaterializeModule } from 'angular2-materialize';
 
 const fireModuleConfig: UserModuleConfig = environment.firebase;
 
 // Not ideal
-firebase.initializeApp(fireModuleConfig);
+//firebase.initializeApp(fireModuleConfig);
 
 @NgModule({
   declarations: [
     LoginComponent,
     AppComponent,
     HeaderComponent,
-
   ],
   imports: [
     BrowserModule,
@@ -40,7 +38,7 @@ firebase.initializeApp(fireModuleConfig);
     AppRoutingModule,
     MaterializeModule,
 
-    AngularFireModule.initializeApp(environment.firebase), // TODO remove app name
+    AngularFireModule.initializeApp(environment.firebase),
     AngularFirestoreModule, // imports firebase/firestore, only needed for database features
     AngularFireAuthModule, // imports firebase/auth, only needed for auth features,
     //AngularFireStorageModule // imports firebase/storage only needed for storage features
@@ -49,7 +47,7 @@ firebase.initializeApp(fireModuleConfig);
     AuthenticationService, UserService,
     { provide: UserModuleConfig, useValue: fireModuleConfig }
   ],
-  bootstrap: [AppComponent, LoginComponent, HeaderComponent]
+  bootstrap: [HeaderComponent]
 })
 
 export class AppModule { }

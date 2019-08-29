@@ -8,7 +8,7 @@ import { UserModel } from 'src/models/user.model';
 import { filter } from 'rxjs/operators';
 
 @Component({
-  selector: 'app-root',
+  selector: 'app-home ',
   templateUrl: 'app.component.html',
   styleUrls: ['app.component.css'],
 })
