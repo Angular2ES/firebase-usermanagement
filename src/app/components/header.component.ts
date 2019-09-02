@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { AuthenticationService } from 'src/services/auth.service';
 import { Router } from '@angular/router';
 import { UserService } from 'src/services/user.service';
+import { map, tap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-root',
@@ -15,5 +16,15 @@ export class HeaderComponent {
   async logout(): Promise<void> {
     await this.authService.logout();
     this.router.navigate(['/login']);
+  }
+
+  async settings(): Promise<void>{
+    //await this.authService.getUid().pipe(tap(id => console.log(id)), map(id => id ? this.navTo(id) : null))
+    this.navTo('1');
+  }
+
+  navTo(userId: string): string {
+    this.router.navigate(['/settings', userId])
+    return userId;
   }
 }

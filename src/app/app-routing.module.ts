@@ -4,11 +4,13 @@ import { RouterModule, Routes } from '@angular/router';
 import { AppComponent } from './app.component';
 import { LoginComponent } from './email-pass-login/login.component';
 import { LoginTestComponent } from './login.test.component';
+import { UserSettingsComponent } from './user-settings/user.settings.Component';
 
 const appRoutes: Routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full'},
   { path: 'login', component: LoginTestComponent },
   { path: 'home', component: AppComponent },
+  { path: 'settings/:uid', component: UserSettingsComponent }
 ];
 
 @NgModule({

@@ -14,10 +14,14 @@ export class LoginComponent {
   constructor(db: AngularFirestore, private authService: AuthenticationService, private userService: UserService, private router: Router) {
   }
 
-  public async loginUser(email: string, password: string): Promise<void> {
-    await this.authService.loginWithEmailAndPassword('test@123.nl', '123123');
-
-    this.router.navigate(['/home']);
+  //TODO create generic error catcher
+  public async loginWithEmailPassword(email: string, password: string): Promise<void> {
+    try{
+      await this.authService.loginWithEmailAndPassword('test@123.nl', '123123');
+      this.router.navigate(['/home']);
+    } catch (e){
+        alert(e.message);
+    }
   }
 }
 

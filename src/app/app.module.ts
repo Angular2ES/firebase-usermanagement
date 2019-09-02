@@ -21,6 +21,7 @@ import { UserService } from 'src/services/user.service';
 // modules
 import { AppRoutingModule } from './app-routing.module';
 import { MaterializeModule } from 'angular2-materialize';
+import { UserSettingsComponent } from './user-settings/user.settings.Component';
 
 const fireModuleConfig: UserModuleConfig = environment.firebase;
 
@@ -29,6 +30,7 @@ const fireModuleConfig: UserModuleConfig = environment.firebase;
     LoginComponent,
     AppComponent,
     HeaderComponent,
+    UserSettingsComponent,
 
     LoginTestComponent,
   ],

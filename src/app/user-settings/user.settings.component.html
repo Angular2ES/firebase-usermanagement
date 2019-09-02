@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+  <body>
+    <div class="user-settings-collection">
+      <form>
+        <li class="text" >
+            <pre>{{ currentUser$ | async | json }}</pre>
+        </li>
+        <input type="text" class="form-control mb-2" placeholder="name" #userName>
+        <input type="text" class="form-control mb-2" placeholder="age" #userAge>
+        <button class="waves-effect waves-light btn" (click)="updateUserAge(userAge.value)">update settings</button>
+      </form>
+    </div>
+  </body>
+</html>
+<html>
