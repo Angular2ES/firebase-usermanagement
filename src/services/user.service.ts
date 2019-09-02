@@ -5,9 +5,7 @@ import { Observable, of } from 'rxjs';
 import { AngularFirestoreCollection, AngularFirestore, AngularFirestoreDocument } from '@angular/fire/firestore';
 import { map, switchMap, tap, shareReplay } from 'rxjs/operators';
 
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable()
 export class UserService {
   private user$: Observable<UserModel | null>;
   private col: AngularFirestoreCollection = this.db.collection('users');

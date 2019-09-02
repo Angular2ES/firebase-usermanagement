@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
 import { AppComponent } from './app.component';
-import { LoginComponent } from './email-pass-login/login.component';
+import { LoginComponent } from './login-components/email-password-login.component';
 import { LoginTestComponent } from './login.test.component';
 import { UserSettingsComponent } from './user-settings/user.settings.Component';
 

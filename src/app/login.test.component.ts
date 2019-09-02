@@ -1,12 +1,15 @@
 import { Component } from '@angular/core';
-import { LoginComponent } from './email-pass-login/login.component';
+import { LoginComponent } from './login-components/email-password-login.component';
+import { LoginEmailComponent } from './login-email/login-email.component';
 
 @Component({
   selector: 'app-test-login',
-  templateUrl: './email-pass-login/login.component.html',
-  styleUrls: ['./email-pass-login/login.component.css'],
+  // templateUrl: './login-components/login.component.html',
+  // styleUrls: ['./login-components/login.component.css'],
+  templateUrl: './login-email/login-email.component.html',
+  styleUrls: ['./login-email/login-email.component.css'],
 })
 
-export class LoginTestComponent extends LoginComponent {
+export class LoginTestComponent extends LoginEmailComponent {
 }
 
