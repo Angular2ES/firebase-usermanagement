@@ -23,7 +23,7 @@ export class AuthenticationService implements CanActivate {
   }
 
   getAuthState(): Observable<User> {
-    return this.angularFireAuth.authState;;
+    return this.angularFireAuth.authState;
   }
 
   getAngularFireAuth(): AngularFireAuth {

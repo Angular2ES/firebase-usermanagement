@@ -6,6 +6,7 @@ import { LoginComponent } from './login-components/email-password-login.componen
 import { HeaderComponent } from './components/header.component';
 import { LoginTestComponent } from './login.test.component';
 import { CreateAccountComponent } from './create-account/create-account.component';
+import { LoginGoogleComponent } from './login-google/login-google.component';
 
 import { UserModuleConfig } from '../users-module-config';
 
@@ -47,6 +48,8 @@ const userModuleConfig: UserModuleConfig = {
     LoginEmailComponent,
     
     CreateAccountComponent,
+    
+    LoginGoogleComponent,
   ],
   imports: [
     BrowserModule,
@@ -62,6 +65,7 @@ const userModuleConfig: UserModuleConfig = {
     //AngularFireStorageModule // imports firebase/storage only needed for storage features
   ],
   providers: [
+    // TODO remove or user toasterService
     AuthenticationService, UserService, LoginHelper, ToasterService,
     { provide: UserModuleConfig, useValue: userModuleConfig }
   ],
