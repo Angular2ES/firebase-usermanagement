@@ -1,7 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { AuthenticationService } from 'src/services/auth.service';
 import { UserService } from 'src/services/user.service';
-import { AngularFirestore } from '@angular/fire/firestore';
 import { LoginHelper } from '../login-components/login-helper.service';
 import { Router, ParamMap, ActivatedRoute } from '@angular/router';
 import { Observable, combineLatest, of, BehaviorSubject } from 'rxjs';
@@ -18,7 +17,6 @@ import { UserModuleConfig } from 'src/users-module-config';
 export class LoginEmailComponent {
 
   authService: AuthenticationService;
-  userService: UserService;
   
   routeQueryMap: Observable<ParamMap>;
   hasActivationCode$: Observable<boolean>;
@@ -26,29 +24,21 @@ export class LoginEmailComponent {
   emailFromStorage$: Observable<string>;
   didSendEmail$ = new BehaviorSubject(false);
 
-  constructor(db: AngularFirestore, private loginHelper: LoginHelper,private activatedRoute: ActivatedRoute, private router: Router,    private userModuleConfig: UserModuleConfig,
+  constructor( loginHelper: LoginHelper, activatedRoute: ActivatedRoute, private router: Router, private userModuleConfig: UserModuleConfig,
     protected localStorage: LocalStorage) {
     
     this.authService = loginHelper.getAuthService();
-    this.userService = loginHelper.getUserService();
 
     this.routeQueryMap = activatedRoute.queryParamMap;
     
+    // example router params
     // apiKey=abc&oobCode=xyz&mode=signIn&lang=en
     this.hasActivationCode$ = this.routeQueryMap.pipe(map(paramMap =>
       (paramMap.has('oobCode') && paramMap.has('mode') && paramMap.has('apiKey'))
     ));
 
-
-
     this.emailFromStorage$ = <Observable<string>>localStorage.getItem('emailForSignIn');
 
-    // if (this.didSendEmail$){
-      
-    //   switchMap(email => of(this.loginUser(this.router.url, email)).pipe(map(credentials => !!credentials)))
-
-    // }
-    //this.hasActivationCode$.pipe(tap(message => console.log(message)));
     this.loginResult$ = combineLatest(this.hasActivationCode$, this.emailFromStorage$).pipe(
       first(),
       switchMap(([hasActivationCode, emailFromStorage]) => {
@@ -73,7 +63,6 @@ export class LoginEmailComponent {
   }
   
   private loginUser(url: string, email: string): Promise<auth.UserCredential | void>{
-    console.log('loggin in right now');
     return this.authService.loginWithEmail(email, url)
       .then((credentials) => {
         this.router.navigateByUrl(this.userModuleConfig.redirectAfterLogin);
@@ -82,7 +71,7 @@ export class LoginEmailComponent {
         return credentials;
       })
       .catch((e) => {
-        //this.localStorage.removeItem('emailForSignIn').toPromise();
+        this.localStorage.removeItem('emailForSignIn').toPromise();
         console.log('error code ' + e)
       });
   }

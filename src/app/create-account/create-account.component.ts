@@ -1,9 +1,6 @@
-import { Component, OnInit } from '@angular/core';
-import { auth } from 'firebase';
-import { AuthenticationService } from 'src/services/auth.service';
-import { RouterModule, Router } from '@angular/router';
+import { Component } from '@angular/core';
 import { UserService } from 'src/services/user.service';
-import { FirebaseFirestore } from '@angular/fire';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-create-account',
@@ -12,7 +9,7 @@ import { FirebaseFirestore } from '@angular/fire';
 })
 export class CreateAccountComponent {
 
-  constructor( private authService: AuthenticationService, private userService: UserService, private router: Router) { }
+  constructor( private userService: UserService, private router: Router) { }
 
   createAccount(email: string): void {
     // TODO check if email exist if so return 

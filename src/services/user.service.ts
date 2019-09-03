@@ -28,7 +28,6 @@ export class UserService {
       return this.mapToDatabase(userCredential.user.uid);
       }
     )
-    
   }
 
   private mapFromDatabase(userData): UserModel {
@@ -42,9 +41,11 @@ export class UserService {
   public mapToDatabase(uid: string): void {
       this.col.doc(uid).set({
         uid: uid,
-      }).then(() => console.log('doc succesfully written')) //: of(null)),
+      }).then(() => console.log('doc succesfully written'))
   }
 
+
+  //TODO working on this
   public async updateUser(userData): Promise<void> {
     this.authService.getUid().pipe(
       switchMap(uid => uid ? this.col.doc(uid).update(userData) : null),
