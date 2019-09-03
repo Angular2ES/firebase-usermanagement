@@ -22,12 +22,27 @@ export class UserService {
     );
   }
 
+  public createUser(email: string): Promise<void> {
+    return this.authService.createAccount(email)
+    .then((userCredential) => {
+      return this.mapToDatabase(userCredential.user.uid);
+      }
+    )
+    
+  }
+
   private mapFromDatabase(userData): UserModel {
     return {
       uid: userData.uid,
       name: userData.name,
       age: userData.age
     }
+  }
+
+  public mapToDatabase(uid: string): void {
+      this.col.doc(uid).set({
+        uid: uid,
+      }).then(() => console.log('doc succesfully written')) //: of(null)),
   }
 
   public async updateUser(userData): Promise<void> {

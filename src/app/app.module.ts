@@ -5,6 +5,7 @@ import { AppComponent } from './app.component';
 import { LoginComponent } from './login-components/email-password-login.component';
 import { HeaderComponent } from './components/header.component';
 import { LoginTestComponent } from './login.test.component';
+import { CreateAccountComponent } from './create-account/create-account.component';
 
 import { UserModuleConfig } from '../users-module-config';
 
@@ -27,6 +28,7 @@ import { LoginEmailComponent } from './login-email/login-email.component';
 import { StorageModule } from '@ngx-pwa/local-storage';
 import { ToasterService, ToasterModule } from 'angular2-toaster';
 
+
 const userModuleConfig: UserModuleConfig = {
   loginRedirectUrl: environment.loginRedirectUrl,
   redirectAfterLogin: '/home',
@@ -43,13 +45,15 @@ const userModuleConfig: UserModuleConfig = {
     LoginTestComponent,
     
     LoginEmailComponent,
+    
+    CreateAccountComponent,
   ],
   imports: [
     BrowserModule,
     FormsModule,
     AppRoutingModule,
     MaterializeModule,
-    ToasterModule.forRoot(), // TODO remove or use it somewhere
+    ToasterModule.forRoot(), // TODO remove or use it somewhere (cur we aren't using it)
     
     AngularFireModule.initializeApp(environment.firebase),
     AngularFirestoreModule, // imports firebase/firestore, only needed for database features

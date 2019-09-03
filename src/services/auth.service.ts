@@ -70,10 +70,9 @@ export class AuthenticationService implements CanActivate {
     return await this.angularFireAuth.auth.signInWithCustomToken(token);
   }
 
-  async createAccount(email: string): Promise<auth.UserCredential | void>{
+  async createAccount(email: string): Promise<auth.UserCredential>{
     // TODO create random password
     const password = 'password'
-    // TODO create error catch
     // User will be loged in after succesfull creation if we want this we need to direct user to home
     return await this.angularFireAuth.auth.createUserWithEmailAndPassword(email, password);
 
