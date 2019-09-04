@@ -5,10 +5,10 @@ import { LoginGoogleComponent } from './login-google/login-google.component';
 
 @Component({
   selector: 'app-test-login',
-  templateUrl: './login-google/login-google.component.html',
-  styleUrls: ['./login-google/login-google.component.css'],
+  templateUrl: './login-email-password/login.component.html',
+  styleUrls: ['./login-email-password/login.component.css'],
 })
 
-export class LoginTestComponent extends LoginGoogleComponent {
+export class LoginTestComponent extends LoginComponent {
 }
 

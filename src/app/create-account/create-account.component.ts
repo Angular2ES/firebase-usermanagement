@@ -16,7 +16,7 @@ export class CreateAccountComponent {
     // make it so the user has to change password before going to /home
     // create user within db
     this.userService.createUser(email).then(
-      () => this.router.navigate(['/home'])
+      // () => this.router.navigate(['/home'])
     ).catch((err) => console.log('error code: ' + err))
   }
 

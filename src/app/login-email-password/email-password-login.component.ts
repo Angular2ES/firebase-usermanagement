@@ -23,7 +23,7 @@ export class LoginComponent {
   // Login user with email and password
   public async loginWithEmailPassword(email: string, password: string): Promise<void> {
     try{
-      await this.authService.loginWithEmailAndPassword('test@123.nl', '123123');
+      await this.authService.loginWithEmailAndPassword(email, password);
       this.router.navigate(['/home']);
     } catch (e){
         alert(e.message);

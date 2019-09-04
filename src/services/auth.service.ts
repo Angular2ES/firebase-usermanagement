@@ -4,15 +4,11 @@ import { Injectable } from '@angular/core';
 import { User, auth } from 'firebase';
 import { Observable } from 'rxjs';
 import { UserModuleConfig } from '../users-module-config';
-import * as firebase from 'firebase';
-import { FirebaseApp } from '@angular/fire';
 import { map } from 'rxjs/operators';
-import { UserService } from './user.service';
 
 @Injectable()
 export class AuthenticationService implements CanActivate {
   private authState$: Observable<User>;
-  //private firebaseApp: firebase.app.App;
 
   constructor(private angularFireAuth: AngularFireAuth, private router: Router, private config: UserModuleConfig) {
   }
@@ -69,21 +65,23 @@ export class AuthenticationService implements CanActivate {
   async createAccount(email: string): Promise<auth.UserCredential>{
     // TODO create random password
     const password = 'password'
-    // User will be loged in after succesfull creation if we want this we need to direct user to home
-    return await this.angularFireAuth.auth.createUserWithEmailAndPassword(email, password);
-
+    // User will be loged in after succesfull creation
+    // so we log out and ask the user to change password with an email
+    return await this.angularFireAuth.auth.createUserWithEmailAndPassword(email, password)
+      .then((userCredentials) => this.sendChangePasswordLink(email).then(() => userCredentials));
   }
 
-  async logout(): Promise<void> {
-    return await this.angularFireAuth.auth.signOut();
+  async sendChangePasswordLink(email: string): Promise<void>{
+    // after user changed password he/she will be logged in again
+    // TODO change this so the user has to log in again to start
+    const url = { url : this.config.loginRedirectUrl }
+    return this.angularFireAuth.auth.sendPasswordResetEmail(email, url) //TODO show alert of send email
+    .then(() => console.log('login again before starting'))
   }
 
-  // getFirebaseApp(): FirebaseApp {
-  //   if (!this.firebaseApp) {
-      
-  //     if (firebase.apps.length > 1) this.firebaseApp = firebase.app();
-  //     else this.firebaseApp = firebase.initializeApp(this.config);
-  //   }
-  //   return this.firebaseApp;
-  // }
+  async logout(url: string): Promise<void> {
+    return await this.angularFireAuth.auth.signOut()
+    .then((result) => this.router.navigate([url]).then(() => result))
+    .catch(e => console.log(e))
+  }
 }
