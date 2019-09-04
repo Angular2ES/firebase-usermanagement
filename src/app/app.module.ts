@@ -1,6 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, FormBuilder } from '@angular/forms';
 import { AppComponent } from './app.component';
 import { LoginComponent } from './login-components/email-password-login.component';
 import { HeaderComponent } from './components/header.component';
@@ -66,7 +66,7 @@ const userModuleConfig: UserModuleConfig = {
   ],
   providers: [
     // TODO remove or user toasterService
-    AuthenticationService, UserService, LoginHelper, ToasterService,
+    AuthenticationService, UserService, LoginHelper, FormBuilder, ToasterService,
     { provide: UserModuleConfig, useValue: userModuleConfig }
   ],
   bootstrap: [HeaderComponent]

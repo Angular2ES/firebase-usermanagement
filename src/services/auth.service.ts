@@ -12,7 +12,7 @@ import { UserService } from './user.service';
 @Injectable()
 export class AuthenticationService implements CanActivate {
   private authState$: Observable<User>;
-  private firebaseApp: firebase.app.App;
+  //private firebaseApp: firebase.app.App;
 
   constructor(private angularFireAuth: AngularFireAuth, private router: Router, private config: UserModuleConfig) {
   }
@@ -64,10 +64,6 @@ export class AuthenticationService implements CanActivate {
     if (this.angularFireAuth.auth.isSignInWithEmailLink(url)) {
       return await this.angularFireAuth.auth.signInWithEmailLink(email, url)
     } else { console.log('Sign link is incorrect')}
-  }
-
-  async loginWithToken(token: string): Promise<auth.UserCredential | void> {
-    return await this.angularFireAuth.auth.signInWithCustomToken(token);
   }
 
   async createAccount(email: string): Promise<auth.UserCredential>{

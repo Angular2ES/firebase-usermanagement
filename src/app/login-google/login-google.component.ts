@@ -49,7 +49,6 @@ export class LoginGoogleComponent{
     //Check if we have a user redirect after
     var user = result.user;
     if (user) {
-      console.log(user)
       this.router.navigate(['/home']);
     }
     return result;

@@ -46,10 +46,12 @@ export class UserService {
 
 
   //TODO working on this
-  public async updateUser(userData): Promise<void> {
-    this.authService.getUid().pipe(
-      switchMap(uid => uid ? this.col.doc(uid).update(userData) : null),
-    )
+  public async updateUser(uid: string, userData): Promise<void> {
+    // this.authService.getUid().pipe(
+    //   tap(uid => console.log(uid)),
+    //   map(uid => uid ? this.col.doc(uid).update(userData).then(() => console.log('done updating')) : null),
+    // )
+    return this.col.doc(uid).update(userData).then(() => console.log('done updating'))
     //return this.col.doc(this.authService.getUid()).update(userData);
       // this.authService.getAuthState().pipe(
       // map(user => user ? user.updateEmail(email) : null)
