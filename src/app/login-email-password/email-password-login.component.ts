@@ -3,7 +3,7 @@ import { AngularFirestore } from '@angular/fire/firestore';
 import { AuthenticationService } from 'src/services/auth.service';
 import { Router } from '@angular/router';
 import { UserService } from 'src/services/user.service';
-import { LoginHelper } from './login-helper.service';
+import { LoginHelper } from '../login-helper.service';
 
 @Component({
   selector: 'app-login',

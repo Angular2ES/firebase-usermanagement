@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { AuthenticationService } from 'src/services/auth.service';
 import { UserService } from 'src/services/user.service';
-import { LoginHelper } from '../login-components/login-helper.service';
+import { LoginHelper } from '../login-helper.service';
 import { Router, ParamMap, ActivatedRoute } from '@angular/router';
 import { Observable, combineLatest, of, BehaviorSubject } from 'rxjs';
 import { map, tap, first, switchMap } from 'rxjs/operators';

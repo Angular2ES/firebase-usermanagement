@@ -7,8 +7,8 @@
             <pre>{{ currentUser$ | async | json }}</pre>
         </li>
         <input type="text" class="form-control mb-2" placeholder="name" #userName>
-        <input type="text" class="form-control mb-2" placeholder="age" #userAge>
-        <button class="waves-effect waves-light btn" (click)="updateUserAge(userAge.value)">update settings</button>
+        <input type="number" class="form-control mb-2" placeholder="age" #userAge>
+        <button class="waves-effect waves-light btn" (click)="updateData(userAge.value, userName.value)">update settings</button>
       </form>
     </div>
   </body>

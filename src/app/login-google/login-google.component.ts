@@ -1,5 +1,5 @@
 import { Component, ErrorHandler } from '@angular/core';
-import { LoginHelper } from '../login-components/login-helper.service';
+import { LoginHelper } from '../login-helper.service';
 import { AuthenticationService } from 'src/services/auth.service';
 import { Router } from '@angular/router';
 import { auth } from 'firebase';

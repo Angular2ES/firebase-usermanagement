@@ -2,11 +2,12 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule, FormBuilder } from '@angular/forms';
 import { AppComponent } from './app.component';
-import { LoginComponent } from './login-components/email-password-login.component';
-import { HeaderComponent } from './components/header.component';
+import { LoginComponent } from './login-email-password/email-password-login.component';
+import { HeaderComponent } from './header/header.component';
 import { LoginTestComponent } from './login.test.component';
 import { CreateAccountComponent } from './create-account/create-account.component';
 import { LoginGoogleComponent } from './login-google/login-google.component';
+import { UserSettingsTestComponent } from './user.settings.test.component';
 
 import { UserModuleConfig } from '../users-module-config';
 
@@ -20,7 +21,7 @@ import { environment } from '../environments/environment';
 // services
 import { AuthenticationService } from 'src/services/auth.service';
 import { UserService } from 'src/services/user.service';
-import { LoginHelper } from './login-components/login-helper.service'
+import { LoginHelper } from './login-helper.service'
 // modules
 import { AppRoutingModule } from './app-routing.module';
 import { MaterializeModule } from 'angular2-materialize';
@@ -44,6 +45,7 @@ const userModuleConfig: UserModuleConfig = {
     UserSettingsComponent,
     
     LoginTestComponent,
+    UserSettingsTestComponent,
     
     LoginEmailComponent,
     
