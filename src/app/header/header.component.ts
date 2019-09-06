@@ -12,9 +12,9 @@ import { map, tap } from 'rxjs/operators';
 export class HeaderComponent {
   constructor(private authService: AuthenticationService, private userService: UserService, private router: Router) { }
 
-// TODO this is temp, just to make the front-end work
+  // TODO this is temp, just to make the front-end work
   async logout(): Promise<void> {
-    await this.authService.logout('/login');
+    await this.authService.logout();
   }
 
   async settings(): Promise<void>{

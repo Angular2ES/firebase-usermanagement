@@ -30,10 +30,10 @@ import { LoginEmailComponent } from './login-email/login-email.component';
 import { StorageModule } from '@ngx-pwa/local-storage';
 import { ToasterService, ToasterModule } from 'angular2-toaster';
 
-
 const userModuleConfig: UserModuleConfig = {
   loginRedirectUrl: environment.loginRedirectUrl,
   redirectAfterLogin: '/home',
+  redirectAfterLogout: '/login',
   firebaseCfg: environment.firebase
 };
 

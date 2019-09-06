@@ -24,7 +24,6 @@ export class AppComponent implements OnInit, OnDestroy {
     this.items = this.userService.getUser().pipe(
       filter(u => !!u)
     );
-
   }
 
   ngOnDestroy(): void {

@@ -59,29 +59,28 @@ export class AuthenticationService implements CanActivate {
   async loginWithEmail(email: string, url: string): Promise<auth.UserCredential | void>{
     if (this.angularFireAuth.auth.isSignInWithEmailLink(url)) {
       return await this.angularFireAuth.auth.signInWithEmailLink(email, url)
-    } else { console.log('Sign link is incorrect')}
+    } else { console.log('Signin link is incorrect')}
   }
 
   async createAccount(email: string): Promise<auth.UserCredential>{
     // TODO create random password
-    const password = 'password'
+    const password = Math.random().toString(36).substring(7);
     // User will be loged in after succesfull creation
     // so we log out and ask the user to change password with an email
     return await this.angularFireAuth.auth.createUserWithEmailAndPassword(email, password)
-      .then((userCredentials) => this.sendChangePasswordLink(email).then(() => userCredentials));
-  }
+      .then((userCredentials) => this.sendChangePasswordLink(email).then(() => userCredentials))
+    }
 
   async sendChangePasswordLink(email: string): Promise<void>{
     // after user changed password he/she will be logged in again
-    // TODO change this so the user has to log in again to start
     const url = { url : this.config.loginRedirectUrl }
     return this.angularFireAuth.auth.sendPasswordResetEmail(email, url) //TODO show alert of send email
     .then(() => console.log('login again before starting'))
   }
 
-  async logout(url: string): Promise<void> {
+  async logout(): Promise<void> {
     return await this.angularFireAuth.auth.signOut()
-    .then((result) => this.router.navigate([url]).then(() => result))
+    .then((result) => this.router.navigate([this.config.redirectAfterLogout]).then(() => result))
     .catch(e => console.log(e))
   }
 }

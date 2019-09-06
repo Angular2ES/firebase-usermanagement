@@ -3,6 +3,8 @@ export class UserModuleConfig {
   loginRedirectUrl: string;
   // After succesfull login redirect to
   redirectAfterLogin: string;
+  // After succesful logout redirect to
+  redirectAfterLogout: string;
   // Used to create a secondary app to register users without login directly in as that user
   firebaseCfg: any;
 

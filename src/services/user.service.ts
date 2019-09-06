@@ -26,7 +26,8 @@ export class UserService {
   public createUser(email: string): Promise<void> {
     return this.authService.createAccount(email)
     .then((userCredential) => this.mapToDatabase(userCredential.user.uid))
-    .then((userCredential) => this.authService.logout('/login').then(() => userCredential).catch((e) => console.log(e)))
+    .then((userCredential) => this.authService.logout().then(() => userCredential))
+    .catch((e) => console.log(e));
   }
 
   private mapFromDatabase(userData): UserModel {
