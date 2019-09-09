@@ -8,6 +8,7 @@ import { LoginTestComponent } from './login.test.component';
 import { CreateAccountComponent } from './create-account/create-account.component';
 import { LoginGoogleComponent } from './login-google/login-google.component';
 import { UserSettingsTestComponent } from './user.settings.test.component';
+import { ToasterComponent } from './toaster.component';
 
 import { UserModuleConfig } from '../users-module-config';
 
@@ -22,6 +23,9 @@ import { environment } from '../environments/environment';
 import { AuthenticationService } from 'src/services/auth.service';
 import { UserService } from 'src/services/user.service';
 import { LoginHelper } from './login-helper.service'
+import { UserAuthGuardService } from '../services/user-auth-guard.service';
+import { AdminAuthGuardService } from 'src/services/admin-auth-guard.service';
+
 // modules
 import { AppRoutingModule } from './app-routing.module';
 import { MaterializeModule } from 'angular2-materialize';
@@ -29,6 +33,7 @@ import { UserSettingsComponent } from './user-settings/user.settings.Component';
 import { LoginEmailComponent } from './login-email/login-email.component';
 import { StorageModule } from '@ngx-pwa/local-storage';
 import { ToasterService, ToasterModule } from 'angular2-toaster';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 const userModuleConfig: UserModuleConfig = {
   loginRedirectUrl: environment.loginRedirectUrl,
@@ -52,13 +57,15 @@ const userModuleConfig: UserModuleConfig = {
     CreateAccountComponent,
     
     LoginGoogleComponent,
+    ToasterComponent,
   ],
   imports: [
     BrowserModule,
     FormsModule,
     AppRoutingModule,
     MaterializeModule,
-    ToasterModule.forRoot(), // TODO remove or use it somewhere (cur we aren't using it)
+    BrowserAnimationsModule,
+    ToasterModule.forRoot(),
     
     AngularFireModule.initializeApp(environment.firebase),
     AngularFirestoreModule, // imports firebase/firestore, only needed for database features
@@ -67,8 +74,8 @@ const userModuleConfig: UserModuleConfig = {
     //AngularFireStorageModule // imports firebase/storage only needed for storage features
   ],
   providers: [
-    // TODO remove or user toasterService
     AuthenticationService, UserService, LoginHelper, FormBuilder, ToasterService,
+    UserAuthGuardService, AdminAuthGuardService, ToasterComponent,
     { provide: UserModuleConfig, useValue: userModuleConfig }
   ],
   bootstrap: [HeaderComponent]

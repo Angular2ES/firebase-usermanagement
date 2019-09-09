@@ -1,11 +1,9 @@
-import { Component, Injectable, OnInit, OnDestroy } from '@angular/core';
-import { AngularFirestore } from '@angular/fire/firestore';
-import { AuthenticationService } from 'src/services/auth.service';
-import { Router } from '@angular/router';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { UserService } from 'src/services/user.service';
 import { Observable } from 'rxjs';
 import { UserModel } from 'src/models/user.model';
 import { filter } from 'rxjs/operators';
+import { ToasterConfig, ToasterService } from 'angular2-toaster';
 
 @Component({
   selector: 'app-home ',
@@ -17,7 +15,8 @@ export class AppComponent implements OnInit, OnDestroy {
 
   items: Observable<UserModel>;
 
-  constructor(private db: AngularFirestore, authService: AuthenticationService, private userService: UserService, private router: Router) {
+  constructor(private userService: UserService,
+    private toasterService: ToasterService) {
   }
 
   ngOnInit(): void {

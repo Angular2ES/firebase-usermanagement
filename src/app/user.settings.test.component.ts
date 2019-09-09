@@ -1,9 +1,10 @@
 import { UserSettingsComponent } from './user-settings/user.settings.Component';
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { AngularFirestore } from '@angular/fire/firestore';
 import { AuthenticationService } from 'src/services/auth.service';
 import { UserService } from 'src/services/user.service';
+import { ToasterComponent } from './toaster.component';
+import { ToasterService } from 'angular2-toaster';
 
 @Component({
   selector: 'app-user-settings-test',
@@ -14,11 +15,11 @@ import { UserService } from 'src/services/user.service';
 export class UserSettingsTestComponent extends UserSettingsComponent{
   private data: FormGroup;
   
-  constructor(db: AngularFirestore, authService: AuthenticationService, userService: UserService, public formBuilder: FormBuilder){ 
-    super(db, authService, userService, formBuilder);
+  constructor(authService: AuthenticationService, userService: UserService, public formBuilder: FormBuilder){ 
+    super(authService, userService, formBuilder);
   }
 
-  updateData(_age, _name){
+  updateData(_age: string, _name: string){
     this.data = this.formBuilder.group ({
       'name' : _name,
       'age' : Number.parseInt(_age),
@@ -27,7 +28,7 @@ export class UserSettingsTestComponent extends UserSettingsComponent{
     this.updateAllDataWith(this.data);
   }
 
-  updateMoreData(_age, _name){
+  updateMoreData(_age: string, _name: string){
     var variables: string[] = ['age', 'name']
     var values: any[] = [Number.parseInt(_age), _name]
     this.updateAllData(variables, values);

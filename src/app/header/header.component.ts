@@ -17,13 +17,16 @@ export class HeaderComponent {
     await this.authService.logout();
   }
 
-  async settings(): Promise<void>{
+  public settings(): void{
     //await this.authService.getUid().pipe(tap(id => console.log(id)), map(id => id ? this.navTo(id) : null))
-    this.navTo('1');
+    this.navTo('/settings/1');
   }
 
-  navTo(userId: string): string {
-    this.router.navigate(['/settings', userId])
-    return userId;
+  public login(): void {
+    this.navTo('/login');
+  }
+
+  navTo(ref: string): Promise<boolean> {
+    return this.router.navigate([ref])
   }
 }

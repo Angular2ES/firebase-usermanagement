@@ -1,11 +1,11 @@
-import { AngularFirestore } from '@angular/fire/firestore';
 import { AuthenticationService } from 'src/services/auth.service';
 import { UserService } from 'src/services/user.service';
 import { Observable, Subscription } from 'rxjs';
 import { UserModel } from 'src/models/user.model';
-import { map, tap } from 'rxjs/operators';
+import { tap } from 'rxjs/operators';
 import { Component, OnDestroy } from '@angular/core';
 import { FormGroup, FormBuilder, FormControl } from '@angular/forms';
+import { ToasterComponent } from '../toaster.component';
 
 @Component({
   selector: 'app-user-settings',
@@ -18,14 +18,19 @@ export class UserSettingsComponent implements OnDestroy  {
   private form: FormGroup;
 
   private subscriptions: Subscription[] = [];
+
+  private toaster: ToasterComponent;
   
-  constructor(private db: AngularFirestore, private authService: AuthenticationService, private userService: UserService, public formBuilder: FormBuilder){
-    this.form = formBuilder.group ({
-      'uid' : new FormControl() ,
-    });
-    this.currentUser$ = this.userService.getUser().pipe(
-      tap (user => { this.form.patchValue(user)}),
-    );
+  constructor(private authService: AuthenticationService, 
+    private userService: UserService, 
+    public formBuilder: FormBuilder)
+  {
+      this.form = formBuilder.group ({
+        'uid' : new FormControl() ,
+      });
+      this.currentUser$ = this.userService.getUser().pipe(
+        tap (user => { this.form.patchValue(user)}),
+      );
   }
 
   /**
@@ -44,7 +49,10 @@ export class UserSettingsComponent implements OnDestroy  {
      * ```
      */
   public updateAllDataWith(data: FormGroup): Promise<void> {
-    return this.userService.updateUser(this.form.value.uid, data.value);
+    return this.userService.updateUser(this.form.value.uid, data.value)
+    .then(() => {
+      new ToasterComponent().showAlert('succes', 'update succesfull', '')
+    }).catch((err) => console.log(err));
   }
 
   public updateAllData(keys: string[], values: any[]): Promise<void>{
