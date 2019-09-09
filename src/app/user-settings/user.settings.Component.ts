@@ -1,10 +1,10 @@
 import { AngularFirestore } from '@angular/fire/firestore';
 import { AuthenticationService } from 'src/services/auth.service';
 import { UserService } from 'src/services/user.service';
-import { Observable } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { UserModel } from 'src/models/user.model';
-import { map, tap, switchMap } from 'rxjs/operators';
-import { Component } from '@angular/core';
+import { map, tap } from 'rxjs/operators';
+import { Component, OnDestroy } from '@angular/core';
 import { FormGroup, FormBuilder, FormControl } from '@angular/forms';
 
 @Component({
@@ -12,10 +12,13 @@ import { FormGroup, FormBuilder, FormControl } from '@angular/forms';
   template: '',
 })
 
-export class UserSettingsComponent {
+export class UserSettingsComponent implements OnDestroy  {
+
   private currentUser$: Observable<UserModel>;
   private form: FormGroup;
 
+  private subscriptions: Subscription[] = [];
+  
   constructor(private db: AngularFirestore, private authService: AuthenticationService, private userService: UserService, public formBuilder: FormBuilder){
     this.form = formBuilder.group ({
       'uid' : new FormControl() ,
@@ -60,10 +63,21 @@ export class UserSettingsComponent {
     return this.updateAllDataWith(this.form);
   }
 
+  public sendResetPasswordMail(): void {
+    // return this.authService.getAuthState().pipe( map((user) => this.authService.sendChangePasswordLink(user.email)))
+    this.subscriptions.push(this.authService.getAuthState().subscribe((user) => this.authService.sendChangePasswordLink(user.email)));
+  }
+
   private async updateUserAge(data: string): Promise<void>{
     this.form.addControl( 'age' , new FormControl());
     this.form.patchValue({ age: Number.parseInt(data) })
 
     return this.userService.updateUser(this.form.value.uid, this.form.value);
+  }
+
+  ngOnDestroy(): void {
+    this.subscriptions.forEach(element => {
+      element.unsubscribe();
+    });
   }
 }

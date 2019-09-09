@@ -30,6 +30,10 @@ export class AuthenticationService implements CanActivate {
     return this.getAuthState().pipe(map((user) => user ? user.uid : null));
   }
 
+  getEmail(): Observable<string> {
+    return this.getAuthState().pipe(map((user) => user ? user.email : null));
+  }
+
   async loginWithEmailAndPassword(email: string, password: string): Promise<auth.UserCredential | void>{
     return await this.angularFireAuth.auth.signInWithEmailAndPassword(email, password);
   }
@@ -63,7 +67,6 @@ export class AuthenticationService implements CanActivate {
   }
 
   async createAccount(email: string): Promise<auth.UserCredential>{
-    // TODO create random password
     const password = Math.random().toString(36).substring(7);
     // User will be loged in after succesfull creation
     // so we log out and ask the user to change password with an email
@@ -73,9 +76,10 @@ export class AuthenticationService implements CanActivate {
 
   async sendChangePasswordLink(email: string): Promise<void>{
     // after user changed password he/she will be logged in again
+    // if you don't want this log the user out
     const url = { url : this.config.loginRedirectUrl }
-    return this.angularFireAuth.auth.sendPasswordResetEmail(email, url) //TODO show alert of send email
-    .then(() => console.log('login again before starting'))
+    return this.angularFireAuth.auth.sendPasswordResetEmail(email, url) 
+    .then(() => console.log('email send')) //TODO show alert of send email
   }
 
   async logout(): Promise<void> {

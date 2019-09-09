@@ -5,6 +5,7 @@ import { Observable, of } from 'rxjs';
 import { AngularFirestoreCollection, AngularFirestore } from '@angular/fire/firestore';
 import { map, switchMap, tap, shareReplay } from 'rxjs/operators';
 import { Router } from '@angular/router';
+import { User } from 'firebase';
 
 @Injectable()
 export class UserService {
@@ -25,7 +26,7 @@ export class UserService {
 
   public createUser(email: string): Promise<void> {
     return this.authService.createAccount(email)
-    .then((userCredential) => this.mapToDatabase(userCredential.user.uid))
+    .then((userCredential) => this.mapToDatabase(userCredential.user))
     .then((userCredential) => this.authService.logout().then(() => userCredential))
     .catch((e) => console.log(e));
   }
@@ -34,14 +35,16 @@ export class UserService {
     return {
       uid: userData.uid,
       name: userData.name,
-      age: userData.age
+      age: userData.age,
+      email: userData.email
     }
   }
 
-  public mapToDatabase(uid: string): Promise<void> {
-    var docRef = this.col.doc(uid);
+  public mapToDatabase(user: User): Promise<void> {
+    var docRef = this.col.doc(user.uid);
     return docRef.set({
-      uid: uid
+      uid: user.uid,
+      email: user.email
     }).then(() => console.log('doc succesfully created'));
   }
 
