@@ -76,7 +76,7 @@ const userModuleConfig: UserModuleConfig = {
   providers: [
     AuthenticationService, UserService, LoginHelper, FormBuilder, ToasterService,
     UserAuthGuardService, AdminAuthGuardService, ToasterComponent,
-    { provide: UserModuleConfig, useValue: userModuleConfig }
+    { provide: UserModuleConfig, useValue: userModuleConfig },
   ],
   bootstrap: [HeaderComponent]
 })

@@ -49,7 +49,7 @@ export class UserService {
   }
 
   public async updateUser(uid: string, userData): Promise<void> {
-    return this.col.doc(uid).update(userData).then(() => console.log('done updating'))
+    return this.col.doc(uid).update(userData);
   }
 
   public getUser(): Observable<UserModel | null> {
