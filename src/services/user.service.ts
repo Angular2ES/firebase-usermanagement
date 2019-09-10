@@ -14,7 +14,7 @@ export class UserService {
 
   constructor(private db: AngularFirestore, private authService: AuthenticationService, private router: Router) {
 
-    // todo remove console logs
+    // TODO remove console logs
     this.user$ = this.authService.getUid().pipe(
       tap(uid => console.log({ uid })),
       switchMap(uid => uid ? this.col.doc(uid).valueChanges() : of(null)),
@@ -46,6 +46,20 @@ export class UserService {
       uid: user.uid,
       email: user.email
     }).then(() => console.log('doc succesfully created'));
+  }
+
+  public isInDatabase(user: User): boolean {
+    return false;
+    // var docRef = this.col.doc(user.uid);
+    // docRef.get()
+    // .then((docSnapshot) => {
+    //   if (docSnapshot.exists) {
+    //     usersRef.onSnapshot((doc) => {
+    //       // do stuff with the data
+    //     });
+    //   } else {
+    //     usersRef.set({...}) // create the document
+    //   }
   }
 
   public async updateUser(uid: string, userData): Promise<void> {

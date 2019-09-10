@@ -2,8 +2,10 @@ import { Component, ErrorHandler } from '@angular/core';
 import { LoginHelper } from '../login-helper.service';
 import { AuthenticationService } from 'src/services/auth.service';
 import { Router } from '@angular/router';
-import { auth } from 'firebase';
+import { auth, User } from 'firebase';
 import { map } from 'rxjs/operators';
+import { UserService } from 'src/services/user.service';
+import { UserModuleConfig } from 'src/users-module-config';
 
 @Component({
   selector: 'app-login-google',
@@ -12,10 +14,12 @@ import { map } from 'rxjs/operators';
 export class LoginGoogleComponent{
 
   authService: AuthenticationService;
+  userService: UserService;
   googleProvider: auth.GoogleAuthProvider;
 
-  constructor(loginHelper: LoginHelper, private router: Router) { 
+  constructor(loginHelper: LoginHelper, private router: Router, private config: UserModuleConfig) { 
     this.authService = loginHelper.getAuthService();
+    this.userService = loginHelper.getUserService();
 
     this.googleProvider = new auth.GoogleAuthProvider();
     this.googleProvider.addScope('profile');
@@ -49,7 +53,8 @@ export class LoginGoogleComponent{
     //Check if we have a user redirect after
     var user = result.user;
     if (user) {
-      this.router.navigate(['/home']);
+      // if (!this.userService.isInDatabase(user)) this.userService.mapToDatabase(user);
+      this.router.navigate([this.config.redirectAfterLogin]);
     }
     return result;
   }

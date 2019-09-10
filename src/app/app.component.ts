@@ -2,7 +2,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { UserService } from 'src/services/user.service';
 import { Observable } from 'rxjs';
 import { UserModel } from 'src/models/user.model';
-import { filter } from 'rxjs/operators';
+import { filter, tap } from 'rxjs/operators';
 import { ToasterConfig, ToasterService } from 'angular2-toaster';
 
 @Component({
@@ -21,7 +21,7 @@ export class AppComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.items = this.userService.getUser().pipe(
-      filter(u => !!u)
+      filter((u: UserModel) => !!u)
     );
   }
 
