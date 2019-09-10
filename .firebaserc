@@ -1,0 +1,6 @@
+{
+  "projects": {
+    "default": "firecast-usermanagement",
+    "firecast": "angulartest-70bea"
+  }
+}
