@@ -3,7 +3,7 @@ import { LoginHelper } from '../login-helper.service';
 import { AuthenticationService } from 'src/services/auth.service';
 import { Router } from '@angular/router';
 import { auth, User } from 'firebase';
-import { map } from 'rxjs/operators';
+import { map, tap } from 'rxjs/operators';
 import { UserService } from 'src/services/user.service';
 import { UserModuleConfig } from 'src/users-module-config';
 
@@ -53,8 +53,13 @@ export class LoginGoogleComponent{
     //Check if we have a user redirect after
     var user = result.user;
     if (user) {
-      // if (!this.userService.isInDatabase(user)) this.userService.mapToDatabase(user);
-      this.router.navigate([this.config.redirectAfterLogin]);
+      // this.userService.isInDatabase(user).pipe(
+      //   tap(exist => exist ? this.userService.mapToDatabase(user) : null),
+      //   tap(() => this.router.navigate([this.config.redirectAfterLogin]))
+      //   );
+      this.userService.mapToDatabase(user)
+      .then(() => this.router.navigate([this.config.redirectAfterLogin]));
+      // this.router.navigate([this.config.redirectAfterLogin]);
     }
     return result;
   }

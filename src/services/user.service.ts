@@ -6,13 +6,18 @@ import { AngularFirestoreCollection, AngularFirestore } from '@angular/fire/fire
 import { map, switchMap, tap, shareReplay } from 'rxjs/operators';
 import { Router } from '@angular/router';
 import { User } from 'firebase';
+import { HttpClient } from 'selenium-webdriver/http';
+import { ConfigService } from './config.service';
 
 @Injectable()
 export class UserService {
   private user$: Observable<UserModel | null>;
   private col: AngularFirestoreCollection = this.db.collection('users');
 
-  constructor(private db: AngularFirestore, private authService: AuthenticationService, private router: Router) {
+  constructor(private db: AngularFirestore,
+    private authService: AuthenticationService,
+    private router: Router,
+    private configService: ConfigService) {
 
     // TODO remove console logs
     this.user$ = this.authService.getUid().pipe(
@@ -40,26 +45,20 @@ export class UserService {
     }
   }
 
-  public mapToDatabase(user: User): Promise<void> {
+  public mapToDatabase(user: User): Promise<any> {
+    // first we check if the user has data in the db
+    // else we create a new user
     var docRef = this.col.doc(user.uid);
-    return docRef.set({
-      uid: user.uid,
-      email: user.email
-    }).then(() => console.log('doc succesfully created'));
-  }
-
-  public isInDatabase(user: User): boolean {
-    return false;
-    // var docRef = this.col.doc(user.uid);
-    // docRef.get()
-    // .then((docSnapshot) => {
-    //   if (docSnapshot.exists) {
-    //     usersRef.onSnapshot((doc) => {
-    //       // do stuff with the data
-    //     });
-    //   } else {
-    //     usersRef.set({...}) // create the document
-    //   }
+    return docRef.get().toPromise()
+    .then((docSnapshot) => {
+      if (docSnapshot.exists) {
+        console.log('user has some data in db')
+      } else {
+        this.configService.getConfig(user.uid).then(() => {
+          console.log('doc succesfully created')
+        })
+      }
+    })
   }
 
   public async updateUser(uid: string, userData): Promise<void> {

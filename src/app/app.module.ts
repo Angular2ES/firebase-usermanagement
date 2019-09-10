@@ -28,12 +28,14 @@ import { AdminAuthGuardService } from 'src/services/admin-auth-guard.service';
 
 // modules
 import { AppRoutingModule } from './app-routing.module';
+import { HttpClientModule } from '@angular/common/http';
 import { MaterializeModule } from 'angular2-materialize';
 import { UserSettingsComponent } from './user-settings/user.settings.Component';
 import { LoginEmailComponent } from './login-email/login-email.component';
 import { StorageModule } from '@ngx-pwa/local-storage';
 import { ToasterService, ToasterModule } from 'angular2-toaster';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { ConfigService } from 'src/services/config.service';
 
 const userModuleConfig: UserModuleConfig = {
   loginRedirectUrl: environment.loginRedirectUrl,
@@ -61,6 +63,7 @@ const userModuleConfig: UserModuleConfig = {
   ],
   imports: [
     BrowserModule,
+    HttpClientModule,
     FormsModule,
     AppRoutingModule,
     MaterializeModule,
@@ -75,7 +78,7 @@ const userModuleConfig: UserModuleConfig = {
   ],
   providers: [
     AuthenticationService, UserService, LoginHelper, FormBuilder, ToasterService,
-    UserAuthGuardService, AdminAuthGuardService, ToasterComponent,
+    UserAuthGuardService, AdminAuthGuardService, ToasterComponent, ConfigService,
     { provide: UserModuleConfig, useValue: userModuleConfig },
   ],
   bootstrap: [HeaderComponent]
