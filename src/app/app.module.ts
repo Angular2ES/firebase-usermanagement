@@ -8,7 +8,6 @@ import { LoginTestComponent } from './login.test.component';
 import { CreateAccountComponent } from './create-account/create-account.component';
 import { LoginGoogleComponent } from './login-google/login-google.component';
 import { UserSettingsTestComponent } from './user.settings.test.component';
-import { ToasterComponent } from './toaster.component';
 
 import { UserModuleConfig } from '../users-module-config';
 
@@ -59,7 +58,7 @@ const userModuleConfig: UserModuleConfig = {
     CreateAccountComponent,
     
     LoginGoogleComponent,
-    ToasterComponent,
+    
   ],
   imports: [
     BrowserModule,
@@ -78,7 +77,7 @@ const userModuleConfig: UserModuleConfig = {
   ],
   providers: [
     AuthenticationService, UserService, LoginHelper, FormBuilder, ToasterService,
-    UserAuthGuardService, AdminAuthGuardService, ToasterComponent, ConfigService,
+    UserAuthGuardService, AdminAuthGuardService, ConfigService,
     { provide: UserModuleConfig, useValue: userModuleConfig },
   ],
   bootstrap: [HeaderComponent]

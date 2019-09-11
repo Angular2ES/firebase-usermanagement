@@ -57,9 +57,10 @@ export class LoginGoogleComponent{
       //   tap(exist => exist ? this.userService.mapToDatabase(user) : null),
       //   tap(() => this.router.navigate([this.config.redirectAfterLogin]))
       //   );
-      this.userService.mapToDatabase(user)
-      .then(() => this.router.navigate([this.config.redirectAfterLogin]));
-      // this.router.navigate([this.config.redirectAfterLogin]);
+      // if (this.userService.isNewUser(user)) {
+        this.userService.mapToDatabase(user)
+        .then(() => this.router.navigate([this.config.redirectAfterLogin]));
+      // } else this.router.navigate([this.config.redirectAfterLogin]);
     }
     return result;
   }

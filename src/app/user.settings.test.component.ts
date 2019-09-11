@@ -3,7 +3,6 @@ import { Component } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { AuthenticationService } from 'src/services/auth.service';
 import { UserService } from 'src/services/user.service';
-import { ToasterComponent } from './toaster.component';
 import { ToasterService } from 'angular2-toaster';
 
 @Component({
@@ -15,8 +14,8 @@ import { ToasterService } from 'angular2-toaster';
 export class UserSettingsTestComponent extends UserSettingsComponent{
   private data: FormGroup;
   
-  constructor(authService: AuthenticationService, userService: UserService, public formBuilder: FormBuilder){ 
-    super(authService, userService, formBuilder);
+  constructor(authService: AuthenticationService, userService: UserService, public formBuilder: FormBuilder, toasterService: ToasterService){ 
+    super(authService, userService, formBuilder, toasterService);
   }
 
   updateData(_age: string, _name: string){

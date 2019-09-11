@@ -5,7 +5,7 @@ import { UserModel } from 'src/models/user.model';
 import { tap } from 'rxjs/operators';
 import { Component, OnDestroy } from '@angular/core';
 import { FormGroup, FormBuilder, FormControl } from '@angular/forms';
-import { ToasterComponent } from '../toaster.component';
+import { ToasterService } from 'angular2-toaster';
 
 @Component({
   selector: 'app-user-settings',
@@ -19,11 +19,10 @@ export class UserSettingsComponent implements OnDestroy  {
 
   private subscriptions: Subscription[] = [];
 
-  private toaster: ToasterComponent;
-  
   constructor(private authService: AuthenticationService, 
     private userService: UserService, 
-    public formBuilder: FormBuilder)
+    public formBuilder: FormBuilder,
+    private toasterService: ToasterService)
   {
       this.form = formBuilder.group ({
         'uid' : new FormControl() ,
@@ -51,7 +50,9 @@ export class UserSettingsComponent implements OnDestroy  {
   public updateAllDataWith(data: FormGroup): Promise<void> {
     return this.userService.updateUser(this.form.value.uid, data.value)
     .then(() => {
-      new ToasterComponent().showAlert('succes', 'update succesfull', '')
+      this.toasterService.pop('succes', 'update succesfull', '')
+
+      // this.toasterService.popToaster('succes', 'update succesfull', '')
     }).catch((err) => console.log(err));
   }
 

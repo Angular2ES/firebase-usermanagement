@@ -8,7 +8,6 @@ import { map } from 'rxjs/operators';
 
 @Injectable()
 export class AuthenticationService implements CanActivate {
-  private authState$: Observable<User>;
 
   constructor(private angularFireAuth: AngularFireAuth, private router: Router, private config: UserModuleConfig) {
   }
@@ -80,6 +79,11 @@ export class AuthenticationService implements CanActivate {
     const url = { url : this.config.loginRedirectUrl }
     return this.angularFireAuth.auth.sendPasswordResetEmail(email, url) 
     .then(() => console.log('email send')) //TODO show alert of send email
+  }
+
+  async sendVerifyEmailLink(user: User): Promise<void> {
+    return user.sendEmailVerification()
+    .then(() => console.log(`email send to ${user.email}`)) //TODO show alert of send email
   }
 
   async logout(): Promise<void> {

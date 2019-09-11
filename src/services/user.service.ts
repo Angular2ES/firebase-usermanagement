@@ -45,19 +45,29 @@ export class UserService {
     }
   }
 
-  public mapToDatabase(user: User): Promise<any> {
-    // first we check if the user has data in the db
-    // else we create a new user
-    var docRef = this.col.doc(user.uid);
-    return docRef.get().toPromise()
-    .then((docSnapshot) => {
-      if (docSnapshot.exists) {
-        console.log('user has some data in db')
-      } else {
-        this.configService.getConfig(user.uid).then(() => {
-          console.log('doc succesfully created')
-        })
-      }
+  // public isNewUser (user: User): boolean {
+  //   // first we check if the user has data in the db
+  //   // if not we create a new user
+  //   var isNew = false;
+  //   var docRef = this.col.doc(user.uid);
+  //   docRef.get().toPromise()
+  //   .then((docSnapshot) => {
+  //     if (docSnapshot.exists) {
+  //       isNew = false;
+  //       console.log('user has some data in db')
+  //     } else {
+  //       isNew = true;
+  //       //this.mapFromDatabase(user)
+  //     } //return docSnapshot.exists
+  //   })
+  //   return isNew;
+  // }
+
+  public mapToDatabase(user: User): Promise<void> {
+    return this.configService.getConfig(user.uid)
+    .then(() => {
+      if (!user.emailVerified) this.authService.sendVerifyEmailLink(user);
+      //console.log('doc succesfully created')
     })
   }
 

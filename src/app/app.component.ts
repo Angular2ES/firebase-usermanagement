@@ -3,7 +3,7 @@ import { UserService } from 'src/services/user.service';
 import { Observable } from 'rxjs';
 import { UserModel } from 'src/models/user.model';
 import { filter, tap } from 'rxjs/operators';
-import { ToasterConfig, ToasterService } from 'angular2-toaster';
+import { ToasterService } from 'angular2-toaster';
 
 @Component({
   selector: 'app-home ',
@@ -15,8 +15,7 @@ export class AppComponent implements OnInit, OnDestroy {
 
   items: Observable<UserModel>;
 
-  constructor(private userService: UserService,
-    private toasterService: ToasterService) {
+  constructor(private userService: UserService) {
   }
 
   ngOnInit(): void {
