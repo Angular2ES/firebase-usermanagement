@@ -5,9 +5,12 @@
   <body>
     <ul>
         <li class="text" >
-          <pre>[ {{ items | async | json }} ]</pre>
+          <pre>[ {{ user$ | async | json }} ]</pre>
+        </li>
+        <li class="text" >
+          <pre>[ {{ group$ | async | json }} ]</pre>
         </li>
       </ul>
   </body>
-  <toaster-container [toasterconfig]="toasterConfig"></toaster-container>
+  <!-- <toaster-container [toasterconfig]="toasterConfig"></toaster-container> -->
 </html>

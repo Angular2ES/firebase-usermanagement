@@ -24,6 +24,8 @@ import { UserService } from 'src/services/user.service';
 import { LoginHelper } from './login-helper.service'
 import { UserAuthGuardService } from '../services/user-auth-guard.service';
 import { AdminAuthGuardService } from 'src/services/admin-auth-guard.service';
+import { ConfigService } from 'src/services/config.service';
+import { GroupService } from 'src/services/group.service';
 
 // modules
 import { AppRoutingModule } from './app-routing.module';
@@ -34,7 +36,6 @@ import { LoginEmailComponent } from './login-email/login-email.component';
 import { StorageModule } from '@ngx-pwa/local-storage';
 import { ToasterService, ToasterModule } from 'angular2-toaster';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { ConfigService } from 'src/services/config.service';
 
 const userModuleConfig: UserModuleConfig = {
   loginRedirectUrl: environment.loginRedirectUrl,
@@ -76,7 +77,7 @@ const userModuleConfig: UserModuleConfig = {
     //AngularFireStorageModule // imports firebase/storage only needed for storage features
   ],
   providers: [
-    AuthenticationService, UserService, LoginHelper, FormBuilder, ToasterService,
+    AuthenticationService, UserService, GroupService, LoginHelper, FormBuilder, ToasterService,
     UserAuthGuardService, AdminAuthGuardService, ConfigService,
     { provide: UserModuleConfig, useValue: userModuleConfig },
   ],

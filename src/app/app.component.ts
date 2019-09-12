@@ -4,6 +4,8 @@ import { Observable } from 'rxjs';
 import { UserModel } from 'src/models/user.model';
 import { filter, tap } from 'rxjs/operators';
 import { ToasterService } from 'angular2-toaster';
+import { GroupService } from 'src/services/group.service';
+import { Group } from 'src/models/group.model';
 
 @Component({
   selector: 'app-home ',
@@ -13,14 +15,21 @@ import { ToasterService } from 'angular2-toaster';
 
 export class AppComponent implements OnInit, OnDestroy {
 
-  items: Observable<UserModel>;
+  user$: Observable<UserModel>;
+  group$: Observable<Group>;
 
-  constructor(private userService: UserService) {
+  constructor(private userService: UserService,
+    private groupService: GroupService) {
   }
 
   ngOnInit(): void {
-    this.items = this.userService.getUser().pipe(
+    this.user$ = this.userService.getUser().pipe(
+      // tap(u => this.groupService.createGroup(u.uid, 'this is a name')),
       filter((u: UserModel) => !!u)
+    );
+
+    this.group$ = this.groupService.getGroup('qrTURgfdXydpLvmcUq1N').pipe(
+      filter((g) => !!g )
     );
   }
 

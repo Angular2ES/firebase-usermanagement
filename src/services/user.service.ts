@@ -78,4 +78,11 @@ export class UserService {
   public getUser(): Observable<UserModel | null> {
     return this.user$;
   }
+
+  public getUserFromDatabase(): Observable<any> {
+    return this.authService.getUid().pipe(
+      switchMap(uid => uid ? this.col.doc(uid).valueChanges() : of(null)),
+      shareReplay(1)
+    );
+  }
 }

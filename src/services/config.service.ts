@@ -15,7 +15,12 @@ export class ConfigService {
     //     'Content-Type': 'application/json',
     //   })
     // };
-    const body = { uid: uid }
+    const body = { uid: uid };
     return this.http.post(this.configUrl, body).toPromise();
+  }
+
+  createGroup(uid: string, groupId: string, groupName: string): Promise<any> {
+    const body = { uid: uid, groupName: groupName, groupId: groupId};
+    return this.http.post('/firebaseApi/createGroup', body).toPromise();
   }
 }

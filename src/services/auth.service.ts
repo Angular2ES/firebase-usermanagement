@@ -5,18 +5,17 @@ import { User, auth } from 'firebase';
 import { Observable } from 'rxjs';
 import { UserModuleConfig } from '../users-module-config';
 import { map } from 'rxjs/operators';
+import { ToasterService } from 'angular2-toaster';
 
 @Injectable()
 export class AuthenticationService implements CanActivate {
-
-  constructor(private angularFireAuth: AngularFireAuth, private router: Router, private config: UserModuleConfig) {
+  
+  constructor(private angularFireAuth: AngularFireAuth, private router: Router, private config: UserModuleConfig, toasterService: ToasterService) {
   }
-
-  //TODO create a guard or a new guardService
+  
   canActivate(): boolean {
     return true;
   }
-
   getAuthState(): Observable<User> {
     return this.angularFireAuth.authState;
   }
