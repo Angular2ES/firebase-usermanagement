@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <body>
-    <nav>
+    <nav id='nav'>
       <div class="nav-wrapper">
         <a href="#" class="brand-logo">Logo</a>
         <ul id="nav-mobile" class="right hide-on-med-and-down">
@@ -11,6 +11,11 @@
           <li><a (click)="logout()" routerLinkActive="active">logout</a></li>
         </ul>
       </div>
+      <style>
+        #nav {
+          display: block;
+        }
+      </style>
     </nav>
     <router-outlet></router-outlet>
     <toaster-container [toasterconfig]="toasterConfig"></toaster-container>
