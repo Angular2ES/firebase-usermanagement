@@ -8,6 +8,7 @@ import { LoginTestComponent } from './login.test.component';
 import { CreateAccountComponent } from './create-account/create-account.component';
 import { LoginGoogleComponent } from './login-google/login-google.component';
 import { UserSettingsTestComponent } from './user.settings.test.component';
+import { GroupSettingsComponent } from './group-settings/group-settings.component';
 
 import { UserModuleConfig } from '../users-module-config';
 
@@ -22,8 +23,8 @@ import { environment } from '../environments/environment';
 import { AuthenticationService } from 'src/services/auth.service';
 import { UserService } from 'src/services/user.service';
 import { LoginHelper } from './login-helper.service'
-import { UserAuthGuardService } from '../services/user-auth-guard.service';
-import { AdminAuthGuardService } from 'src/services/admin-auth-guard.service';
+import { UserAuthGuardService } from '../services/auth.services/user-auth-guard.service';
+import { AdminAuthGuardService } from 'src/services/auth.services/admin-auth-guard.service';
 import { ConfigService } from 'src/services/config.service';
 import { GroupService } from 'src/services/group.service';
 
@@ -46,19 +47,16 @@ const userModuleConfig: UserModuleConfig = {
 
 @NgModule({
   declarations: [
-    LoginComponent,
-    AppComponent,
-    HeaderComponent,
-    UserSettingsComponent,
-    
     LoginTestComponent,
     UserSettingsTestComponent,
-    
+    LoginComponent,
+    UserSettingsComponent,
+    AppComponent,
+    HeaderComponent,
     LoginEmailComponent,
-    
     CreateAccountComponent,
-    
     LoginGoogleComponent,
+    GroupSettingsComponent,
     
   ],
   imports: [

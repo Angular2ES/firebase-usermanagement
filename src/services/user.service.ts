@@ -41,7 +41,8 @@ export class UserService {
       uid: userData.uid,
       name: userData.name,
       age: userData.age,
-      email: userData.email
+      email: userData.email,
+      groups: userData.groups
     }
   }
 
@@ -64,7 +65,7 @@ export class UserService {
   // }
 
   public mapToDatabase(user: User): Promise<void> {
-    return this.configService.getConfig(user.uid)
+    return this.configService.createUser(user.uid)
     .then(() => {
       if (!user.emailVerified) this.authService.sendVerifyEmailLink(user);
       //console.log('doc succesfully created')

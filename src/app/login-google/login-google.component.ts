@@ -58,7 +58,7 @@ export class LoginGoogleComponent{
       //   tap(() => this.router.navigate([this.config.redirectAfterLogin]))
       //   );
       // if (this.userService.isNewUser(user)) {
-        this.userService.mapToDatabase(user)
+        this.userService.mapToDatabase(user) // TODO we are overwriting every time we log in so we need to check if it's a new user or not
         .then(() => this.router.navigate([this.config.redirectAfterLogin]));
       // } else this.router.navigate([this.config.redirectAfterLogin]);
     }

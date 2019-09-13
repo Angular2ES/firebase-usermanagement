@@ -2,9 +2,9 @@ import { Injectable, Component } from '@angular/core';
 import { CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot, Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { map, tap } from 'rxjs/operators';
-import { UserService } from './user.service';
+import { UserService } from '../user.service';
 import { ToasterService, ToasterConfig } from 'angular2-toaster';
-import { AuthenticationService } from './auth.service';
+import { AuthenticationService } from '../auth.service';
 
 @Injectable()
 export class AdminAuthGuardService implements CanActivate {

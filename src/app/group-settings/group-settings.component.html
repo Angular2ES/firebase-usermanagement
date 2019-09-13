@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+  <body>
+    <div class="group-settings-collection">
+      <form>
+        <li class="text" >
+            <pre>{{ currentGroup$ | async | json }}</pre>
+        </li>
+        <input type="text" class="form-control mb-2" placeholder="name" #groupName>
+        <button class="waves-effect waves-light btn" (click)="changeName(groupName.value)">update settings</button>
+      </form>
+    </div>
+  </body>
+</html>
+<html>

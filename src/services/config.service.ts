@@ -9,7 +9,7 @@ export class ConfigService {
   constructor(private http: HttpClient) {
 
   }
-  getConfig(uid: string): Promise<any> {
+  createUser(uid: string): Promise<any> {
     // const httpOptions = {
     //   headers: new HttpHeaders({
     //     'Content-Type': 'application/json',

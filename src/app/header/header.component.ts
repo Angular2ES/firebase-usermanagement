@@ -15,7 +15,6 @@ export class HeaderComponent implements OnInit{
   }
   
   ngOnInit(): void {
-    console.log(document.URL);
     //TODO fix this if we still need it
     // if (document.URL == 'http://localhost:4200/login') document.getElementById('nav').style.display = 'none';
     // else document.getElementById('nav').style.display = 'block';
@@ -28,7 +27,10 @@ export class HeaderComponent implements OnInit{
 
   public settings(): void{
     //await this.authService.getUid().pipe(tap(id => console.log(id)), map(id => id ? this.navTo(id) : null))
-    this.navTo('/settings/1');
+    this.userService.getUser().subscribe(
+      (user => this.router.navigate(['/groupSettings', user.groups[0]])) // TODO we send the user to settings of the first group. catch error if user doesn't have a group
+    ).unsubscribe();
+    //this.router.navigate(['/groupSettings', 'qrTURgfdXydpLvmcUq1N'])
   }
 
   public login(): void {

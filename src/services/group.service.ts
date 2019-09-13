@@ -21,8 +21,8 @@ export class GroupService {
     private configService: ConfigService) {}
 
   public addUsersToGroup(userId: string[], groupId: string): Promise<void> {
-    return this.userCol.doc(groupId).update({
-      users: firebase.firestore.FieldValue.arrayUnion(userId)
+    return this.groupCol.doc(groupId).update({
+      users: firebase.firestore.FieldValue.arrayUnion(userId) // TODO on update add group to user we do this in the functions index.ts
     });
   }
 
@@ -38,12 +38,30 @@ export class GroupService {
     )
   }
 
+  public getGroupPermissions(groupId: string): Observable<any> {
+    return this.groupCol.doc(groupId).valueChanges().pipe(
+      map(data => data ? this.mapGroupPermissions(data) : null)
+    )
+  }
+
+  private mapGroupPermissions(data): any{
+    return {
+      permisions: data.permisions
+    }
+  }
+
   private mapFromDatabase(data): Group {
     return {
       groupId: data.groupId,
       groupName: data.groupName,
       users: data.users
     }
+  }
+
+  public updateGroupData(groupId: string, data: any): Promise<void> {
+    return this.groupCol.doc(groupId).update(data)
+    .then(succes => console.log('update succesfull'))
+    .catch(err => console.log(err));
   }
 
 }
