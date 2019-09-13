@@ -34,20 +34,20 @@ export class GroupSettingsComponent implements OnInit, CanActivate {
       switchMap(params => this.groupService.getGroup(params['id'])),
     )
   }
-    // TODO give feedback to the user
-    canActivate(): Observable<boolean> {
-      return this.route.params.pipe(
-        switchMap(params => this.groupService.getGroupPermissions(params['id'])),
-        switchMap(perm => this.IsCurUserAdminCheck(perm)),
-      )
-    }
-  
-    private IsCurUserAdminCheck(permissions: any): Observable<boolean> {
-      return this.userService.getUser().pipe(
-        tap(u => console.log(permissions.admin[0])),
-        map(user => user == permissions.admin[0]) // TODO we only check the first admin
-      )
-    }
+  // TODO give feedback to the user
+  canActivate(): Observable<boolean> {
+    return this.route.params.pipe(
+      switchMap(params => this.groupService.getGroupPermissions(params['id'])),
+      switchMap(perm => this.IsCurUserAdminCheck(perm)),
+    )
+  }
+
+  private IsCurUserAdminCheck(permissions: any): Observable<boolean> {
+    return this.userService.getUser().pipe(
+      tap(u => console.log(permissions.admin[0])),
+      map(user => user == permissions.admin[0]) // TODO we only check the first admin
+    )
+  }
 
   public changeName(name: string): void {
     const groupData = {

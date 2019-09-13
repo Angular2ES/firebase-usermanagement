@@ -23,4 +23,9 @@ export class ConfigService {
     const body = { uid: uid, groupName: groupName, groupId: groupId};
     return this.http.post('/firebaseApi/createGroup', body).toPromise();
   }
+
+  addUserToGroup(uid: string, groupId: string): Promise<any> {
+    const body = { uid: uid, groupId: groupId};
+    return this.http.post('/firebaseApi/addUserToGroup', body).toPromise();
+  }
 }
