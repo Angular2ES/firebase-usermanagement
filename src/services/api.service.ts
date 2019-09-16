@@ -1,14 +1,11 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { UserModel } from 'src/models/user.model';
+import { HttpClient } from '@angular/common/http';
 
 @Injectable()
-export class ConfigService {
-  configUrl = '/firebaseApi/createUser';
+export class ApiService {
 
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient) {}
 
-  }
   createUser(uid: string): Promise<any> {
     // const httpOptions = {
     //   headers: new HttpHeaders({
@@ -16,7 +13,7 @@ export class ConfigService {
     //   })
     // };
     const body = { uid: uid };
-    return this.http.post(this.configUrl, body).toPromise();
+    return this.http.post('/firebaseApi/createUser', body).toPromise();
   }
 
   createGroup(uid: string, groupId: string, groupName: string): Promise<any> {

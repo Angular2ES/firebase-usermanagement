@@ -25,7 +25,7 @@ import { UserService } from 'src/services/user.service';
 import { LoginHelper } from './login-helper.service'
 import { UserAuthGuardService } from '../services/auth.services/user-auth-guard.service';
 import { AdminAuthGuardService } from 'src/services/auth.services/admin-auth-guard.service';
-import { ConfigService } from 'src/services/config.service';
+import { ApiService } from 'src/services/api.service';
 import { GroupService } from 'src/services/group.service';
 
 // modules
@@ -76,7 +76,7 @@ const userModuleConfig: UserModuleConfig = {
   ],
   providers: [
     AuthenticationService, UserService, GroupService, LoginHelper, FormBuilder, ToasterService,
-    UserAuthGuardService, AdminAuthGuardService, ConfigService,
+    UserAuthGuardService, AdminAuthGuardService, ApiService,
     { provide: UserModuleConfig, useValue: userModuleConfig },
   ],
   bootstrap: [HeaderComponent]

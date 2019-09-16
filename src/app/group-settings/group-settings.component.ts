@@ -6,7 +6,6 @@ import { map, switchMap, tap } from 'rxjs/operators';
 import { Router, ActivatedRoute, CanActivate } from '@angular/router';
 import { UserModel } from 'src/models/user.model';
 import { UserService } from 'src/services/user.service';
-import { ConfigService } from 'src/services/config.service';
 import { FormGroup, FormBuilder, FormControl } from '@angular/forms';
 
 @Component({
@@ -23,10 +22,9 @@ export class GroupSettingsComponent implements OnInit, CanActivate {
   constructor(private groupService: GroupService, 
     private route: ActivatedRoute,
     private userService: UserService,
-    private configService: ConfigService,
     private formBuilder: FormBuilder) {
 
-    this.curGroupForm = formBuilder.group ({
+    this.curGroupForm = this.formBuilder.group ({
       'groupId' : new FormControl() ,
     });
     this.currentGroup$ = this.route.params.pipe(

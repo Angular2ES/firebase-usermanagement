@@ -1,24 +1,19 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/firestore';
-import { AuthenticationService } from './auth.service';
-import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { Group } from 'src/models/group.model';
 import * as firebase from 'firebase';
-import { ConfigService } from './config.service';
+import { ApiService } from './api.service';
 import { map } from 'rxjs/operators';
 
 @Injectable()
 export class GroupService {
 
-  private userCol: AngularFirestoreCollection = this.db.collection('users');
   private groupCol: AngularFirestoreCollection = this.db.collection('groups');
 
 
   constructor(private db: AngularFirestore,
-    private authService: AuthenticationService,
-    private router: Router,
-    private configService: ConfigService) {}
+    private apiService: ApiService) {}
 
   public addUsersToGroup(userId: string[], groupId: string): Promise<void> {
     return this.groupCol.doc(groupId).update({
@@ -27,7 +22,7 @@ export class GroupService {
   }
 
   public createGroup(userId: string, groupName: string): Promise<any> {
-    return this.configService.createGroup(userId, this.db.createId(), groupName)
+    return this.apiService.createGroup(userId, this.db.createId(), groupName)
     .then((data) => console.log('group has been created')) // TODO let user know this
     .catch((err) => console.log(err));
   }

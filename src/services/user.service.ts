@@ -6,8 +6,7 @@ import { AngularFirestoreCollection, AngularFirestore } from '@angular/fire/fire
 import { map, switchMap, tap, shareReplay } from 'rxjs/operators';
 import { Router } from '@angular/router';
 import { User } from 'firebase';
-import { HttpClient } from 'selenium-webdriver/http';
-import { ConfigService } from './config.service';
+import { ApiService } from './api.service';
 
 @Injectable()
 export class UserService {
@@ -17,7 +16,7 @@ export class UserService {
   constructor(private db: AngularFirestore,
     private authService: AuthenticationService,
     private router: Router,
-    private configService: ConfigService) {
+    private apiService: ApiService) {
 
     // TODO remove console logs
     this.user$ = this.authService.getUid().pipe(
@@ -65,7 +64,7 @@ export class UserService {
   // }
 
   public mapToDatabase(user: User): Promise<void> {
-    return this.configService.createUser(user.uid)
+    return this.apiService.createUser(user.uid)
     .then(() => {
       if (!user.emailVerified) this.authService.sendVerifyEmailLink(user);
       //console.log('doc succesfully created')
