@@ -16,20 +16,14 @@ import { Group } from 'src/models/group.model';
 export class AppComponent implements OnInit, OnDestroy {
 
   user$: Observable<UserModel>;
-  group$: Observable<Group>;
 
-  constructor(private userService: UserService,
-    private groupService: GroupService) {
+  constructor(private userService: UserService) {
   }
 
   ngOnInit(): void {
     this.user$ = this.userService.getUser().pipe(
       // tap(u => this.groupService.createGroup(u.uid, 'this is a name')),
       filter((u: UserModel) => !!u)
-    );
-
-    this.group$ = this.groupService.getGroup('qrTURgfdXydpLvmcUq1N').pipe(
-      filter((g) => !!g )
     );
   }
 

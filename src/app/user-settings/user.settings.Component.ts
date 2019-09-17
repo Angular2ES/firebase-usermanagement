@@ -4,7 +4,7 @@ import { Observable, Subscription } from 'rxjs';
 import { UserModel } from 'src/models/user.model';
 import { tap } from 'rxjs/operators';
 import { Component, OnDestroy } from '@angular/core';
-import { FormGroup, FormBuilder, FormControl } from '@angular/forms';
+import { FormGroup, FormBuilder, FormControl, Validators } from '@angular/forms';
 import { ToasterService } from 'angular2-toaster';
 
 @Component({
@@ -15,7 +15,7 @@ import { ToasterService } from 'angular2-toaster';
 export class UserSettingsComponent implements OnDestroy  {
 
   private currentUser$: Observable<UserModel>;
-  private form: FormGroup;
+  public form: FormGroup;
 
   private subscriptions: Subscription[] = [];
 
@@ -25,7 +25,7 @@ export class UserSettingsComponent implements OnDestroy  {
     private toasterService: ToasterService)
   {
       this.form = formBuilder.group ({
-        'uid' : new FormControl() ,
+        'uid' : ['', Validators.required] ,
       });
       this.currentUser$ = this.userService.getUser().pipe(
         tap (user => { this.form.patchValue(user)}),

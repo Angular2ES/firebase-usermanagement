@@ -1,6 +1,6 @@
 import { UserSettingsComponent } from './user-settings/user.settings.Component';
 import { Component } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup, FormControl } from '@angular/forms';
 import { AuthenticationService } from 'src/services/auth.service';
 import { UserService } from 'src/services/user.service';
 import { ToasterService } from 'angular2-toaster';
@@ -19,12 +19,15 @@ export class UserSettingsTestComponent extends UserSettingsComponent{
   }
 
   updateData(_age: string, _name: string){
-    this.data = this.formBuilder.group ({
-      'name' : _name,
-      'age' : Number.parseInt(_age),
-    })
+    this.form.addControl('name', new FormControl());
+    this.form.addControl('age', new FormControl());
+    this.form.patchValue({'name': _name, 'age': Number.parseInt(_age)})
+    // this.data = this.formBuilder.group ({
+    //   'name' : _name,
+    //   'age' : Number.parseInt(_age),
+    // })
     //this.data.patchValue({ name: _name, age: _age })
-    this.updateAllDataWith(this.data);
+    this.updateAllDataWith(this.form);
   }
 
   updateMoreData(_age: string, _name: string){
