@@ -37,7 +37,7 @@ import { LoginEmailComponent } from './login-email/login-email.component';
 import { StorageModule } from '@ngx-pwa/local-storage';
 import { ToasterService, ToasterModule } from 'angular2-toaster';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { ControlMessagesComponent } from './control-messages/control-messages.component';
+import { ValidationMessagesComponent } from './validation-messages/validation-messages.component';
 
 const userModuleConfig: UserModuleConfig = {
   loginRedirectUrl: environment.loginRedirectUrl,
@@ -58,7 +58,7 @@ const userModuleConfig: UserModuleConfig = {
     CreateAccountComponent,
     LoginGoogleComponent,
     GroupSettingsComponent,
-    ControlMessagesComponent,
+    ValidationMessagesComponent,
     
   ],
   imports: [
