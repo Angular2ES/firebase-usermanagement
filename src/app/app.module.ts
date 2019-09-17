@@ -1,6 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { FormsModule, FormBuilder } from '@angular/forms';
+import { FormsModule, FormBuilder, ReactiveFormsModule } from '@angular/forms';
 import { AppComponent } from './app.component';
 import { LoginComponent } from './login-email-password/email-password-login.component';
 import { HeaderComponent } from './header/header.component';
@@ -37,7 +37,6 @@ import { LoginEmailComponent } from './login-email/login-email.component';
 import { StorageModule } from '@ngx-pwa/local-storage';
 import { ToasterService, ToasterModule } from 'angular2-toaster';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { Control } from './control.messages/control.messages.component';
 import { ControlMessagesComponent } from './control-messages/control-messages.component';
 
 const userModuleConfig: UserModuleConfig = {
@@ -59,7 +58,6 @@ const userModuleConfig: UserModuleConfig = {
     CreateAccountComponent,
     LoginGoogleComponent,
     GroupSettingsComponent,
-    Control.MessagesComponent,
     ControlMessagesComponent,
     
   ],
@@ -67,6 +65,7 @@ const userModuleConfig: UserModuleConfig = {
     BrowserModule,
     HttpClientModule,
     FormsModule,
+    ReactiveFormsModule,
     AppRoutingModule,
     MaterializeModule,
     BrowserAnimationsModule,

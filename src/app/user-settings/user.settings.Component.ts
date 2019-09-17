@@ -25,7 +25,7 @@ export class UserSettingsComponent implements OnDestroy  {
     private toasterService: ToasterService)
   {
       this.form = formBuilder.group ({
-        'uid' : ['', Validators.required] ,
+        'uid' : new FormControl() ,
       });
       this.currentUser$ = this.userService.getUser().pipe(
         tap (user => { this.form.patchValue(user)}),

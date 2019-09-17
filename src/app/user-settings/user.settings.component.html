@@ -2,16 +2,21 @@
 <html>
   <body>
     <div class="user-settings-collection">
-      <form>
+
+      <form [formGroup]="data" (submit)="updateData()">
         <li class="text" >
             <pre>{{ currentUser$ | async | json }}</pre>
         </li>
-        <input type="text" class="form-control mb-2" placeholder="name" #userName>
-        <input type="number" class="form-control mb-2" placeholder="age" #userAge>
-        <div style="align-content: center" >
+        <label for="name">Name</label>
+        <input type="text" class="form-control mb-2" formControlName="name" id="name">
+        <control-messages class="error-message" [control]="data.get('name')"></control-messages>
+        
+        <label for="age">Age</label>
+        <input type="number" class="form-control mb-2" formControlName="age" id="age">
+        <control-messages class="error-message" [control]="data.get('age')"></control-messages>
 
-        </div>
-        <button class="waves-effect waves-light btn" (click)="updateData(userAge.value, userName.value)">update settings</button>
+        <div style="align-content: center"></div>
+        <button type="submit" class="waves-effect waves-light btn" [disabled]="!data.valid">update settings</button>
         <button class="waves-effect waves-light btn" (click)="sendResetPasswordMail()">new password</button>
       </form>
     </div>

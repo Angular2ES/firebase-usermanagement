@@ -1,9 +1,10 @@
 import { UserSettingsComponent } from './user-settings/user.settings.Component';
 import { Component } from '@angular/core';
-import { FormBuilder, FormGroup, FormControl } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AuthenticationService } from 'src/services/auth.service';
 import { UserService } from 'src/services/user.service';
 import { ToasterService } from 'angular2-toaster';
+import { ValidationService } from 'src/services/validation.service';
 
 @Component({
   selector: 'app-user-settings-test',
@@ -12,22 +13,22 @@ import { ToasterService } from 'angular2-toaster';
 })
 
 export class UserSettingsTestComponent extends UserSettingsComponent{
-  private data: FormGroup;
+  public data: FormGroup;
   
-  constructor(authService: AuthenticationService, userService: UserService, public formBuilder: FormBuilder, toasterService: ToasterService){ 
+  constructor(authService: AuthenticationService, 
+    userService: UserService, 
+    public formBuilder: FormBuilder, toasterService: ToasterService, 
+    private validationService: ValidationService){ 
     super(authService, userService, formBuilder, toasterService);
+
+    this.data = this.formBuilder.group({
+      name: ['', [Validators.required]],
+      age: ['', [Validators.required]]
+    })
   }
 
-  updateData(_age: string, _name: string){
-    this.form.addControl('name', new FormControl());
-    this.form.addControl('age', new FormControl());
-    this.form.patchValue({'name': _name, 'age': Number.parseInt(_age)})
-    // this.data = this.formBuilder.group ({
-    //   'name' : _name,
-    //   'age' : Number.parseInt(_age),
-    // })
-    //this.data.patchValue({ name: _name, age: _age })
-    this.updateAllDataWith(this.form);
+  updateData(){ 
+    this.updateAllDataWith(this.data);
   }
 
   updateMoreData(_age: string, _name: string){
