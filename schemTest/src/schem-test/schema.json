@@ -1,0 +1,19 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema" ,
+  "id": "TestSchematics",
+    "title": "Collection Schema for validating a 'collection.json'.",
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string",
+      "$default": {
+        "$source": "argv",
+        "index": 0
+      },
+      "x-prompt": "Who do we want to greet?"
+    }
+  },
+  "required": [
+    "name"
+  ]
+}
