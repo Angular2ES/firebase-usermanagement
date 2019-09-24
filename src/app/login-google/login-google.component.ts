@@ -50,17 +50,11 @@ export class LoginGoogleComponent{
       var token = result.credential.providerId;
     }
     
-    //Check if we have a user redirect after
+    //Check if we have a user redirect afterj
+    //TODO if we don't have a user login create account or login was unsuccelfull
     var user = result.user;
     if (user) {
-      // this.userService.isInDatabase(user).pipe(
-      //   tap(exist => exist ? this.userService.mapToDatabase(user) : null),
-      //   tap(() => this.router.navigate([this.config.redirectAfterLogin]))
-      //   );
-      // if (this.userService.isNewUser(user)) {
-        this.userService.mapToDatabase(user) // TODO we are overwriting every time we log in so we need to check if it's a new user or not
-        .then(() => this.router.navigate([this.config.redirectAfterLogin]));
-      // } else this.router.navigate([this.config.redirectAfterLogin]);
+      this.router.navigate([this.config.redirectAfterLogin]);
     }
     return result;
   }

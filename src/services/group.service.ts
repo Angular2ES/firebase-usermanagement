@@ -3,8 +3,8 @@ import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/fire
 import { Observable } from 'rxjs';
 import { Group } from 'src/models/group.model';
 import * as firebase from 'firebase';
-import { ApiService } from './api.service';
 import { map } from 'rxjs/operators';
+import { UserService } from './user.service';
 
 @Injectable()
 export class GroupService {
@@ -13,7 +13,7 @@ export class GroupService {
 
 
   constructor(private db: AngularFirestore,
-    private apiService: ApiService) {}
+    private userService: UserService) {}
 
   public addUsersToGroup(userId: string[], groupId: string): Promise<void> {
     return this.groupCol.doc(groupId).update({
@@ -22,9 +22,18 @@ export class GroupService {
   }
 
   public createGroup(userId: string, groupName: string): Promise<any> {
-    return this.apiService.createGroup(userId, this.db.createId(), groupName)
-    .then((data) => console.log('group has been created')) // TODO let user know this
-    .catch((err) => console.log(err));
+    const newId = this.db.createId();
+    const groupData = {
+      groupId: newId,
+      groupName: groupName,
+      users: [userId]
+    }
+    return this.groupCol.doc(newId).set(groupData).then(() => {
+      //this.userService.addGroupToUser(userId, newId).catch((e) => console.log(e))
+    }).catch((e) => console.log(e));
+    // return this.apiService.createGroup(userId, this.db.createId(), groupName)
+    // .then((data) => console.log('group has been created')) // TODO let user know this
+    // .catch((err) => console.log(err));
   }
 
   public getGroup(groupId: string): Observable<Group> {

@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { UserService } from 'src/services/user.service';
-import { Observable } from 'rxjs';
+import { Observable, Subscribable, Subscriber, Subscription } from 'rxjs';
 import { UserModel } from 'src/models/user.model';
 import { filter, tap } from 'rxjs/operators';
 import { ToasterService } from 'angular2-toaster';
@@ -16,8 +16,11 @@ import { Group } from 'src/models/group.model';
 export class AppComponent implements OnInit, OnDestroy {
 
   user$: Observable<UserModel>;
+  userSub: Subscription; // TODO remove this
+  uid: string;
 
-  constructor(private userService: UserService) {
+  constructor(private userService: UserService,
+    private groupService: GroupService) {
   }
 
   ngOnInit(): void {
@@ -25,9 +28,15 @@ export class AppComponent implements OnInit, OnDestroy {
       // tap(u => this.groupService.createGroup(u.uid, 'this is a name')),
       filter((u: UserModel) => !!u)
     );
+    //TODO remove after bug fixing
+    this.userSub = this.user$.subscribe((user) => this.uid = user.uid);
   }
 
   ngOnDestroy(): void {
+  }
+
+  createGroup(){
+      this.groupService.createGroup(this.uid, 'a new groupName')
   }
 }
 
