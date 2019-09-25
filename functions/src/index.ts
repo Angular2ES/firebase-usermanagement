@@ -1,8 +1,11 @@
 import * as functions from 'firebase-functions';
 import * as admin from 'firebase-admin';
+import { FieldValue } from '@google-cloud/firestore';
 admin.initializeApp();
 
-export interface UserGroup {
+// TODO clean this script up and seperate functionalities
+
+export interface Group {
   groupId: string,
   groupName: string,
   users: string[];
@@ -32,40 +35,55 @@ export const onCreateUser = functions.auth.user().onCreate((user) =>{
 })
 
 export const onUpdateGroup = functions.firestore.document('groups/{groupId}').onWrite((change, context) => {
-  const oldDoc = change.before.data() as UserGroup;
-  const newDoc = change.after.data() as UserGroup;
+  const oldDoc = change.before.data() as Group;
+  const newDoc = change.after.data() as Group;
+
+  // both old and new data exist
   if (oldDoc !== undefined && newDoc !== undefined) {
-    // console.log(newDoc);
-    console.log([oldDoc.users.length, newDoc.users.length]);
+    // if a user was added he will also get a new group
     if (newDoc.users.length > oldDoc.users.length) {
-      console.log('kak');
       return addGroupToUser(newDoc.users[newDoc.users.length - 1], newDoc.groupId);
     }
-  } 
-  if(oldDoc === undefined && newDoc !== undefined) {
-    console.log('lul!');
+    // if a user was removed we remove the group from the user 
+    else if (newDoc.users.length < oldDoc.users.length) {
+      removeGroupFromUsers(getRemovedUsers(oldDoc.users, newDoc.users), newDoc.groupId)
+    }
+  }
+  // the group was just created
+  else if(oldDoc === undefined && newDoc !== undefined) {
     return addGroupToUser(newDoc.users[newDoc.users.length - 1], newDoc.groupId);
+  }
+  // the newData was complete deleted
+  else if(oldDoc !== undefined && newDoc == undefined){
+    removeGroupFromUsers(oldDoc.users, oldDoc.groupId);
   }
   return Promise.resolve();
 })
 
-function addGroupToUser(userId: string, groupId: string){
+function addGroupToUser(userId: string, groupId: string): Promise<any>{
   return admin.firestore().doc(`users/${userId}`).set({
     groups: [groupId]
   }, { merge: true}).catch((e) => console.log(e))
 }
 
+function removeGroupFromUsers(users: string[], ToRemoveGroupId: string) {
+  users.forEach(userId => {
+    admin.firestore().doc(`users/${userId}`).update({
+      groups: FieldValue.arrayRemove(ToRemoveGroupId)
+    }).catch(e => console.log(e))
+  })
+}
 
-// export const onUpdateGroup = functions.firestore.document('groups').onWrite((change, context) => {
-//   const oldDocument = change.before.data();
-//   // const userId = context.auth ? context.auth.uid : null
-//   const document = change.after.exists ? change.after.data() : null;
-//   if (document != null && oldDocument != null) {
-//     document.users.forEach((userId: string) => {
-//       admin.firestore().doc(`users/${userId}/groups/${document.groepId}`).set({
-//         groupId: document.groepId,
-//       }).then(() => console.log('doc succesfully created'))
-//       .catch((err) => console.log(err))
-//     })
-//   }
-// })
+function getRemovedUsers(oldUsers: string[], newUsers: string[]): string[] {
+  const users = oldUsers.filter(user => filterUser(user, newUsers));
+  console.log(users);
+  return users;
+}
+
+function filterUser(oldUser: string, newUsers: string[]): boolean{
+  let hasUser: boolean = false;
+  newUsers.forEach(newUser => {
+    if (newUser === oldUser) hasUser = true;
+  }) 
+  return !hasUser;
+}
