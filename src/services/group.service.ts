@@ -68,4 +68,10 @@ export class GroupService {
     .catch(err => console.log(err));
   }
 
+  public deleteGroup(groupId: string): Promise<void> {
+    return this.groupCol.doc(groupId).delete()
+    .then(succes => console.log('delete succesfull'))
+    .catch(err => console.log(err));
+  }
+
 }

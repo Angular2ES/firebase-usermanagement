@@ -62,7 +62,7 @@ export const onUpdateGroup = functions.firestore.document('groups/{groupId}').on
 
 function addGroupToUser(userId: string, groupId: string): Promise<any>{
   return admin.firestore().doc(`users/${userId}`).set({
-    groups: [groupId]
+    groups: FieldValue.arrayUnion(groupId)
   }, { merge: true}).catch((e) => console.log(e))
 }
 

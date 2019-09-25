@@ -32,7 +32,7 @@ export class UserService {
     .catch((e) => console.log(e));
   }
   
-  //TODO get email and group data from an other db table
+  //TODO get email data from an other db table
   private mapFromDatabase(userData): UserModel {
     return {
       uid: userData.uid,

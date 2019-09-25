@@ -7,6 +7,7 @@ import { Router, ActivatedRoute, CanActivate } from '@angular/router';
 import { UserModel } from 'src/models/user.model';
 import { UserService } from 'src/services/user.service';
 import { FormGroup, FormBuilder, FormControl } from '@angular/forms';
+import { group } from '@angular/animations';
 
 @Component({
   selector: 'app-group-settings',
@@ -52,6 +53,10 @@ export class GroupSettingsComponent implements OnInit, CanActivate {
       groupName: name
     }
     this.groupService.updateGroupData(this.curGroupForm.value.groupId, groupData)
+  }
+
+  public deleteGroup(): void {
+    this.groupService.deleteGroup(this.curGroupForm.value.groupId);
   }
 
   ngOnInit() {
