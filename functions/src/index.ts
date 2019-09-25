@@ -2,6 +2,14 @@ import * as functions from 'firebase-functions';
 import * as admin from 'firebase-admin';
 admin.initializeApp();
 
+export interface UserGroup {
+  groupId: string,
+  groupName: string,
+  users: string[];
+}
+
+
+
 // Start writing Firebase Functions
 // https://firebase.google.com/docs/functions/typescript
 
@@ -24,21 +32,27 @@ export const onCreateUser = functions.auth.user().onCreate((user) =>{
 })
 
 export const onUpdateGroup = functions.firestore.document('groups/{groupId}').onWrite((change, context) => {
-  var oldDoc = change.before.exists ? change.before.data() : null;
-  var newDoc = change.after.exists ? change.after.data() : null;
-  if (oldDoc != null && newDoc != null){
-    console.log(newDoc);
-    if (newDoc.users.lenght > oldDoc.users.lenght) {
-      addGroupToUser(newDoc.users[newDoc.users.lenght], newDoc.groupId);
+  const oldDoc = change.before.data() as UserGroup;
+  const newDoc = change.after.data() as UserGroup;
+  if (oldDoc !== undefined && newDoc !== undefined) {
+    // console.log(newDoc);
+    console.log([oldDoc.users.length, newDoc.users.length]);
+    if (newDoc.users.length > oldDoc.users.length) {
+      console.log('kak');
+      return addGroupToUser(newDoc.users[newDoc.users.length - 1], newDoc.groupId);
     }
-  } if(oldDoc == null && newDoc != null) addGroupToUser(newDoc.users[newDoc.users.lenght], newDoc.groupId);
+  } 
+  if(oldDoc === undefined && newDoc !== undefined) {
+    console.log('lul!');
+    return addGroupToUser(newDoc.users[newDoc.users.length - 1], newDoc.groupId);
+  }
+  return Promise.resolve();
 })
 
 function addGroupToUser(userId: string, groupId: string){
-  const userData = {
-    groups: admin.firestore.FieldValue.arrayUnion(groupId)
-  }
-  admin.firestore().doc(`users/${userId}`).update(userData).catch((e) => console.log(e))
+  return admin.firestore().doc(`users/${userId}`).set({
+    groups: [groupId]
+  }, { merge: true}).catch((e) => console.log(e))
 }
 
 
