@@ -38,6 +38,8 @@ import { StorageModule } from '@ngx-pwa/local-storage';
 import { ToasterService, ToasterModule } from 'angular2-toaster';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ValidationMessagesComponent } from './validation-messages/validation-messages.component';
+import { GroupListComponent } from './group-list/group-list.component';
+import { GroupContainer } from './group-list/group-container/group-container';
 
 const userModuleConfig: UserModuleConfig = {
   loginRedirectUrl: environment.loginRedirectUrl,
@@ -59,6 +61,8 @@ const userModuleConfig: UserModuleConfig = {
     LoginGoogleComponent,
     GroupSettingsComponent,
     ValidationMessagesComponent,
+    GroupContainer,
+    GroupListComponent,
     
   ],
   imports: [

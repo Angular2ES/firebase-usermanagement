@@ -33,10 +33,11 @@ export class AppComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
+    this.userSub.unsubscribe();
   }
 
   createGroup(){
-      this.groupService.createGroup(this.uid, 'a new groupName')
+    this.groupService.createGroup(this.uid, 'a new groupName')
   }
 }
 

@@ -1,0 +1,13 @@
+<p>group-list works!</p>
+
+<body>
+  <ul>
+    <li class="text" >
+      <pre>[ {{ groupList$ | async | json }} ]</pre>
+    </li>
+  </ul>
+  <div id="slideContainer">
+  </div>
+  
+  <button class="waves-effect waves-light btn" (click)="createGroup()">create a new group</button>
+</body>

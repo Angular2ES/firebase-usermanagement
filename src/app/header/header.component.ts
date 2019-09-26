@@ -31,6 +31,12 @@ export class HeaderComponent implements OnInit{
     ).unsubscribe();
   }
 
+  public groupList(): void{
+    this.userService.getUser().subscribe(
+      (user => this.router.navigate(['/groupList', user.uid])) // TODO we send the user to settings of the first group. catch error if user doesn't have a group
+    ).unsubscribe();
+  }
+
   public groupSettings(): void{
     this.userService.getUser().subscribe(
       (user => this.router.navigate(['/groupSettings', user.groups[0]])) // TODO we send the user to settings of the first group. catch error if user doesn't have a group
