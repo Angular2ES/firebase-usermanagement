@@ -42,12 +42,6 @@ export class UserService {
       groups: userData.groups
     }
   }
-
-  // private getGroups(userId: string): string[]{
-  //   return this.userCollection.doc(`${userId}/groups`).get().pipe(
-  //     map(snapshot => snapshot ? snapshot.data : null)
-  //   )
-  // }
   
   public async updateUserPrivateProfile(uid: string, userData): Promise<void> {
     return this.db.collection('user_private_profile').doc(uid).update(userData);
@@ -60,16 +54,5 @@ export class UserService {
   public getUser(): Observable<UserModel | null> {
     return this.user$;
   }
-
-  // public addGroupToUser(userId: string, groupId: string): Promise<void> {
-  //   return this.db.collection('users').doc(`${userId}/groups/${groupId}`).set({groupId: groupId})
-  // }
-
-  public getUserFromDatabase(): Observable<any> {
-    return this.authService.getUid().pipe(
-      switchMap(uid => uid ? this.userCollection.doc(uid).valueChanges() : of(null)),
-      shareReplay(1)
-      );
-    }
-  }
+}
   

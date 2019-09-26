@@ -77,11 +77,8 @@ export class UserSettingsComponent implements OnDestroy  {
     this.subscriptions.push(this.authService.getAuthState().subscribe((user) => this.authService.sendChangePasswordLink(user.email)));
   }
 
-  private async updateUserAge(data: string): Promise<void>{
-    this.form.addControl( 'age' , new FormControl());
-    this.form.patchValue({ age: Number.parseInt(data) })
-
-    return this.userService.updateUser(this.form.value.uid, this.form.value);
+  public deleteAccount(): void {
+    this.authService.deleteAccount();
   }
 
   ngOnDestroy(): void {

@@ -13,9 +13,11 @@ export class AuthenticationService implements CanActivate {
   constructor(private angularFireAuth: AngularFireAuth, private router: Router, private config: UserModuleConfig, toasterService: ToasterService) {
   }
   
+  // TODO do we need this here?
   canActivate(): boolean {
     return true;
   }
+
   getAuthState(): Observable<User> {
     return this.angularFireAuth.authState;
   }
@@ -26,10 +28,6 @@ export class AuthenticationService implements CanActivate {
 
   getUid(): Observable<string> {
     return this.getAuthState().pipe(map((user) => user ? user.uid : null));
-  }
-
-  getEmail(): Observable<string> {
-    return this.getAuthState().pipe(map((user) => user ? user.email : null));
   }
 
   async loginWithEmailAndPassword(email: string, password: string): Promise<auth.UserCredential | void>{
@@ -83,6 +81,12 @@ export class AuthenticationService implements CanActivate {
   async sendVerifyEmailLink(user: User): Promise<void> {
     return user.sendEmailVerification()
     .then(() => console.log(`email send to ${user.email}`)) //TODO show alert of send email
+  }
+
+  async deleteAccount(): Promise<void> {
+    return await this.angularFireAuth.auth.currentUser.delete()
+    .then((result) => this.router.navigate([this.config.redirectAfterLogout]).then(() => result))
+    .catch(e => console.log(e))
   }
 
   async logout(): Promise<void> {
