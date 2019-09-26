@@ -29,11 +29,7 @@ export class GroupService {
       users: [userId]
     }
     return this.groupCol.doc(newId).set(groupData).then(() => {
-      //this.userService.addGroupToUser(userId, newId).catch((e) => console.log(e))
     }).catch((e) => console.log(e));
-    // return this.apiService.createGroup(userId, this.db.createId(), groupName)
-    // .then((data) => console.log('group has been created')) // TODO let user know this
-    // .catch((err) => console.log(err));
   }
 
   public getGroup(groupId: string): Observable<Group> {
