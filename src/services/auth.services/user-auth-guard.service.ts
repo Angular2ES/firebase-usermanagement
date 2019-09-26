@@ -4,18 +4,24 @@ import { CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot, Router } from
 import { Observable } from 'rxjs';
 import { map, tap } from 'rxjs/operators';
 import { UserModuleConfig } from 'src/users-module-config';
+import { ToasterService } from 'angular2-toaster';
 
 @Injectable()
 export class UserAuthGuardService implements CanActivate {
 
-  constructor(private authService: AuthenticationService, private router: Router, private config: UserModuleConfig) {
+  constructor(private authService: AuthenticationService, 
+    private router: Router, 
+    private config: UserModuleConfig,
+    private toaster: ToasterService) {
   }
 
-  // TODO give feedback to the user
   canActivate(next: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> {
     return this.authService.getUid().pipe(
       map(uid => !!uid),
-      tap(isUser => {if(!isUser) this.router.navigate([this.config.redirectAfterLogout])})
+      tap(isUser => {if(!isUser) {
+        this.router.navigate([this.config.redirectAfterLogout])
+        this.toaster.pop('warning', 'Sorry', 'Something went wrong please try again')
+      }})
       );
   }
 }
