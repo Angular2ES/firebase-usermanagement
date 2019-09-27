@@ -19,7 +19,7 @@ const appRoutes: Routes = [
   { path: 'home', component: AppComponent, canActivate: [UserAuthGuardService]},
   { path: 'settings/:uid', component: UserSettingsTestComponent, canActivate: [UserAuthGuardService, AdminAuthGuardService] },
   { path: 'groupSettings/:id', component: GroupSettingsComponent, canActivate: [UserAuthGuardService]}, // TODO add authGaurd for only user within the group or only admins of this group
-  { path: 'groupList/:id', component: GroupListComponent, canActivate: [UserAuthGuardService]},
+  { path: 'groupList', component: GroupListComponent, canActivate: [UserAuthGuardService]},
 ];
 
 @NgModule({

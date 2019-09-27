@@ -9,6 +9,9 @@ import { CreateAccountComponent } from './create-account/create-account.componen
 import { LoginGoogleComponent } from './login-google/login-google.component';
 import { UserSettingsTestComponent } from './user.settings.test.component';
 import { GroupSettingsComponent } from './group-settings/group-settings.component';
+import { ValidationMessagesComponent } from './validation-messages/validation-messages.component';
+import { GroupListComponent } from './group-list/group-list.component';
+import { GroupListContainerComponent } from './group-list/group-list-container/group-list-container.component';
 
 import { UserModuleConfig } from '../users-module-config';
 
@@ -37,9 +40,7 @@ import { LoginEmailComponent } from './login-email/login-email.component';
 import { StorageModule } from '@ngx-pwa/local-storage';
 import { ToasterService, ToasterModule } from 'angular2-toaster';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { ValidationMessagesComponent } from './validation-messages/validation-messages.component';
-import { GroupListComponent } from './group-list/group-list.component';
-import { GroupContainer } from './group-list/group-container/group-container';
+
 
 const userModuleConfig: UserModuleConfig = {
   loginRedirectUrl: environment.loginRedirectUrl,
@@ -61,7 +62,7 @@ const userModuleConfig: UserModuleConfig = {
     LoginGoogleComponent,
     GroupSettingsComponent,
     ValidationMessagesComponent,
-    GroupContainer,
+    GroupListContainerComponent,
     GroupListComponent,
     
   ],
