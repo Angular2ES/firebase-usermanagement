@@ -1,16 +1,12 @@
 <p>group-list works!</p>
 
-<ul>
-  <li class="text" >
-    <pre>[ {{ groupList$ | async | json }} ]</pre>
-  </li>
-</ul>
-
-<div class="col-6" *ngFor="let group of contactFormGroup.value; let i = index;">
-
-    <label>Group Id Label</label>
-    <group-list-container [group]="contactFormGroup.value[i]"></group-list-container>
-
+<div *ngIf="groupList$ | async">
+  <div class="col-6" *ngFor="let group of contactFormGroup.value; let i = index;">
+  
+      <label>Group Id Label</label>
+      <group-list-container [group]="contactFormGroup.value[i]"></group-list-container>
+  
+  </div>
 </div>
 
 <button class="waves-effect waves-light btn" (click)="createGroup()">create a new group</button>
