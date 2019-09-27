@@ -34,13 +34,15 @@ export class UserService {
   
   //TODO get email data from an other db table
   private mapFromDatabase(userData): UserModel {
-    return {
+    const _user: UserModel = {
       uid: userData.uid,
       name: userData.name,
       age: userData.age,
       email: null,
       groups: userData.groups
     }
+    this.authService.getAuthState().subscribe((user => _user.email = user.email)).unsubscribe();
+    return _user;
   }
   
   public async updateUserPrivateProfile(uid: string, userData): Promise<void> {

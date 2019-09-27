@@ -45,15 +45,8 @@ export class LoginGoogleComponent{
   }
 
   private resultHandler(result: auth.UserCredential): auth.UserCredential{
-    if (result.credential) {
-      // This gives you a Google Access Token.
-      var token = result.credential.providerId;
-    }
-    
     //Check if we have a user redirect afterj
-    //TODO if we don't have a user login create account or login was unsuccelfull
-    var user = result.user;
-    if (user) {
+    if (result.user) {
       this.router.navigate([this.config.redirectAfterLogin]);
     }
     return result;

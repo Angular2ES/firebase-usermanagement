@@ -17,7 +17,7 @@ export class GroupService {
 
   public addUsersToGroup(userId: string[], groupId: string): Promise<void> {
     return this.groupCol.doc(groupId).update({
-      users: firebase.firestore.FieldValue.arrayUnion(userId) // TODO on update add group to user we do this in the functions index.ts
+      users: firebase.firestore.FieldValue.arrayUnion(userId)
     });
   }
 

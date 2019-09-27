@@ -35,13 +35,15 @@ export class GroupSettingsComponent implements OnInit, CanActivate {
   }
   // TODO give feedback to the user
   canActivate(): Observable<boolean> {
+    return new Observable<true>();
+    // TODO who has permission to edit the settings of the group
     return this.route.params.pipe(
       switchMap(params => this.groupService.getGroupPermissions(params['id'])),
-      switchMap(perm => this.IsCurUserAdminCheck(perm)),
+      switchMap(perm => this.IsCurUserAdmin(perm)),
     )
   }
 
-  private IsCurUserAdminCheck(permissions: any): Observable<boolean> {
+  private IsCurUserAdmin(permissions: any): Observable<boolean> {
     return this.userService.getUser().pipe(
       tap(u => console.log(permissions.admin[0])),
       map(user => user == permissions.admin[0]) // TODO we only check the first admin
