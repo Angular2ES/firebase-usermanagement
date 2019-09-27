@@ -17,49 +17,63 @@ export function onUpdateGroup(change: functions.Change<FirebaseFirestore.Documen
   if (oldDoc !== undefined && newDoc !== undefined) {
     // if a user was added he will also get a new group
     if (newDoc.users.length > oldDoc.users.length) {
-      return addGroupToUser(newDoc.users[newDoc.users.length - 1], newDoc.groupId);
+      return addGroupToUsers(getUserDifference(newDoc.users, oldDoc.users), newDoc.groupId);
     }
     // if a user was removed we remove the group from the user 
     else if (newDoc.users.length < oldDoc.users.length) {
-      removeGroupFromUsers(getRemovedUsers(oldDoc.users, newDoc.users), newDoc.groupId)
+      return removeGroupFromUsers(getUserDifference(oldDoc.users, newDoc.users), newDoc.groupId)
     }
   }
   // the group was just created
   else if(oldDoc === undefined && newDoc !== undefined) {
-    return addGroupToUser(newDoc.users[newDoc.users.length - 1], newDoc.groupId);
+    return addGroupToUsers([newDoc.users[newDoc.users.length - 1]], newDoc.groupId);
   }
   // the newData was complete deleted
   else if(oldDoc !== undefined && newDoc == undefined){
-    removeGroupFromUsers(oldDoc.users, oldDoc.groupId);
+    return removeGroupFromUsers(oldDoc.users, oldDoc.groupId);
   }
   return Promise.resolve();
 }
 
-function addGroupToUser(userId: string, groupId: string): Promise<any>{
-  return admin.firestore().doc(`users/${userId}`).set({
-    groups: FieldValue.arrayUnion(groupId)
-  }, { merge: true}).catch((e) => console.log(e))
-}
+function addGroupToUsers(users: string[], groupId: string): Promise<any>{
+  const batch = admin.firestore().batch();
 
-// large ammount off users to delete will not work
-function removeGroupFromUsers(users: string[], ToRemoveGroupId: string) {
   users.forEach(userId => {
-    admin.firestore().doc(`users/${userId}`).update({
-      groups: FieldValue.arrayRemove(ToRemoveGroupId)
-    }).catch(e => console.log(e))
+    const userRef = admin.firestore().doc(`users/${userId}`);
+    batch.set(userRef, {
+      groups: FieldValue.arrayUnion(groupId)
+    }, { merge: true})
   })
+
+  return batch.commit()
+  .then(() => console.log('succes'))
+  .catch((e) => console.log(e))
 }
 
-function getRemovedUsers(oldUsers: string[], newUsers: string[]): string[] {
-  const users = oldUsers.filter(user => filterUser(user, newUsers));
+function removeGroupFromUsers(users: string[], ToRemoveGroupId: string): Promise<any> {
+  const batch = admin.firestore().batch();
+
+  users.forEach(userId => {
+    const userRef = admin.firestore().doc(`users/${userId}`);
+    batch.update(userRef, {
+      groups: FieldValue.arrayRemove(ToRemoveGroupId)
+    });
+  })
+  return batch.commit()
+  .then(() => console.log('succes'))
+  .catch((e) => console.log(e))
+}
+
+function getUserDifference(largeUserList: string[], smalUserList: string[]): string[] {
+  const users = largeUserList.filter(user => filterUser(user, smalUserList));
   console.log(users);
   return users;
 }
 
-function filterUser(oldUser: string, newUsers: string[]): boolean{
+function filterUser(curUser: string, smalUserList: string[]): boolean{
   let hasUser: boolean = false;
-  newUsers.forEach(newUser => {
-    if (newUser === oldUser) hasUser = true;
+  smalUserList.forEach(newUser => {
+    if (newUser === curUser) hasUser = true;
   }) 
   return !hasUser;
 }
