@@ -15,7 +15,7 @@ export class UserService {
   
   constructor(private db: AngularFirestore,
     private authService: AuthenticationService) {
-
+      
       // TODO remove console logs
     this.user$ = this.authService.getUid().pipe(
       tap(uid => console.log({ uid })),
@@ -23,9 +23,9 @@ export class UserService {
       map(user => user ? this.mapFromDatabase(user) : null),
       tap(user => console.log({ user })),
       shareReplay(1)
-    );
+      );
   }
-
+  
   public createUser(email: string): Promise<void> {
     return this.authService.createAccount(email)
     .then((userCredential) => this.authService.logout())
@@ -33,7 +33,7 @@ export class UserService {
   }
   
   //TODO get email data from an other db table
-  private mapFromDatabase(userData): UserModel {
+  private mapFromDatabase(userData: any): UserModel {
     const _user: UserModel = {
       uid: userData.uid,
       name: userData.name,
@@ -41,20 +41,35 @@ export class UserService {
       email: null,
       groups: userData.groups
     }
-    this.authService.getAuthState().subscribe((user => _user.email = user.email)).unsubscribe();
+    // this.authService.getAuthState().subscribe((user => _user.email = user.email)).unsubscribe();
     return _user;
   }
   
   public async updateUserPrivateProfile(uid: string, userData): Promise<void> {
     return this.db.collection('user_private_profile').doc(uid).update(userData);
   }
-
+  
   public async updateUser(uid: string, userData): Promise<void> {
     return this.userCollection.doc(uid).update(userData);
   }
 
   public getUser(): Observable<UserModel | null> {
     return this.user$;
+  }
+
+  public getAllUserList(): Observable<firebase.firestore.QuerySnapshot> {
+    return this.userCollection.get();
+    // .pipe(
+    //   map((querySnapshot) => {
+    //     const users = [];
+    //     querySnapshot.forEach((doc) => {
+    //         // doc.data() is never undefined for query doc snapshots
+    //         console.log(doc.id, " => ", doc.data());
+    //         users.push(doc.id);
+    //     });
+    //     return users;
+    //   })
+    // )
   }
 }
   

@@ -15,13 +15,8 @@ export class GroupService {
   constructor(private db: AngularFirestore,
     private userService: UserService) {}
 
-  public addUsersToGroup(userId: string[], groupId: string): Promise<void> {
-    return this.groupCol.doc(groupId).set({
-      users: firebase.firestore.FieldValue.arrayUnion.apply(null, userId)
-    }, { merge: true});
-  }
-
-  public createGroup(userId: string, groupName: string): Promise<any> {
+    
+    public createGroup(userId: string, groupName: string): Promise<any> {
     const newId = this.db.createId();
     const groupData = {
       groupId: newId,
@@ -31,7 +26,7 @@ export class GroupService {
     return this.groupCol.doc(newId).set(groupData).then(() => {
     }).catch((e) => console.log(e));
   }
-
+  
   public getGroup(groupId: string): Observable<Group> {
     return this.groupCol.doc(groupId).valueChanges().pipe(
       map(data => data ? this.mapFromDatabase(data) : null)
@@ -49,7 +44,7 @@ export class GroupService {
       permisions: data.permisions
     }
   }
-
+  
   private mapFromDatabase(data): Group {
     return {
       groupId: data.groupId,
@@ -62,6 +57,18 @@ export class GroupService {
     return this.groupCol.doc(groupId).update(data)
     .then(succes => console.log('update succesfull'))
     .catch(err => console.log(err));
+  }
+
+  public addUsersToGroup(userId: string[], groupId: string): Promise<void> {
+    return this.groupCol.doc(groupId).set({
+      users: firebase.firestore.FieldValue.arrayUnion.apply(null, userId)
+    }, { merge: true});
+  }
+  
+  public removeUsersFromGroup(userId: string[], groupId: string): Promise<void> {
+    return this.groupCol.doc(groupId).set({
+      users: firebase.firestore.FieldValue.arrayRemove.apply(null, userId)
+    }, { merge: true});
   }
 
   public deleteGroup(groupId: string): Promise<void> {

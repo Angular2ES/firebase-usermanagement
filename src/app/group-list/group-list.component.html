@@ -1,11 +1,11 @@
 <p>group-list works!</p>
 
 <div *ngIf="groupList$ | async">
-  <div class="col-6" *ngFor="let group of contactFormGroup.value; let i = index;">
+  <div class="col-6" *ngFor="let group of formGroup.value; let i = index;">
   
       <label>Group Id Label</label>
-      <group-list-container [group]="contactFormGroup.value[i]"></group-list-container>
-  
+      <group-list-container [group]="formGroup.value[i]"></group-list-container>
+      
   </div>
 </div>
 

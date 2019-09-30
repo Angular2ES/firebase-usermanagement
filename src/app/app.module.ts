@@ -40,6 +40,7 @@ import { LoginEmailComponent } from './login-email/login-email.component';
 import { StorageModule } from '@ngx-pwa/local-storage';
 import { ToasterService, ToasterModule } from 'angular2-toaster';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { UserListContainerComponent } from './user-list/user-list-container/user-list-container.component';
 
 
 const userModuleConfig: UserModuleConfig = {
@@ -64,6 +65,7 @@ const userModuleConfig: UserModuleConfig = {
     ValidationMessagesComponent,
     GroupListContainerComponent,
     GroupListComponent,
+    UserListContainerComponent,
     
   ],
   imports: [

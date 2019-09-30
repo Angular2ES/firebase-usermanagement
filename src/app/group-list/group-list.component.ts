@@ -25,6 +25,7 @@ export class GroupListComponent {
       this.formData = this.fb.group({
         groups: this.fb.array([])
       })
+      
       this.groupList$ = userService.getUser().pipe(
         tap((user: UserModel) => {
 
@@ -39,7 +40,7 @@ export class GroupListComponent {
       )
   }
 
-  get contactFormGroup() {
+  get formGroup(): FormArray {
     return this.formData.get('groups') as FormArray;
   }
 
