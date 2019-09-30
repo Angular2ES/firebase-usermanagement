@@ -1,5 +1,11 @@
-<div class="col-md-6">
-  <pre>{{group.groupId}}</pre>
-  <!-- <pre>{{group.groupName}}</pre> -->
-  <button class="waves-effect waves-light btn" (click)="groupSettings(group.groupId)">Settings of: {{group.groupName}}</button>
-</div>
+<ul class="collection">
+  <li class="collection-item avatar">
+      <!-- <img src="images/yuna.jpg" alt="" class="circle"> -->
+      <span class="title">groupName not defined</span>
+      <p>{{group.groupId}}</p>
+
+      <a class="secondary-content"> <button class="material-icons" class="waves-effect waves-light btn" (click)="groupSettings(group.groupId)">Settings</button></a>
+
+      <!-- <a href="#!" class="secondary-content"><i class="material-icons">grade</i></a> -->
+    </li>
+</ul>

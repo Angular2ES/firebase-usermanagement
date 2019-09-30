@@ -1,13 +1,11 @@
-<p>group-list works!</p>
-
-<div *ngIf="groupList$ | async">
-  <div class="col-6" *ngFor="let group of formGroup.value; let i = index;">
-  
-      <label>Group Id Label</label>
-      <group-list-container [group]="formGroup.value[i]"></group-list-container>
-      
+<div class="group-list">
+  <div *ngIf="groupList$ | async">
+    <div *ngFor="let group of formGroup.value; let i = index;">
+    
+        <group-list-container [group]="formGroup.value[i]"></group-list-container>
+        
+    </div>
   </div>
-</div>
-
-<button class="waves-effect waves-light btn" (click)="createGroup()">create a new group</button>
-
+  
+  <button class="waves-effect waves-light btn" (click)="createGroup()">create a new group</button>
+</div>  
