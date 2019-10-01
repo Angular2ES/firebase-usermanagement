@@ -26,19 +26,19 @@ export class HeaderComponent implements OnInit{
   }
 
   public userSettings(): void {
-    this.userService.getUser().subscribe(
+    this.userService.getCurrentUser().subscribe(
       user => this.router.navigate(['/settings', user.uid])
     ).unsubscribe();
   }
 
   public groupList(): void{
-    this.userService.getUser().subscribe(
+    this.userService.getCurrentUser().subscribe(
       (user => this.router.navigate(['/groupList'])) // TODO we send the user to settings of the first group. catch error if user doesn't have a group
     ).unsubscribe();
   }
 
   public groupSettings(): void{
-    this.userService.getUser().subscribe(
+    this.userService.getCurrentUser().subscribe(
       (user => this.router.navigate(['/groupSettings', user.groups[0]])) // TODO we send the user to settings of the first group. catch error if user doesn't have a group
     ).unsubscribe();
   }

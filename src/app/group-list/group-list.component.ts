@@ -1,7 +1,7 @@
-import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
+import { Component } from '@angular/core';
 import { GroupService } from 'src/services/group.service';
 import { UserService } from 'src/services/user.service';
-import { Observable, Subscription } from 'rxjs';
+import { Observable } from 'rxjs';
 import { map, tap } from 'rxjs/operators';
 import { UserModel } from 'src/models/user.model';
 import { FormGroup, FormBuilder, FormArray } from '@angular/forms';
@@ -23,17 +23,19 @@ export class GroupListComponent {
     private fb: FormBuilder) {
       
       this.formData = this.fb.group({
-        groups: this.fb.array([])
+        'groupId': this.fb.array([])
       })
       
-      this.groupList$ = userService.getUser().pipe(
+      this.groupList$ = this.userService.getCurrentUser().pipe(
         tap((user: UserModel) => {
 
-          const control = <FormArray>this.formData.controls['groups'];
+          const control = <FormArray>this.formData.controls['groupId'];
           control.clear();
-          user.groups.forEach(groupId => {
-            control.push(this.createFormOfGroup(groupId))
-          })
+          if(user.groups){
+            user.groups.forEach(groupId => {
+              control.push(this.createFormOfGroup(groupId))
+            })
+          }
         }),
         tap((user: UserModel) => this.uid = user.uid),
         map(user => user.groups)
@@ -41,17 +43,13 @@ export class GroupListComponent {
   }
 
   get formGroup(): FormArray {
-    return this.formData.get('groups') as FormArray;
+    return this.formData.get('groupId') as FormArray;
   }
 
   private createFormOfGroup(groupId: string): FormGroup{
-    // TODO get the rest of the data with groupService
-    const newGroup = this.fb.group({
+    return this.fb.group({
       groupId: groupId, 
-      groupName: null, 
-      users: null
     })
-    return newGroup
   }
 
   public createGroup(){

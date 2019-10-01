@@ -19,7 +19,7 @@ export class GroupSettingsComponent implements CanActivate {
   private curGroupForm: FormGroup;
 
   curUserForm: FormGroup;
-  userList$: Observable<any>;
+  userList$: Observable<string[]>;
 
   constructor(private groupService: GroupService, 
     private route: ActivatedRoute,
@@ -35,17 +35,19 @@ export class GroupSettingsComponent implements CanActivate {
     )
 
     this.curUserForm = this.formBuilder.group ({
-      users: this.formBuilder.array([])
+      'userId': this.formBuilder.array([])
     })
     this.userList$ = this.userService.getAllUserList().pipe(
       map((user: firestore.QuerySnapshot) => {
-        const userList = [];
-        const control = <FormArray>this.curUserForm.controls['users'];
+        const userList: string[] = [];
+        const control = <FormArray>this.curUserForm.controls['userId'];
         control.clear();
-        user.forEach(data => {
-          control.push(this.createFormOfUser(data.id))
-          userList.push(data.id);
-        })
+        if (user){
+          user.forEach(data => {
+            control.push(this.createFormOfUser(data.id))
+            userList.push(data.id);
+          })
+        }
         return userList;
       }),
     )
@@ -62,19 +64,19 @@ export class GroupSettingsComponent implements CanActivate {
   }
 
   private IsCurUserAdmin(permissions: any): Observable<boolean> {
-    return this.userService.getUser().pipe(
+    return this.userService.getCurrentUser().pipe(
       tap(u => console.log(permissions.admin[0])),
       map(user => user == permissions.admin[0]) // TODO we only check the first admin
     )
   }
   
   get userForm(): FormArray{
-    return this.curUserForm.get('users') as FormArray
+    return this.curUserForm.get('userId') as FormArray
   }
 
   private createFormOfUser(userId: string): FormGroup {
     return this.formBuilder.group({
-      uid: userId
+      userId: userId
     })
   }
   

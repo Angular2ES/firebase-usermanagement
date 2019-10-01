@@ -16,12 +16,9 @@ export class UserService {
   constructor(private db: AngularFirestore,
     private authService: AuthenticationService) {
       
-      // TODO remove console logs
     this.user$ = this.authService.getUid().pipe(
-      tap(uid => console.log({ uid })),
       switchMap(uid => uid ? this.userCollection.doc(uid).valueChanges() : of(null)),
       map(user => user ? this.mapFromDatabase(user) : null),
-      tap(user => console.log({ user })),
       shareReplay(1)
       );
   }
@@ -53,9 +50,17 @@ export class UserService {
     return this.userCollection.doc(uid).update(userData);
   }
 
-  public getUser(): Observable<UserModel | null> {
+  public getCurrentUser(): Observable<UserModel | null> {
     return this.user$;
   }
+
+  public getUserWithId(userId): Observable<UserModel | null> {
+    return this.userCollection.doc(userId).valueChanges().pipe(
+      map(user => this.mapFromDatabase(user)),
+      shareReplay(1)
+    )
+  }
+  
 
   public getAllUserList(): Observable<firebase.firestore.QuerySnapshot> {
     return this.userCollection.get();

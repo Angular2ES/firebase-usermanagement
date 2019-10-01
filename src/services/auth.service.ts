@@ -8,14 +8,9 @@ import { map } from 'rxjs/operators';
 import { ToasterService } from 'angular2-toaster';
 
 @Injectable()
-export class AuthenticationService implements CanActivate {
+export class AuthenticationService {
   
   constructor(private angularFireAuth: AngularFireAuth, private router: Router, private config: UserModuleConfig, toasterService: ToasterService) {
-  }
-  
-  // TODO do we need this here?
-  canActivate(): boolean {
-    return true;
   }
 
   getAuthState(): Observable<User> {

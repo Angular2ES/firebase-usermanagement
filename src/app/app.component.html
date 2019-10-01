@@ -1,15 +1,7 @@
 
 <!--The content below is only a placeholder and can be replaced.-->
-<html>
-  
-  <body>
-    <ul>
-        <li class="text" >
-          <pre>[ {{ user$ | async | json }} ]</pre>
-        </li>
-      </ul>
-      <button class="waves-effect waves-light btn" (click)="createGroup()">create a new group</button>
-
-  </body>
-  <!-- <toaster-container [toasterconfig]="toasterConfig"></toaster-container> -->
-</html>
+<ul>
+  <li class="text" >
+    <pre>[ {{ user$ | async | json }} ]</pre>
+  </li>
+</ul>

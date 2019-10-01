@@ -27,7 +27,7 @@ export class UserSettingsComponent implements OnDestroy  {
       this.form = formBuilder.group ({
         'uid' : new FormControl() ,
       });
-      this.currentUser$ = this.userService.getUser().pipe(
+      this.currentUser$ = this.userService.getCurrentUser().pipe(
         tap (user => { this.form.patchValue(user)}),
       );
   }
