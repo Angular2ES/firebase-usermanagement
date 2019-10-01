@@ -6,7 +6,9 @@ import * as firebase from 'firebase';
 import { map } from 'rxjs/operators';
 import { UserService } from './user.service';
 
-@Injectable()
+@Injectable({
+  providedIn: 'root'
+})
 export class GroupService {
 
   private groupCol: AngularFirestoreCollection = this.db.collection('groups');

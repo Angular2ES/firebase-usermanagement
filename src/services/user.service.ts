@@ -3,12 +3,11 @@ import { AuthenticationService } from './auth.service';
 import { UserModel } from '../models/user.model';
 import { Observable, of } from 'rxjs';
 import { AngularFirestoreCollection, AngularFirestore } from '@angular/fire/firestore';
-import { map, switchMap, tap, shareReplay } from 'rxjs/operators';
-import { Router } from '@angular/router';
-import { User } from 'firebase';
-import { ApiService } from './api.service';
+import { map, switchMap, shareReplay } from 'rxjs/operators';
 
-@Injectable()
+@Injectable({
+  providedIn: 'root'
+})
 export class UserService {
   private user$: Observable<UserModel | null>;
   private userCollection: AngularFirestoreCollection = this.db.collection('users');

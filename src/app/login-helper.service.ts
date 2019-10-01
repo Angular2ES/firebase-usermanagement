@@ -2,7 +2,9 @@ import { AuthenticationService } from 'src/services/auth.service';
 import { UserService } from 'src/services/user.service';
 import { Component, Injectable } from '@angular/core';
 
-@Injectable()
+@Injectable({
+  providedIn: 'root'
+})
 export class LoginHelper{
   constructor(private authService: AuthenticationService, private userService: UserService){
   }

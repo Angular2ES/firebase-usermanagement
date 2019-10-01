@@ -1,7 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule, FormBuilder, ReactiveFormsModule } from '@angular/forms';
-import { AppComponent } from './app.component';
+import { AppComponent } from './app-main/app.component';
 import { LoginComponent } from './login-email-password/email-password-login.component';
 import { HeaderComponent } from './header/header.component';
 import { LoginTestComponent } from './login.test.component';
@@ -24,12 +24,8 @@ import { environment } from '../environments/environment';
 
 // services
 import { AuthenticationService } from 'src/services/auth.service';
-import { UserService } from 'src/services/user.service';
-import { LoginHelper } from './login-helper.service'
 import { UserAuthGuardService } from '../services/auth.services/user-auth-guard.service';
 import { AdminAuthGuardService } from 'src/services/auth.services/admin-auth-guard.service';
-import { ApiService } from 'src/services/api.service';
-import { GroupService } from 'src/services/group.service';
 
 // modules
 import { AppRoutingModule } from './app-routing.module';
@@ -85,8 +81,8 @@ const userModuleConfig: UserModuleConfig = {
     //AngularFireStorageModule // imports firebase/storage only needed for storage features
   ],
   providers: [
-    AuthenticationService, UserService, GroupService, LoginHelper, FormBuilder, ToasterService,
-    UserAuthGuardService, AdminAuthGuardService, ApiService,
+    AuthenticationService, FormBuilder, ToasterService,
+    UserAuthGuardService, AdminAuthGuardService,
     { provide: UserModuleConfig, useValue: userModuleConfig },
   ],
   bootstrap: [HeaderComponent]
