@@ -6,24 +6,25 @@ import { Observable } from 'rxjs';
 import { UserModel } from 'src/models/user.model';
 import { UserService } from 'src/services/user.service';
 import { tap } from 'rxjs/operators';
-import { Group } from 'src/models/group.model';
+import { Group, GroupUsersPermissions } from 'src/models/group.model';
 
 @Component({
   selector: 'user-list-container',
   template: 
-  `<ul class="collection" *ngIf="currentUser$ | async">
+  `<ul class="collection" class="user-list" *ngIf="currentUser$ | async">
     <li class="collection-item avatar">
       <span class="title">{{ userId }}</span>
       <p>{{ userName }}</p>
 
-      <select id="select" style="display: block">
-          <option value="{{userRolesKeys[j]}}" *ngFor="let option of userRolesKeys; let j = index">{{userRolesKeys[j]}}</option>
+      <select id="selector-{{userId}}" style="display: block">
+          <option value="{{userRoles[j]}}" *ngFor="let option of userRoles; let j = index">{{userRoles[j]}}</option>
       </select>
       <a> <button class="material-icons" class="waves-effect waves-light btn" (click)="addUserToGroup()">Add this user to the group</button></a>
 
-      <a class="secondary-content"> <button class="material-icons" class="waves-effect waves-light btn" (click)="groupSettings.removUser(userId)">Remove user</button></a>
+      <a class="secondary-content"> <button class="material-icons" class="waves-effect waves-light btn" (click)="groupSettings.removeUser(userId)">Remove user</button></a>
     </li>
-  </ul>`
+  </ul>`,
+  styleUrls: ['./user-list-container.component.css']
 })
 
 export class UserListContainerComponent implements OnInit{
@@ -34,13 +35,7 @@ export class UserListContainerComponent implements OnInit{
   userName: string;
   userId: string;
 
-  private userRoles: Group['users'] = {
-    editors: [],
-    readOnly: [],
-    admins: []
-  }
-
-  userRolesKeys: string[] = Object.keys(this.userRoles);
+  private userRoles: string[] = Object.keys(GroupUsersPermissions);//new Group().users;
 
   constructor(private router: Router,
     private userService: UserService){
@@ -54,8 +49,8 @@ export class UserListContainerComponent implements OnInit{
   }
 
   addUserToGroup(){
-    const sel = document.getElementById('select') as HTMLSelectElement;
-    this.groupSettings.addUser(this.userId, sel.value)
+    const sel = document.getElementById(`selector-${this.userId}`) as HTMLSelectElement;
+    console.log(sel.options[sel.selectedIndex].value, sel.value)
+    this.groupSettings.addUser(this.userId, sel.options[sel.selectedIndex].value)
   }
-
 }

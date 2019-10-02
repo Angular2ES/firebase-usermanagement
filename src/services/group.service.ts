@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/firestore';
 import { Observable } from 'rxjs';
-import { Group } from 'src/models/group.model';
+import { Group, GroupUsersPermissions } from 'src/models/group.model';
 import * as firebase from 'firebase';
 import { map } from 'rxjs/operators';
 
@@ -18,7 +18,7 @@ export class GroupService {
     
   public createGroup(userId: string, groupName: string): Promise<any> {
     const newId = this.db.createId();
-    const groupData: Group= {
+    const groupData: Group = {
       groupId: newId,
       groupName: groupName,
       users: {
@@ -33,18 +33,6 @@ export class GroupService {
     return this.groupCol.doc(groupId).valueChanges().pipe(
       map(data => data ? this.mapFromDatabase(data) : null)
     )
-  }
-
-  public getGroupPermissions(groupId: string): Observable<any> {
-    return this.groupCol.doc(groupId).valueChanges().pipe(
-      map(data => data ? this.mapGroupPermissions(data) : null)
-    )
-  }
-
-  private mapGroupPermissions(data): any{
-    return {
-      permisions: data.permisions
-    }
   }
   
   private mapFromDatabase(data): Group {
@@ -74,12 +62,11 @@ export class GroupService {
   public removeUsersFromGroup(userId: string[], groupId: string): Promise<void> {
     const groupData: Group = {
       groupId: groupId,
-      users: {
-        readOnly: firebase.firestore.FieldValue.arrayRemove.apply(null, userId),
-        editors: firebase.firestore.FieldValue.arrayRemove.apply(null, userId),
-        admins: firebase.firestore.FieldValue.arrayRemove.apply(null, userId)
-      }
+      users: {}
     }
+    Object.keys(GroupUsersPermissions).forEach(roleKey => {
+      groupData.users[roleKey] = firebase.firestore.FieldValue.arrayRemove.apply(null, userId)
+    })
     return this.groupCol.doc(groupId).set(groupData, { merge: true});
   }
 

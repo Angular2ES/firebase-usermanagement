@@ -64,10 +64,10 @@ export class GroupSettingsComponent implements CanActivate {
   canActivate(): Observable<boolean> {
     return new Observable<true>();
     // TODO who has permission to edit the settings of the group
-    return this.route.params.pipe(
-      switchMap(params => this.groupService.getGroupPermissions(params['id'])),
-      switchMap(perm => this.IsCurUserAdmin(perm)),
-    )
+    // return this.route.params.pipe(
+    //   switchMap(params => this.groupService.getGroupPermissions(params['id'])),
+    //   switchMap(perm => this.IsCurUserAdmin(perm)),
+    // }
   }
 
   private IsCurUserAdmin(permissions: any): Observable<boolean> {
