@@ -34,10 +34,9 @@ export class UserService {
       uid: userData.uid,
       name: userData.name,
       age: userData.age,
-      email: null,
       groups: userData.groups
     }
-    // this.authService.getAuthState().subscribe((user => _user.email = user.email)).unsubscribe();
+    //this.authService.getAuthState().pipe((user => _user.email = user.email))
     return _user;
   }
   

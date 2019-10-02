@@ -4,7 +4,6 @@ import { Observable } from 'rxjs';
 import { Group } from 'src/models/group.model';
 import * as firebase from 'firebase';
 import { map } from 'rxjs/operators';
-import { UserService } from './user.service';
 
 @Injectable({
   providedIn: 'root'
@@ -14,16 +13,17 @@ export class GroupService {
   private groupCol: AngularFirestoreCollection = this.db.collection('groups');
 
 
-  constructor(private db: AngularFirestore,
-    private userService: UserService) {}
+  constructor(private db: AngularFirestore) {}
 
     
-    public createGroup(userId: string, groupName: string): Promise<any> {
+  public createGroup(userId: string, groupName: string): Promise<any> {
     const newId = this.db.createId();
-    const groupData = {
+    const groupData: Group= {
       groupId: newId,
       groupName: groupName,
-      users: [userId]
+      users: {
+        admins: [userId]
+      }
     }
     return this.groupCol.doc(newId).set(groupData).then(() => {
     }).catch((e) => console.log(e));
@@ -61,16 +61,26 @@ export class GroupService {
     .catch(err => console.log(err));
   }
 
-  public addUsersToGroup(userId: string[], groupId: string): Promise<void> {
-    return this.groupCol.doc(groupId).set({
-      users: firebase.firestore.FieldValue.arrayUnion.apply(null, userId)
-    }, { merge: true});
+  public addUsersToGroup(userId: string[], role: string, groupId: string): Promise<void> {
+    const groupData: Group = {
+      groupId: groupId,
+      users: {}
+    }
+    groupData.users[role] = firebase.firestore.FieldValue.arrayUnion.apply(null, userId);
+    return this.groupCol.doc(groupId).set(groupData, { merge: true});
   }
   
+  // TODO make it so we can add more roles within this group
   public removeUsersFromGroup(userId: string[], groupId: string): Promise<void> {
-    return this.groupCol.doc(groupId).set({
-      users: firebase.firestore.FieldValue.arrayRemove.apply(null, userId)
-    }, { merge: true});
+    const groupData: Group = {
+      groupId: groupId,
+      users: {
+        readOnly: firebase.firestore.FieldValue.arrayRemove.apply(null, userId),
+        editors: firebase.firestore.FieldValue.arrayRemove.apply(null, userId),
+        admins: firebase.firestore.FieldValue.arrayRemove.apply(null, userId)
+      }
+    }
+    return this.groupCol.doc(groupId).set(groupData, { merge: true});
   }
 
   public deleteGroup(groupId: string): Promise<void> {

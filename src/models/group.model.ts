@@ -1,5 +1,10 @@
 export class Group {
   groupId: string;
-  groupName: string;
-  users?: [];
+  groupName?: string;
+  description?: string;
+  users?: {
+    readOnly?: string[],
+    editors?: string[]
+    admins?: string[],
+  };
 }

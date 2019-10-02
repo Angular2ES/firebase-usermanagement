@@ -1,39 +1,49 @@
-import admin = require("firebase-admin");
+import * as admin from "firebase-admin";
 import * as functions from 'firebase-functions';
 import { FieldValue } from "@google-cloud/firestore";
 
 
 export interface Group {
   groupId: string,
-  groupName: string,
-  users: string[];
+  users: {
+    readOnly?: string[],
+    editors?: string[],
+    admins?: string[]
+  };
 }
 
 export function onUpdateGroup(change: functions.Change<FirebaseFirestore.DocumentSnapshot>, context: functions.EventContext) {
   const oldDoc = change.before.data() as Group;
   const newDoc = change.after.data() as Group;
 
-  // both old and new data exist
-  if (oldDoc !== undefined && newDoc !== undefined) {
-    // if a user was added he will also get a new group
-    if (newDoc.users.length > oldDoc.users.length) {
-      return addGroupToUsers(getUserDifference(newDoc.users, oldDoc.users), newDoc.groupId);
+  switch(checkUserListChanges(oldDoc, newDoc)) {
+    case 'hasNewUsers': {
+      return addGroupToUsers(getRemovedOrNewUsers(newDoc.users, oldDoc.users), newDoc.groupId);
     }
-    // if a user was removed we remove the group from the user 
-    else if (newDoc.users.length < oldDoc.users.length) {
-      return removeGroupFromUsers(getUserDifference(oldDoc.users, newDoc.users), newDoc.groupId)
+    case 'hasDeletedUsers': {
+      return removeGroupFromUsers(getRemovedOrNewUsers(oldDoc.users, newDoc.users), newDoc.groupId);
+    }    
+    case 'groupCreated': {
+      return addGroupToUsers(getRemovedOrNewUsers(newDoc.users, {}), newDoc.groupId);
+    }    
+    case 'groupDeleted': {
+      return removeGroupFromUsers(getRemovedOrNewUsers(oldDoc.users, {}), oldDoc.groupId);
+    }
+    default: {
+      return Promise.resolve();
     }
   }
-  // the group was just created
-  else if(oldDoc === undefined && newDoc !== undefined) {
-    return addGroupToUsers([newDoc.users[newDoc.users.length - 1]], newDoc.groupId);
-  }
-  // the newData was complete deleted
-  else if(oldDoc !== undefined && newDoc == undefined){
-    return removeGroupFromUsers(oldDoc.users, oldDoc.groupId);
-  }
-  return Promise.resolve();
 }
+
+function checkUserListChanges(oldDoc: Group, newDoc: Group): string {
+  if (oldDoc !== undefined && newDoc !== undefined) {
+    if (createArrayOfUsers(newDoc.users).length > createArrayOfUsers(oldDoc.users).length) return 'hasNewUsers'
+    else if (createArrayOfUsers(newDoc.users).length < createArrayOfUsers(oldDoc.users).length) return 'hasDeletedUsers'
+  }
+  else if(oldDoc === undefined && newDoc !== undefined) return 'groupCreated'
+  else if(oldDoc !== undefined && newDoc === undefined) return 'groupDeleted'
+  return 'default'
+  }
 
 function addGroupToUsers(users: string[], groupId: string): Promise<any>{
   const batch = admin.firestore().batch();
@@ -64,8 +74,8 @@ function removeGroupFromUsers(users: string[], ToRemoveGroupId: string): Promise
   .catch((e) => console.log(e))
 }
 
-function getUserDifference(largeUserList: string[], smalUserList: string[]): string[] {
-  const users = largeUserList.filter(user => filterUser(user, smalUserList));
+function getRemovedOrNewUsers(largeUserList: Group["users"], smalUserList: Group["users"]): string[] {
+  const users = createArrayOfUsers(largeUserList).filter(user => filterUser(user, createArrayOfUsers(smalUserList)));
   console.log(users);
   return users;
 }
@@ -76,4 +86,12 @@ function filterUser(curUser: string, smalUserList: string[]): boolean{
     if (newUser === curUser) hasUser = true;
   }) 
   return !hasUser;
+}
+
+function createArrayOfUsers(users: Group["users"]): string[]{
+  const newUserArray: string[] = [];
+  const readOnly = users.readOnly ? users.readOnly : [];
+  const editors = users.editors ? users.editors : [];
+  const admins = users.admins ? users.admins : [];
+  return newUserArray.concat(readOnly, editors, admins);
 }

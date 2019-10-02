@@ -13,10 +13,17 @@ import { firestore } from 'firebase';
   templateUrl: './group-settings.component.html',
   styleUrls: ['./group-settings.component.css']
 })
+
 export class GroupSettingsComponent implements CanActivate {
 
   currentGroup$: Observable<Group>;
   private curGroupForm: FormGroup;
+
+  userOptions = [
+     'readOnly',
+     'editores',
+     'admins'
+  ]
 
   curUserForm: FormGroup;
   userList$: Observable<string[]>;
@@ -91,8 +98,8 @@ export class GroupSettingsComponent implements CanActivate {
     this.groupService.deleteGroup(this.curGroupForm.value.groupId);
   }
 
-  public addUser(userId: string): void {
-    this.groupService.addUsersToGroup([userId], this.curGroupForm.value.groupId);
+  public addUser(userId: string, role: string): void {
+    this.groupService.addUsersToGroup([userId], role, this.curGroupForm.value.groupId);
   }
 
   public removeUser(userId: string): void {
