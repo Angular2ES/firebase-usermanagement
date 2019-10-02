@@ -58,7 +58,6 @@ export class GroupService {
     return this.groupCol.doc(groupId).set(groupData, { merge: true});
   }
   
-  // TODO make it so we can add more roles within this group
   public removeUsersFromGroup(userId: string[], groupId: string): Promise<void> {
     const groupData: Group = {
       groupId: groupId,
