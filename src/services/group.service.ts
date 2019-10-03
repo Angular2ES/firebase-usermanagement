@@ -12,7 +12,6 @@ export class GroupService {
 
   private groupCol: AngularFirestoreCollection = this.db.collection('groups');
 
-
   constructor(private db: AngularFirestore) {}
 
     

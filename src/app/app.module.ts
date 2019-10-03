@@ -37,6 +37,7 @@ import { StorageModule } from '@ngx-pwa/local-storage';
 import { ToasterService, ToasterModule } from 'angular2-toaster';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { UserListContainerComponent } from './user-list-container/user-list-container.component';
+import { GroupAdminAuthGuardService } from 'src/services/auth.services/groupAdmin-auth-gaurd.service';
 
 
 const userModuleConfig: UserModuleConfig = {
@@ -82,7 +83,7 @@ const userModuleConfig: UserModuleConfig = {
   ],
   providers: [
     AuthenticationService, FormBuilder, ToasterService,
-    UserAuthGuardService, AdminAuthGuardService,
+    UserAuthGuardService, AdminAuthGuardService, GroupAdminAuthGuardService,
     { provide: UserModuleConfig, useValue: userModuleConfig },
   ],
   bootstrap: [HeaderComponent]

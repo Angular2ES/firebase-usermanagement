@@ -14,16 +14,10 @@ import { firestore } from 'firebase';
   styleUrls: ['./group-settings.component.css']
 })
 
-export class GroupSettingsComponent implements CanActivate {
+export class GroupSettingsComponent {
 
   currentGroup$: Observable<Group>;
   private curGroupForm: FormGroup;
-
-  userOptions = [
-     'readOnly',
-     'editores',
-     'admins'
-  ]
 
   curUserForm: FormGroup;
   userList$: Observable<string[]>;
@@ -60,22 +54,23 @@ export class GroupSettingsComponent implements CanActivate {
     )
   }
     
-  // TODO give feedback to the user
-  canActivate(): Observable<boolean> {
-    return new Observable<true>();
-    // TODO who has permission to edit the settings of the group
-    // return this.route.params.pipe(
-    //   switchMap(params => this.groupService.getGroupPermissions(params['id'])),
-    //   switchMap(perm => this.IsCurUserAdmin(perm)),
-    // }
-  }
+  // // TODO give feedback to the user
+  // canActivate(): Observable<boolean> {
+  //   // return new Observable<true>();
+  //   // TODO who has permission to edit the settings of the group
+  //   return this.route.params.pipe(
+  //     switchMap(params => this.groupService.getGroup(params['id'])),
+  //     switchMap(group => group.users['admins']),
+  //     switchMap(perm => this.IsCurUserAdmin(perm))
+  //   )
+  // }
 
-  private IsCurUserAdmin(permissions: any): Observable<boolean> {
-    return this.userService.getCurrentUser().pipe(
-      tap(u => console.log(permissions.admin[0])),
-      map(user => user == permissions.admin[0]) // TODO we only check the first admin
-    )
-  }
+  // private IsCurUserAdmin(permissions: any): Observable<boolean> {
+  //   return this.userService.getCurrentUser().pipe(
+  //     tap(u => console.log(permissions.admin[0])),
+  //     map(user => user.uid in permissions.admin)
+  //   )
+  // }
   
   get userForm(): FormArray{
     return this.curUserForm.get('userId') as FormArray

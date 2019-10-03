@@ -28,7 +28,6 @@ export class UserService {
     .catch((e) => console.log(e));
   }
   
-  //TODO get email data from an other db table
   private mapFromDatabase(userData: any): UserModel {
     const _user: UserModel = {
       uid: userData.uid,
@@ -36,12 +35,7 @@ export class UserService {
       age: userData.age,
       groups: userData.groups
     }
-    //this.authService.getAuthState().pipe((user => _user.email = user.email))
     return _user;
-  }
-  
-  public async updateUserPrivateProfile(uid: string, userData): Promise<void> {
-    return this.db.collection('user_private_profile').doc(uid).update(userData);
   }
   
   public async updateUser(uid: string, userData): Promise<void> {
@@ -58,21 +52,10 @@ export class UserService {
       shareReplay(1)
     )
   }
-  
 
+  // TODO do not get all users at the same time...might be a lot of users
   public getAllUserList(): Observable<firebase.firestore.QuerySnapshot> {
     return this.userCollection.get();
-    // .pipe(
-    //   map((querySnapshot) => {
-    //     const users = [];
-    //     querySnapshot.forEach((doc) => {
-    //         // doc.data() is never undefined for query doc snapshots
-    //         console.log(doc.id, " => ", doc.data());
-    //         users.push(doc.id);
-    //     });
-    //     return users;
-    //   })
-    // )
   }
 }
   

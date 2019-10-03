@@ -5,7 +5,7 @@ import { FieldValue } from "@google-cloud/firestore";
 
 export interface Group {
   groupId: string,
-  users: {};
+  users: any;
 }
 
 export function onUpdateGroup(change: functions.Change<FirebaseFirestore.DocumentSnapshot>, context: functions.EventContext) {
@@ -88,7 +88,7 @@ function createArrayOfUsers(users: Group["users"]): string[]{
   const newUserArray: string[] = [];
 
   Object.keys(users).forEach(array => {
-    newUserArray.concat(array);
+    newUserArray.concat(users['array']);
   })
   return newUserArray;
 }

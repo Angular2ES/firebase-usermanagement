@@ -11,6 +11,7 @@ import { UserSettingsTestComponent } from './user.settings.test.component';
 // canActivate
 import { UserAuthGuardService } from '../services/auth.services/user-auth-guard.service';
 import { AdminAuthGuardService } from 'src/services/auth.services/admin-auth-guard.service';
+import { GroupAdminAuthGuardService } from 'src/services/auth.services/groupAdmin-auth-gaurd.service';
 
 const appRoutes: Routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full'},
@@ -18,7 +19,7 @@ const appRoutes: Routes = [
   { path: 'createAccount', component: CreateAccountComponent },
   { path: 'home', component: AppComponent, canActivate: [UserAuthGuardService]},
   { path: 'settings/:uid', component: UserSettingsTestComponent, canActivate: [UserAuthGuardService, AdminAuthGuardService] },
-  { path: 'groupSettings/:id', component: GroupSettingsComponent, canActivate: [UserAuthGuardService]}, // TODO add authGaurd for only user within the group or only admins of this group
+  { path: 'groupSettings/:id', component: GroupSettingsComponent, canActivate: [UserAuthGuardService, GroupAdminAuthGuardService]}, // TODO add authGaurd for only user within the group or only admins of this group
   { path: 'groupList', component: GroupListComponent, canActivate: [UserAuthGuardService]},
 ];
 
