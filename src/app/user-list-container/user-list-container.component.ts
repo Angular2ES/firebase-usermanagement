@@ -50,7 +50,6 @@ export class UserListContainerComponent implements OnInit{
 
   addUserToGroup(){
     const sel = document.getElementById(`selector-${this.userId}`) as HTMLSelectElement;
-    console.log(sel.options[sel.selectedIndex].value, sel.value)
     this.groupSettings.addUser(this.userId, sel.options[sel.selectedIndex].value)
   }
 }

@@ -5,11 +5,7 @@ import { FieldValue } from "@google-cloud/firestore";
 
 export interface Group {
   groupId: string,
-  users: {
-    readOnly?: string[],
-    editors?: string[],
-    admins?: string[]
-  };
+  users: {};
 }
 
 export function onUpdateGroup(change: functions.Change<FirebaseFirestore.DocumentSnapshot>, context: functions.EventContext) {
@@ -90,8 +86,9 @@ function filterUser(curUser: string, smalUserList: string[]): boolean{
 
 function createArrayOfUsers(users: Group["users"]): string[]{
   const newUserArray: string[] = [];
-  const readOnly = users.readOnly ? users.readOnly : [];
-  const editors = users.editors ? users.editors : [];
-  const admins = users.admins ? users.admins : [];
-  return newUserArray.concat(readOnly, editors, admins);
+
+  Object.keys(users).forEach(array => {
+    newUserArray.concat(array);
+  })
+  return newUserArray;
 }
