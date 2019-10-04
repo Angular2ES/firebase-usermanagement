@@ -11,6 +11,6 @@
 
 <div *ngIf="userList$ | async">
   <div class="col-6" *ngFor="let user of userForm.value; let i = index;">
-      <user-list-container [user]="userForm.value[i]" [groupSettingsInstance]="this"></user-list-container>
+    <user-list-container [user]="userForm.value[i]" [groupSettingsInstance]="this"></user-list-container>
   </div>
 </div>

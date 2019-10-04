@@ -24,7 +24,7 @@ export class GroupService {
         admins: [userId]
       }
     }
-    return this.groupCol.doc(newId).set(groupData).then(() => {
+    return this.groupCol.doc(newId).set(groupData).then(() => { console.log('group has been created')
     }).catch((e) => console.log(e));
   }
   

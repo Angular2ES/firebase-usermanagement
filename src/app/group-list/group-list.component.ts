@@ -2,9 +2,10 @@ import { Component } from '@angular/core';
 import { GroupService } from 'src/services/group.service';
 import { UserService } from 'src/services/user.service';
 import { Observable } from 'rxjs';
-import { map, tap } from 'rxjs/operators';
+import { map, tap, filter } from 'rxjs/operators';
 import { UserModel } from 'src/models/user.model';
 import { FormGroup, FormBuilder, FormArray } from '@angular/forms';
+import { Router, NavigationStart, ActivatedRouteSnapshot } from '@angular/router';
 
 @Component({
   selector: 'app-group-list',
@@ -17,6 +18,9 @@ export class GroupListComponent {
   uid: string;
 
   formData: FormGroup;
+
+  pageIndex: number = 0;
+  totalPageItems: number = 6; //TODO 
 
   constructor(private groupService: GroupService,
     private userService: UserService,
@@ -42,8 +46,23 @@ export class GroupListComponent {
       )
   }
 
-  get formGroup(): FormArray {
-    return this.formData.get('groupId') as FormArray;
+  updatePageIndex(index: number): void {
+    this.pageIndex = index;
+  }
+
+  get pagedItems(): string[] {
+    const newArr = []
+    const array = this.formData.get('groupId') as FormArray;
+    for(let i = 0; i < this.totalPageItems; i++){
+      const page = array.value[(this.pageIndex * this.totalPageItems) + i];
+      if (page) newArr.push(page)
+    }
+    return newArr;
+  }
+
+  formGroupPagination(itemCount: number): any[] {
+    const array = this.formData.get('groupId') as FormArray
+    return new Array(Math.ceil(array.length / itemCount))
   }
 
   private createFormOfGroup(groupId: string): FormGroup{

@@ -24,12 +24,12 @@ export class UserSettingsComponent implements OnDestroy  {
     public formBuilder: FormBuilder,
     private toasterService: ToasterService)
   {
-      this.form = formBuilder.group ({
-        'uid' : new FormControl() ,
-      });
-      this.currentUser$ = this.userService.getCurrentUser().pipe(
-        tap (user => { this.form.patchValue(user)}),
-      );
+    this.form = formBuilder.group ({
+      'uid' : new FormControl() ,
+    });
+    this.currentUser$ = this.userService.getCurrentUser().pipe(
+      tap (user => { this.form.patchValue(user)}),
+    );
   }
 
   /**

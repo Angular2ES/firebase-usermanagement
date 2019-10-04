@@ -1,11 +1,21 @@
 <div class="group-list">
+  <button class="waves-effect waves-light btn" (click)="createGroup()">create a new group</button>
+
   <div *ngIf="groupList$ | async">
-    <div *ngFor="let group of formGroup.value; let i = index;">
+    <div *ngFor="let group of pagedItems; let i = index;">
     
-        <group-list-container [group]="formGroup.value[i]"></group-list-container>
+        <group-list-container [group]="group"></group-list-container>
         
     </div>
   </div>
+
+  <ul class="pagination" >
+    <!-- <a href="groupList#" class="waves-effect waves-light btn disabled">left</a> -->
+    <li id="pagination-index" class="waves-effect" *ngFor="let page of formGroupPagination(totalPageItems); let i = index">
+      <a (click)="updatePageIndex(i)" >{{i + 1}}</a>
+      <!-- <a [routerLink]="['/groupList', 'i + 1']">{{i + 1}}</a> -->
+    </li>
+    <!-- <a href="groupList#" class="waves-effect waves-light btn">right</a> -->
+  </ul>
   
-  <button class="waves-effect waves-light btn" (click)="createGroup()">create a new group</button>
-</div>  
+</div>
