@@ -20,10 +20,10 @@ export function onUpdateGroup(change: functions.Change<FirebaseFirestore.Documen
       return removeGroupFromUsers(getRemovedOrNewUsers(oldDoc.users, newDoc.users), newDoc.groupId);
     }    
     case 'groupCreated': {
-      return addGroupToUsers(getRemovedOrNewUsers(newDoc.users, {}), newDoc.groupId);
+      return addGroupToUsers(createArrayOfUsers(newDoc.users), newDoc.groupId);
     }    
     case 'groupDeleted': {
-      return removeGroupFromUsers(getRemovedOrNewUsers(oldDoc.users, {}), oldDoc.groupId);
+      return removeGroupFromUsers(createArrayOfUsers(oldDoc.users), oldDoc.groupId);
     }
     default: {
       return Promise.resolve();
@@ -72,7 +72,6 @@ function removeGroupFromUsers(users: string[], ToRemoveGroupId: string): Promise
 
 function getRemovedOrNewUsers(largeUserList: Group["users"], smalUserList: Group["users"]): string[] {
   const users = createArrayOfUsers(largeUserList).filter(user => filterUser(user, createArrayOfUsers(smalUserList)));
-  console.log(users);
   return users;
 }
 
@@ -85,10 +84,9 @@ function filterUser(curUser: string, smalUserList: string[]): boolean{
 }
 
 function createArrayOfUsers(users: Group["users"]): string[]{
-  const newUserArray: string[] = [];
-
-  Object.keys(users).forEach(array => {
-    newUserArray.concat(users['array']);
-  })
+  let newUserArray: string[] = [];
+  for (let value of Object.values(users)) {
+    newUserArray = newUserArray.concat(value as string[]);
+  }
   return newUserArray;
 }
