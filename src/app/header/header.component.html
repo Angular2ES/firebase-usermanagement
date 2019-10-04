@@ -2,10 +2,10 @@
   <div class="nav-wrapper">
     <a href="#" class="brand-logo">Logo</a>
     <ul id="nav-mobile" class="right hide-on-med-and-down">
-      <li><a (click)="login()" routerLinkActive="active">login</a></li>
+      <li><a routerLink="/login" routerLinkActive="active">login</a></li>
       <li><a routerLink="/home" routerLinkActive="active">home</a></li>
-      <li><a (click)="userSettings()" routerLinkActive="active">user settings</a></li>
-      <li><a (click)="groupList()" routerLinkActive="active">group list</a></li>
+      <li><a routerLink="/userSettings" routerLinkActive="active">user settings</a></li>
+      <li><a routerLink="/groupList" routerLinkActive="active">group list</a></li>
       <li><a (click)="logout()" routerLinkActive="active">logout</a></li>
     </ul>
   </div>

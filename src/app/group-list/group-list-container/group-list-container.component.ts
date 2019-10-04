@@ -14,7 +14,7 @@ import { tap } from 'rxjs/operators';
       <span class="title">{{ groupName }}</span>
       <p>{{ groupId }}</p>
 
-      <a class="secondary-content"> <button class="material-icons" class="waves-effect waves-light btn" (click)="groupSettings(group.groupId)">Settings</button></a>
+      <a class="secondary-content material-icons waves-effect waves-light btn" [routerLink]="['/groupSettings', groupId]">Settings</a>
     </li>
   </ul>`
 })
@@ -35,9 +35,5 @@ export class GroupListContainerComponent implements OnInit{
     this.currentGroup$ = this.groupService.getGroup(this.group['groupId']).pipe(
       tap(group => {this.groupName = group.groupName; this.groupId = group.groupId}),
     )
-  }
-
-  groupSettings(groupId: string){
-    this.router.navigate(['groupSettings', groupId])
   }
 }
