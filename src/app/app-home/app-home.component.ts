@@ -7,11 +7,11 @@ import { GroupService } from 'src/services/group.service';
 
 @Component({
   selector: 'app-home ',
-  templateUrl: 'app.component.html',
-  styleUrls: ['app.component.css'],
+  templateUrl: 'app-home.component.html',
+  styleUrls: ['app-home.component.css'],
 })
 
-export class AppComponent implements OnInit {
+export class AppHomeComponent implements OnInit {
 
   user$: Observable<UserModel>;
   uid: string;

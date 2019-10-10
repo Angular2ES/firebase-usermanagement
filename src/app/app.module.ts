@@ -1,7 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule, FormBuilder, ReactiveFormsModule } from '@angular/forms';
-import { AppComponent } from './app-main/app.component';
+import { AppHomeComponent } from './app-home/app-home.component';
 import { LoginComponent } from './login-email-password/email-password-login.component';
 import { HeaderComponent } from './header/header.component';
 import { LoginTestComponent } from './login.test.component';
@@ -12,6 +12,7 @@ import { GroupSettingsComponent } from './group-settings/group-settings.componen
 import { ValidationMessagesComponent } from './validation-messages/validation-messages.component';
 import { GroupListComponent } from './group-list/group-list.component';
 import { GroupListContainerComponent } from './group-list/group-list-container/group-list-container.component';
+import { AppComponent } from './app.component';
 
 import { UserModuleConfig } from '../users-module-config';
 
@@ -53,7 +54,7 @@ const userModuleConfig: UserModuleConfig = {
     UserSettingsTestComponent,
     LoginComponent,
     UserSettingsComponent,
-    AppComponent,
+    AppHomeComponent,
     HeaderComponent,
     LoginEmailComponent,
     CreateAccountComponent,
@@ -63,6 +64,7 @@ const userModuleConfig: UserModuleConfig = {
     GroupListContainerComponent,
     GroupListComponent,
     UserListContainerComponent,
+    AppComponent,
     
   ],
   imports: [
@@ -86,7 +88,7 @@ const userModuleConfig: UserModuleConfig = {
     UserAuthGuardService, AdminAuthGuardService, GroupAdminAuthGuardService,
     { provide: UserModuleConfig, useValue: userModuleConfig },
   ],
-  bootstrap: [HeaderComponent]
+  bootstrap: [AppComponent]
 })
 
 export class AppModule { }

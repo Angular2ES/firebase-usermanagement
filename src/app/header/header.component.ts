@@ -5,7 +5,7 @@ import { UserModel } from 'src/models/user.model';
 import { Observable } from 'rxjs';
 
 @Component({
-  selector: 'app-root',
+  selector: 'app-header',
   templateUrl: 'header.component.html',
 })
 
