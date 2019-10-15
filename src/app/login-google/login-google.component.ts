@@ -9,7 +9,8 @@ import { UserModuleConfig } from 'src/users-module-config';
 
 @Component({
   selector: 'app-login-google',
-  template: ``,
+  templateUrl: '../login-google/login-google.component.html',
+  styleUrls: ['../login-google/login-google.component.css'],
 })
 export class LoginGoogleComponent{
 

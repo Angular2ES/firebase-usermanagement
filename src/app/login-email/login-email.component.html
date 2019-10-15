@@ -1,19 +1,2 @@
-<html>
-  
-  <body>
-    <div class="login-collection">
-      <form method="POST">
-          <li class="text" >
-              <pre>{{ emailFromStorage$ | async | json }}</pre>
-              <pre>{{ hasActivationCode$ | async | json }}</pre>
-              <pre>{{ loginResult$ | async | json }}</pre>
-          </li>
-
-        <input type="text" class="form-control mb-2" placeholder="Email" #userEmail required autofocus>
-        <button class="waves-effect waves-light btn" (click)="submitEmail(userEmail.value)">submitEmail</button>
-      </form>
-    </div>
-
-  </body>
-</html>
-
+<input type="text" class="form-control mb-2" placeholder="Email" #userEmail required autofocus>
+<button class="waves-effect waves-light btn" (click)="submitEmail(userEmail.value)">submitEmail</button>

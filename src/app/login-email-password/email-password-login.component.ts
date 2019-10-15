@@ -6,8 +6,8 @@ import { UserService } from 'src/services/user.service';
 import { LoginHelper } from '../login-helper.service';
 
 @Component({
-  selector: 'app-login',
-  template: ``, 
+  selector: 'app-login-email-password',
+  templateUrl: '../login-email-password/email-password-login.component.html',
 })
 
 export class LoginComponent {

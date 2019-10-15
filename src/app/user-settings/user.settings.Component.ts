@@ -3,19 +3,22 @@ import { UserService } from 'src/services/user.service';
 import { Observable, Subscription } from 'rxjs';
 import { UserModel } from 'src/models/user.model';
 import { tap } from 'rxjs/operators';
-import { Component, OnDestroy } from '@angular/core';
+import { Component, OnDestroy, Input } from '@angular/core';
 import { FormGroup, FormBuilder, FormControl, Validators } from '@angular/forms';
 import { ToasterService } from 'angular2-toaster';
 
 @Component({
   selector: 'app-user-settings',
-  template: '',
+  templateUrl: '../user-settings/user.settings.component.html',
+  styleUrls: ['../user-settings/user.settings.component.css'],
 })
 
 export class UserSettingsComponent implements OnDestroy  {
 
   private currentUser$: Observable<UserModel>;
   public form: FormGroup;
+
+  @Input('formGroup') data: FormGroup;
 
   private subscriptions: Subscription[] = [];
 

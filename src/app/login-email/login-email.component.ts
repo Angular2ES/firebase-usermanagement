@@ -12,7 +12,8 @@ import { UserModuleConfig } from 'src/users-module-config';
 
 @Component({
   selector: 'app-login-email',
-  template:  ``,
+  templateUrl:  '../login-email/login-email.component.html',
+  styleUrls:  ['../login-email/login-email.component.css'],
 })
 export class LoginEmailComponent {
 

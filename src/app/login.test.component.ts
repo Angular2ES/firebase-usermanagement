@@ -4,9 +4,18 @@ import { LoginGoogleComponent } from './login-google/login-google.component';
 
 @Component({
   selector: 'app-test-login',
-  templateUrl: './login-google/login-google.component.html',
-  styleUrls: ['./login-google/login-google.component.css'],
+  template: `
+  <div class="login-collection">
+    <form>  
+      <app-login-email-password></app-login-email-password>
+      <app-login-google></app-login-google>
+      <app-login-email></app-login-email>
+      <app-create-account></app-create-account>
+    </form>
+  </div>
+  `,
+  styleUrls: ['./login-email-password/email-password-login.component.scss'],
 })
 
-export class LoginTestComponent extends LoginGoogleComponent {
+export class LoginTestComponent {
 } 
