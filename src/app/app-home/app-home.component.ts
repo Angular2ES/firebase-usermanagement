@@ -26,5 +26,7 @@ export class AppHomeComponent implements OnInit {
       tap(user => this.uid = user.uid)
     );
   }
+
+  // Test pull request
 }
 
