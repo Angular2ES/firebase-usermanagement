@@ -131,7 +131,7 @@
       "projectType": "library",
       "root": "projects/ng-usermanagement",
       "sourceRoot": "projects/ng-usermanagement/src",
-      "prefix": "lib",
+      "prefix": "ng",
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-ng-packagr:build",

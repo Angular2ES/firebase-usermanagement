@@ -1,6 +1,20 @@
 {
   "name": "ng-usermanagement",
   "version": "0.0.1",
+  "description": "A simple way to implement user management into your application",
+
+  "author": "Jacob Vroegop",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Joolnl/firebase-usermanagement"
+  },
+  "keywords": [
+    "angular",
+    "javascript",
+    "typescript",
+    "user management",
+    "firebase"
+  ],
   "peerDependencies": {
     "@angular/common": "^8.2.0",
     "@angular/core": "^8.2.0"
