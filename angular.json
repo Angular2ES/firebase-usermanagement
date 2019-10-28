@@ -1,31 +1,28 @@
 {
   "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
   "version": 1,
-  "newProjectRoot": "projects",
+  "newProjectRoot": "",
   "projects": {
     "firebase-usermanagement": {
       "projectType": "application",
       "schematics": {},
-      "root": "",
-      "sourceRoot": "src",
+      "root": "apps/firebase-usermanagement",
+      "sourceRoot": "apps/firebase-usermanagement/src",
       "prefix": "app",
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
             "outputPath": "dist/firebase-usermanagement",
-            "index": "src/index.html",
-            "main": "src/main.ts",
-            "polyfills": "src/polyfills.ts",
-            "tsConfig": "tsconfig.app.json",
+            "index": "apps/firebase-usermanagement/src/index.html",
+            "main": "apps/firebase-usermanagement/src/main.ts",
+            "polyfills": "apps/firebase-usermanagement/src/polyfills.ts",
+            "tsConfig": "apps/firebase-usermanagement/tsconfig.app.json",
             "aot": false,
-            "assets": [
-              "src/favicon.ico",
-              "src/assets"
-            ],
+            "assets": ["apps/firebase-usermanagement/src/favicon.ico", "apps/firebase-usermanagement/src/assets"],
             "styles": [
               "node_modules/materialize-css/dist/css/materialize.css",
-              "src/styles.css"
+              "apps/firebase-usermanagement/src/styles.css"
             ],
             "scripts": [
               "node_modules/jquery/dist/jquery.js",
@@ -37,8 +34,8 @@
             "production": {
               "fileReplacements": [
                 {
-                  "replace": "src/environments/environment.ts",
-                  "with": "src/environments/environment.prod.ts"
+                  "replace": "apps/firebase-usermanagement/src/environments/environment.ts",
+                  "with": "apps/firebase-usermanagement/src/environments/environment.prod.ts"
                 }
               ],
               "optimization": true,
@@ -86,17 +83,12 @@
         "test": {
           "builder": "@angular-devkit/build-angular:karma",
           "options": {
-            "main": "src/test.ts",
-            "polyfills": "src/polyfills.ts",
-            "tsConfig": "tsconfig.spec.json",
-            "karmaConfig": "karma.conf.js",
-            "assets": [
-              "src/favicon.ico",
-              "src/assets"
-            ],
-            "styles": [
-              "src/styles.css"
-            ],
+            "main": "apps/firebase-usermanagement/src/test.ts",
+            "polyfills": "apps/firebase-usermanagement/src/polyfills.ts",
+            "tsConfig": "apps/firebase-usermanagement/tsconfig.spec.json",
+            "karmaConfig": "apps/firebase-usermanagement/karma.conf.js",
+            "assets": ["apps/firebase-usermanagement/src/favicon.ico", "apps/firebase-usermanagement/src/assets"],
+            "styles": ["apps/firebase-usermanagement/src/styles.css"],
             "scripts": []
           }
         },
@@ -104,13 +96,11 @@
           "builder": "@angular-devkit/build-angular:tslint",
           "options": {
             "tsConfig": [
-              "tsconfig.app.json",
-              "tsconfig.spec.json",
+              "apps/firebase-usermanagement/tsconfig.app.json",
+              "apps/firebase-usermanagement/tsconfig.spec.json",
               "e2e/tsconfig.json"
             ],
-            "exclude": [
-              "**/node_modules/**"
-            ]
+            "exclude": ["**/node_modules/**"]
           }
         },
         "e2e": {
@@ -129,38 +119,49 @@
     },
     "ng-usermanagement": {
       "projectType": "library",
-      "root": "projects/ng-usermanagement",
-      "sourceRoot": "projects/ng-usermanagement/src",
+      "root": "libs/ng-usermanagement",
+      "sourceRoot": "libs/ng-usermanagement/src",
       "prefix": "ng",
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-ng-packagr:build",
           "options": {
-            "tsConfig": "projects/ng-usermanagement/tsconfig.lib.json",
-            "project": "projects/ng-usermanagement/ng-package.json"
+            "tsConfig": "libs/ng-usermanagement/tsconfig.lib.json",
+            "project": "libs/ng-usermanagement/ng-package.json"
           }
         },
         "test": {
           "builder": "@angular-devkit/build-angular:karma",
           "options": {
-            "main": "projects/ng-usermanagement/src/test.ts",
-            "tsConfig": "projects/ng-usermanagement/tsconfig.spec.json",
-            "karmaConfig": "projects/ng-usermanagement/karma.conf.js"
+            "main": "libs/ng-usermanagement/src/test.ts",
+            "tsConfig": "libs/ng-usermanagement/tsconfig.spec.json",
+            "karmaConfig": "libs/ng-usermanagement/karma.conf.js"
           }
         },
         "lint": {
           "builder": "@angular-devkit/build-angular:tslint",
           "options": {
             "tsConfig": [
-              "projects/ng-usermanagement/tsconfig.lib.json",
-              "projects/ng-usermanagement/tsconfig.spec.json"
+              "libs/ng-usermanagement/tsconfig.lib.json",
+              "libs/ng-usermanagement/tsconfig.spec.json"
             ],
-            "exclude": [
-              "**/node_modules/**"
-            ]
+            "exclude": ["**/node_modules/**"]
           }
         }
       }
-    }},
-  "defaultProject": "firebase-usermanagement"
+    }
+  },
+  "defaultProject": "firebase-usermanagement",
+  "schematics": {
+    "@nrwl/angular:application": {
+      "unitTestRunner": "jest",
+      "e2eTestRunner": "protractor"
+    },
+    "@nrwl/angular:library": {
+      "unitTestRunner": "jest"
+    }
+  },
+  "cli": {
+    "defaultCollection": "@nrwl/angular"
+  }
 }
