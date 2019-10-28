@@ -126,6 +126,41 @@
           }
         }
       }
+    },
+    "ng-usermanagement": {
+      "projectType": "library",
+      "root": "projects/ng-usermanagement",
+      "sourceRoot": "projects/ng-usermanagement/src",
+      "prefix": "lib",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-ng-packagr:build",
+          "options": {
+            "tsConfig": "projects/ng-usermanagement/tsconfig.lib.json",
+            "project": "projects/ng-usermanagement/ng-package.json"
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "projects/ng-usermanagement/src/test.ts",
+            "tsConfig": "projects/ng-usermanagement/tsconfig.spec.json",
+            "karmaConfig": "projects/ng-usermanagement/karma.conf.js"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "projects/ng-usermanagement/tsconfig.lib.json",
+              "projects/ng-usermanagement/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        }
+      }
     }},
   "defaultProject": "firebase-usermanagement"
 }
