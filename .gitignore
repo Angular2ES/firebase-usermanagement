@@ -66,3 +66,8 @@ node_modules/
 
 # build of library
 dist/
+
+# sypress e2e
+serviceAccount.json
+cypress/config.json
+cypress.env.json
