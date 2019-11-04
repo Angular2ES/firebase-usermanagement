@@ -17,6 +17,11 @@
   ],
   "peerDependencies": {
     "@angular/common": "^8.2.0",
-    "@angular/core": "^8.2.0"
+    "@angular/core": "^8.2.0",
+    "@angular/router": "^8.2.10",
+    "@angular/fire": "^5.2.1",
+    "angular2-toaster": "^8.0.0",
+    "firebase": "^6.6.2",
+    "rxjs": "~6.4.0"
   }
 }
