@@ -39,13 +39,18 @@ import { ToasterService, ToasterModule } from 'angular2-toaster';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { UserListContainerComponent } from './user-list-container/user-list-container.component';
 import { GroupAdminAuthGuardService } from '../services/auth.services/groupAdmin-auth-gaurd.service';
+import { LibModule } from 'libs/ng-usermanagement/src/public-api';
 
-
+// TODO remove this after refactoring
 const userModuleConfig: UserModuleConfig = {
   loginRedirectUrl: environment.loginRedirectUrl,
   redirectAfterLogin: '/home',
   redirectAfterLogout: '/login',
   firebaseCfg: environment.firebase
+};
+
+const userModuleCfg = {
+  firebaseConfig: environment.firebase
 };
 
 @NgModule({
@@ -77,11 +82,14 @@ const userModuleConfig: UserModuleConfig = {
     BrowserAnimationsModule,
     ToasterModule.forRoot(),
     
+    
     AngularFireModule.initializeApp(environment.firebase),
     AngularFirestoreModule, // imports firebase/firestore, only needed for database features
     AngularFireAuthModule, 
     StorageModule.forRoot({ IDBNoWrap: true }), // imports firebase/auth, only needed for auth features,
     //AngularFireStorageModule // imports firebase/storage only needed for storage features
+    
+    LibModule.forRoot(userModuleCfg),
   ],
   providers: [
     AuthenticationService, FormBuilder, ToasterService,
