@@ -9,10 +9,5 @@ import { Router } from '@angular/router';
 })
 export class CreateAccountComponent {
 
-  constructor( private userService: UserService, private router: Router) { }
-
-  createAccount(email: string): void {
-    this.userService.createUser(email);
-  }
-
+  constructor() { }
 }
