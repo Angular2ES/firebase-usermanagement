@@ -2,6 +2,7 @@ import { Inject, Injectable } from '@angular/core';
 import * as firebase from 'firebase';
 import { auth, User } from 'firebase';
 import { INgUserManagementConfig, NgUserManagementConfigToken } from '../interfaces/firebase-config.interface';
+import { AngularFireAuth } from '@angular/fire/auth';
 
 @Injectable({
   providedIn: 'root'
@@ -11,30 +12,41 @@ export class AuthenticationService {
   private firebaseApp: firebase.app.App;
   
   constructor(
-    // private angularFireAuth: AngularFireAuth,
-    @Inject(NgUserManagementConfigToken) public config: INgUserManagementConfig
-    ) {
+    private angularFireAuth: AngularFireAuth,
+    @Inject(NgUserManagementConfigToken) public config: INgUserManagementConfig) {
   }
 
+  /**
+   * Create a new account
+   * The function createUserWithEmailAndPassword will log the user into the app
+   * We do not want this so we create a new FirebaseApp
+   * After succesfull creation of the user we log the user out of the secondary app
+   * @param email 
+   * @param password 
+   */
   async createAccount(email: string, password: string): Promise<auth.UserCredential>{
-    // const password = Math.random().toString(36).substring(7);
-    return await this.createInstanceOfAngularFireAuth().auth().createUserWithEmailAndPassword(email, password)
-      .then((userCredentials) => this.sendChangePasswordLink(email).then(() => userCredentials))
-      //TODO logout user from 
+    return await this.getSecondaryApp().auth().createUserWithEmailAndPassword(email, password)
+      .then((userCredentials) => this.getSecondaryApp().auth().signOut().then(() => userCredentials))
   }
 
-  async sendChangePasswordLink(email: string): Promise<void>{
+  /**
+   * @param user 
+   */
+  async sendChangePasswordLink(user: User): Promise<void>{
     // after user changed password he/she will be logged in again
-    return this.createInstanceOfAngularFireAuth().auth().sendPasswordResetEmail(email) 
-    .then(() => console.log('email send')) //TODO show alert of send email
+    return this.angularFireAuth.auth.sendPasswordResetEmail(user.email) 
+    .then(() => console.log(`email send to ${user.email}`)) //TODO show alert of send email
   }
-
+  
+  /**
+   * @param user 
+   */
   async sendVerifyEmailLink(user: User): Promise<void> {
     return user.sendEmailVerification()
     .then(() => console.log(`email send to ${user.email}`)) //TODO show alert of send email
   }
 
-  private createInstanceOfAngularFireAuth(): firebase.app.App {
+  private getSecondaryApp(): firebase.app.App {
     if(!this.firebaseApp) {
       console.log(this.config)
       this.firebaseApp = firebase.initializeApp(this.config.firebaseConfig, "secondary");
