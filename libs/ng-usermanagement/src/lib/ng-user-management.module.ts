@@ -14,14 +14,14 @@ import { SpinnerModule } from './spinner/spinner.module';
   ],
   providers: []
 })
-export class LibModule { 
+export class NgUserManagementModule { 
   static forRoot(
     //configFactory: FirebaseAppConfig,
     config: INgUserManagementConfig = {},
     appNameFactory?: () => string
   ): ModuleWithProviders {
     return {
-      ngModule: LibModule,
+      ngModule: NgUserManagementModule,
       providers:
         [
           {

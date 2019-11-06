@@ -10,7 +10,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { StorageModule } from '@ngx-pwa/local-storage';
 import { MaterializeModule } from 'angular2-materialize';
 import { ToasterModule, ToasterService } from 'angular2-toaster';
-import { LibModule } from 'libs/ng-usermanagement/src/public-api';
+import { NgUserManagementModule } from 'libs/ng-usermanagement/src/public-api';
 import { environment } from '../environments/environment';
 // services
 import { AuthenticationService } from '../services/auth.service';
@@ -83,7 +83,7 @@ const userModuleCfg = {
     StorageModule.forRoot({ IDBNoWrap: true }), // imports firebase/auth, only needed for auth features,
     //AngularFireStorageModule // imports firebase/storage only needed for storage features
     
-    LibModule.forRoot(userModuleCfg),
+    NgUserManagementModule.forRoot(userModuleCfg),
   ],
   providers: [
     AuthenticationService, FormBuilder, ToasterService,

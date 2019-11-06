@@ -11,5 +11,6 @@ export * from './lib/spinner/spinner.module';
 
 // Services
 export * from './lib/services/auth.service';
+export * from './lib/services/user.service';
 
-export * from './lib/lib.module';
+export * from './lib/ng-user-management.module';
