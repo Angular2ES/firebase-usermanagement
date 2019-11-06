@@ -1,6 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthenticationService } from '../services/auth.service';
+import { UserService } from '../services/user.service';
 
 @Component({
   selector: 'ng-register',
@@ -10,23 +11,26 @@ import { AuthenticationService } from '../services/auth.service';
 export class RegisterComponent implements OnInit {
 
   @Input('redirectOnSucces') redirectOnSucces: string;
+  @Input('extraData') addExtraData: any;
+
   public loading: Boolean = false;
 
   constructor(
-    public authService: AuthenticationService,
+    private authService: AuthenticationService,
     private router: Router) { }
 
   ngOnInit() {
   }
 
-  registerUser(email: string, password: string){
+  registerUser(email: string, password: string): void{
     this.loading = true;
-    this.authService.createAccount(email, password)
+    this.authService.createAccount(email, password, this.addExtraData)
       .then(() => this.loading = false)
       .then(() => { 
         if (this.redirectOnSucces != null) {
           this.router.navigate([this.redirectOnSucces])
         }
       })
+      .catch((err) => alert(err))
   }
 }

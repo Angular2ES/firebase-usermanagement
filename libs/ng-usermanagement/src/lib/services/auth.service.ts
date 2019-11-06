@@ -3,6 +3,7 @@ import * as firebase from 'firebase';
 import { auth, User } from 'firebase';
 import { INgUserManagementConfig, NgUserManagementConfigToken } from '../interfaces/firebase-config.interface';
 import { AngularFireAuth } from '@angular/fire/auth';
+import { AngularFirestore } from '@angular/fire/firestore';
 
 @Injectable({
   providedIn: 'root'
@@ -24,10 +25,18 @@ export class AuthenticationService {
    * @param email 
    * @param password 
    */
-  async createAccount(email: string, password: string): Promise<auth.UserCredential | void>{
+  async createAccount(email: string, password: string, extraUserData?: any): Promise<auth.UserCredential>{
     return await this.getSecondaryApp().auth().createUserWithEmailAndPassword(email, password)
+      .then((userCredentials) => this.setExtraDataToUserCol(userCredentials, extraUserData))
       .then((userCredentials) => this.getSecondaryApp().auth().signOut().then(() => userCredentials))
-      .catch((err) => alert(err))
+  }
+
+  private setExtraDataToUserCol(userCredentials: auth.UserCredential, extraUserData?: any): auth.UserCredential {
+    if (extraUserData != null) {
+      this.getSecondaryApp().firestore().collection('users').doc(userCredentials.user.uid).set(extraUserData, {merge: true})
+        .catch((err) => alert(err))
+    }
+    return userCredentials;
   }
 
   /**

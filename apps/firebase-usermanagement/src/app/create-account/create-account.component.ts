@@ -1,6 +1,4 @@
 import { Component } from '@angular/core';
-import { UserService } from '../../services/user.service';
-import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-create-account',
@@ -9,5 +7,11 @@ import { Router } from '@angular/router';
 })
 export class CreateAccountComponent {
 
+  public userData = {
+    name: 'mijn naam'
+  }
+
+  public routerLink = '/login'
+  
   constructor() { }
 }
