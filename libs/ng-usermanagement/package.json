@@ -2,7 +2,6 @@
   "name": "ng-usermanagement",
   "version": "0.0.1",
   "description": "A simple way to implement user management into your application",
-
   "author": "Jacob Vroegop",
   "repository": {
     "type": "git",
@@ -20,6 +19,7 @@
     "@angular/core": "^8.2.0",
     "@angular/router": "^8.2.10",
     "@angular/fire": "^5.2.1",
+    "@angular/material": "8.2.3",
     "angular2-toaster": "^8.0.0",
     "firebase": "^6.6.2",
     "rxjs": "~6.4.0"

@@ -24,9 +24,10 @@ export class AuthenticationService {
    * @param email 
    * @param password 
    */
-  async createAccount(email: string, password: string): Promise<auth.UserCredential>{
+  async createAccount(email: string, password: string): Promise<auth.UserCredential | void>{
     return await this.getSecondaryApp().auth().createUserWithEmailAndPassword(email, password)
       .then((userCredentials) => this.getSecondaryApp().auth().signOut().then(() => userCredentials))
+      .catch((err) => alert(err))
   }
 
   /**
@@ -48,7 +49,6 @@ export class AuthenticationService {
 
   private getSecondaryApp(): firebase.app.App {
     if(!this.firebaseApp) {
-      console.log(this.config)
       this.firebaseApp = firebase.initializeApp(this.config.firebaseConfig, "secondary");
     }
     return this.firebaseApp;
