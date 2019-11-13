@@ -1,10 +1,17 @@
-<input type="text" class="form-control mb-2" placeholder="Email" #userEmail required autofocus>
-<input type="password" class="form-control mb-2" placeholder="Password" #userPassword required>
-<input type="password" class="form-control mb-2" placeholder="Password" #userPassword2 required>
-<button class="waves-effect waves-light btn" (click)="registerUser(userEmail.value, userPassword.value)">create account</button>
- 
-<ng-spinner *ngIf="((loading))"></ng-spinner>
+<form [formGroup]="registerForm">
+  <input type="text" [ngClass]="{'form-submitted': formSubmitted}" class="form-control mb-2" placeholder="Email" formControlName="email">
+  <!-- <ng-validation-message [control]="registerForm.get('email')"></ng-validation-message> -->
 
+  <input type="password" [ngClass]="{'form-submitted': formSubmitted}" class="form-control mb-2" placeholder="Password" formControlName="password">
+  <!-- <ng-validation-message [control]="registerForm.get('password')"></ng-validation-message> -->
+
+  <input type="password" [ngClass]="{'form-submitted': formSubmitted}" class="form-control mb-2" placeholder="Password" formControlName="confirmPassword">
+  <!-- <ng-validation-message [control]="registerForm.get('confirmPassword')"></ng-validation-message> -->
+  <ng-validation-message [control]="registerForm"></ng-validation-message>
+  <button class="waves-effect waves-light btn" (click)="registerUser(registerForm.get('email').value, registerForm.get('password').value)" [disabled]="!registerForm.valid">create account</button>
+</form>
+
+<ng-spinner *ngIf="loading"></ng-spinner>
 <!-- TODO show validation error
   Add secondary password validation
  -->
