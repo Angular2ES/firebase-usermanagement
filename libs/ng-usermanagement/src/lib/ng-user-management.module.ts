@@ -1,7 +1,7 @@
 import { ModuleWithProviders, NgModule } from '@angular/core';
 import { FirebaseNameOrConfigToken, FirebaseOptionsToken } from '@angular/fire';
 import { INgUserManagementConfig, ngUserManagementConfigFactory, NgUserManagementConfigToken, UserProvidedConfigToken } from './interfaces/firebase-config.interface';
-import { LoginEmailPasswordModule } from './login-email-password/login-email-password.module';
+import { LoginEmailPasswordModule } from './login-providers/login-email-password/login-email-password.module';
 import { RegisterModule } from './register/register.module';
 import { SpinnerModule } from './spinner/spinner.module';
 @NgModule({
