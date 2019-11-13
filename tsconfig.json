@@ -21,9 +21,21 @@
     "plugins": [
       {
         "name": "typescript-lit-html-plugin",
-        "tags": [ "html", "svg", "raw" ]
+        "tags": [
+          "html",
+          "svg",
+          "raw"
+        ]
       }
-    ]
+    ],
+    "paths": {
+      "ng-usermanagement": [
+        "dist/ng-usermanagement"
+      ],
+      "ng-usermanagement/*": [
+        "dist/ng-usermanagement/*"
+      ]
+    }
   },
   "angularCompilerOptions": {
     "fullTemplateTypeCheck": true,
