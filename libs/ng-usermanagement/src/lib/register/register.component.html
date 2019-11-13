@@ -1,0 +1,10 @@
+<input type="text" class="form-control mb-2" placeholder="Email" #userEmail required autofocus>
+<input type="password" class="form-control mb-2" placeholder="Password" #userPassword required>
+<input type="password" class="form-control mb-2" placeholder="Password" #userPassword2 required>
+<button class="waves-effect waves-light btn" (click)="registerUser(userEmail.value, userPassword.value)">create account</button>
+ 
+<ng-spinner *ngIf="loading"></ng-spinner>
+
+<!-- TODO show validation error
+  Add secondary password validation
+ -->
