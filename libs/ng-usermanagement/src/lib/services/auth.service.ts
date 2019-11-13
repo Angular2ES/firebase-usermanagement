@@ -28,7 +28,9 @@ export class AuthenticationService {
   async createAccount(email: string, password: string, extraUserData?: any): Promise<auth.UserCredential>{
     return await this.getSecondaryApp().auth().createUserWithEmailAndPassword(email, password)
       .then((userCredentials) => this.setExtraDataToUserCol(userCredentials, extraUserData))
-      .then((userCredentials) => this.getSecondaryApp().auth().signOut().then(() => userCredentials))
+      .then((userCredentials) => this.getSecondaryApp().auth().signOut()
+        .then(() => userCredentials)
+        )
   }
 
   private setExtraDataToUserCol(userCredentials: auth.UserCredential, extraUserData?: any): auth.UserCredential {
