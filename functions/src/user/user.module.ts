@@ -11,7 +11,7 @@ export function onCreateUser(user: admin.auth.UserRecord ) {
   admin.firestore().doc(`users/${user.uid}`).set({
     uid: user.uid,
     email: user.email
-  })
+  }, {merge: true})
   .then(() => {
     // admin.firestore().doc(`user_private_profile/${user.uid}`).set({
     //   email: user.email
