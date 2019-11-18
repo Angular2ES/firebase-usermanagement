@@ -3,7 +3,6 @@ import * as firebase from 'firebase';
 import { auth, User } from 'firebase';
 import { INgUserManagementConfig, NgUserManagementConfigToken } from '../interfaces/firebase-config.interface';
 import { AngularFireAuth } from '@angular/fire/auth';
-import { AngularFirestore } from '@angular/fire/firestore';
 
 @Injectable({
   providedIn: 'root'
@@ -17,13 +16,26 @@ export class AuthenticationService {
     @Inject(NgUserManagementConfigToken) public config: INgUserManagementConfig) {
   }
 
+  get AngularFireAuth(): AngularFireAuth {
+    return this.angularFireAuth;
+  }
+
   /**
-   * Create a new account
-   * The function createUserWithEmailAndPassword will log the user into the app
-   * We do not want this so we create a new FirebaseApp
-   * After succesfull creation of the user we log the user out of the secondary app
+   * Create a new account.
+   * The user will not be logged in after creating an account
    * @param email 
    * @param password 
+   * @param extraUserData
+   * 
+   * @usageNotes
+   * Create a new account and add name to the database
+   * ```
+   * const userName = {
+   *  name: 'Jan'
+   * }
+   * createAccount('email', 'password', userName)
+   *  .then((userCredentials) => console.log('succesfull login'))
+   * ```
    */
   async createAccount(email: string, password: string, extraUserData?: any): Promise<auth.UserCredential>{
     return await this.getSecondaryApp().auth().createUserWithEmailAndPassword(email, password)
@@ -50,7 +62,7 @@ export class AuthenticationService {
   }
 
   /**
-   * @param user 
+   * @param user
    */
   async sendChangePasswordLink(user: User): Promise<void>{
     // after user changed password he/she will be logged in again

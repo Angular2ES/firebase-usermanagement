@@ -3,6 +3,7 @@
  */
 
 export * from './lib/login/providers/login-email-password/login-email-password.component';
+export * from './lib/login/providers/login-google/login-google.component';
 export * from './lib/login/login-providers.module';
 export * from './lib/register/register.component';
 export * from './lib/register/register.module';
