@@ -1,7 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthenticationService } from '../services/auth.service';
-import { UserService } from '../services/user.service';
 
 @Component({
   selector: 'ng-register',
