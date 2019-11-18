@@ -27,9 +27,6 @@ import { GroupListContainerComponent } from './group-list/group-list-container/g
 import { GroupListComponent } from './group-list/group-list.component';
 import { GroupSettingsComponent } from './group-settings/group-settings.component';
 import { HeaderComponent } from './header/header.component';
-import { LoginComponent } from './login-email-password/email-password-login.component';
-import { LoginEmailComponent } from './login-email/login-email.component';
-import { LoginGoogleComponent } from './login-google/login-google.component';
 import { LoginTestComponent } from './login.test.component';
 import { UserListContainerComponent } from './user-list-container/user-list-container.component';
 import { UserSettingsComponent } from './user-settings/user.settings.Component';
@@ -52,13 +49,10 @@ const userModuleCfg = {
   declarations: [
     LoginTestComponent,
     UserSettingsTestComponent,
-    LoginComponent,
     UserSettingsComponent,
     AppHomeComponent,
     HeaderComponent,
-    LoginEmailComponent,
     CreateAccountComponent,
-    LoginGoogleComponent,
     GroupSettingsComponent,
     ValidationMessagesComponent,
     GroupListContainerComponent,
