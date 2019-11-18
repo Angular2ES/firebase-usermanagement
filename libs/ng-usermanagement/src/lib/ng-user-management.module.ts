@@ -1,10 +1,13 @@
-import { ModuleWithProviders, NgModule } from '@angular/core';
+import { ModuleWithProviders, NgModule, TypeDecorator } from '@angular/core';
 import { FirebaseNameOrConfigToken, FirebaseOptionsToken } from '@angular/fire';
 import { INgUserManagementConfig, ngUserManagementConfigFactory, NgUserManagementConfigToken, UserProvidedConfigToken } from './interfaces/firebase-config.interface';
+
 import { LoginProvidersModule } from './login/login-providers.module';
 import { RegisterModule } from './register/register.module';
 import { SpinnerModule } from './spinner/spinner.module';
 import { LoginRegisterModule } from './templates/login-register.module';
+import { IInputValidation, InputValidationToken, UserProvidedValidationToken, ngInputValidationFactory} from './interfaces/input-validation.interface'
+
 @NgModule({
   declarations: [
   ],
@@ -21,8 +24,9 @@ export class NgUserManagementModule {
   static forRoot(
     //configFactory: FirebaseAppConfig,
     config: INgUserManagementConfig = {},
+    inputValidationConfig?: IInputValidation,
     appNameFactory?: () => string
-  ): ModuleWithProviders {
+  ): ModuleWithProviders<any> {
     return {
       ngModule: NgUserManagementModule,
       providers:
@@ -41,6 +45,13 @@ export class NgUserManagementModule {
             useFactory: ngUserManagementConfigFactory,
             deps: [UserProvidedConfigToken]
           },
+          {provide: UserProvidedValidationToken, useValue: inputValidationConfig},
+          {
+            provide: InputValidationToken,
+            useFactory: ngInputValidationFactory,
+            deps: [UserProvidedValidationToken]
+          }
+
         ]
     };
   }
