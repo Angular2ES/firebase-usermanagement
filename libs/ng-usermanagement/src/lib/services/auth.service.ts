@@ -42,6 +42,14 @@ export class AuthenticationService {
   }
 
   /**
+   * @param email
+   * @param password
+   */
+  async loginWithEmailAndPassword(email: string, password: string): Promise<auth.UserCredential>{
+    return await this.angularFireAuth.auth.signInWithEmailAndPassword(email, password);
+  }
+
+  /**
    * @param user 
    */
   async sendChangePasswordLink(user: User): Promise<void>{
