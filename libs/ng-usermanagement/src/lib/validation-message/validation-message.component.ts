@@ -1,6 +1,6 @@
 import { Component, Input, OnInit, Inject } from '@angular/core';
 import { FormControl } from '@angular/forms';
-import { defaultInputValidation, IInputValidation, InputValidationToken } from '../interfaces/input-validation.interface';
+import { IInputValidation, InputValidationToken } from '../interfaces/input-validation.interface';
 
 @Component({
   selector: 'ng-validation-message',

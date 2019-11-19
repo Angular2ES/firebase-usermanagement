@@ -22,12 +22,6 @@ export class UserService {
       );
   }
   
-  public createUser(email: string): Promise<void> {
-    return this.authService.createAccount(email)
-    .then((userCredential) => this.authService.logout())
-    .catch((e) => console.log(e));
-  }
-  
   private mapFromDatabase(userData: any): UserModel {
     const _user: UserModel = {
       uid: userData.uid,
