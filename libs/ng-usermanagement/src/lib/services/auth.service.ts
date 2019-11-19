@@ -1,7 +1,7 @@
 import { Inject, Injectable } from '@angular/core';
 import * as firebase from 'firebase';
 import { auth, User } from 'firebase';
-import { INgUserManagementConfig, NgUserManagementConfigToken } from '../interfaces/firebase-config.interface';
+import { ngUserManagementConfig, NgUserManagementConfigToken } from '../interfaces/firebase-config.interface';
 import { AngularFireAuth } from '@angular/fire/auth';
 
 @Injectable({
@@ -13,7 +13,7 @@ export class AuthenticationService {
   
   constructor(
     private angularFireAuth: AngularFireAuth,
-    @Inject(NgUserManagementConfigToken) public config: INgUserManagementConfig) {
+    @Inject(NgUserManagementConfigToken) public config: ngUserManagementConfig) {
   }
 
   get AngularFireAuth(): AngularFireAuth {

@@ -1,6 +1,6 @@
 import { ModuleWithProviders, NgModule, TypeDecorator } from '@angular/core';
 import { FirebaseNameOrConfigToken, FirebaseOptionsToken } from '@angular/fire';
-import { INgUserManagementConfig, ngUserManagementConfigFactory, NgUserManagementConfigToken, UserProvidedConfigToken } from './interfaces/firebase-config.interface';
+import { ngUserManagementConfig, ngUserManagementConfigFactory, NgUserManagementConfigToken, UserProvidedConfigToken } from './interfaces/firebase-config.interface';
 
 import { LoginProvidersModule } from './login/login-providers.module';
 import { RegisterModule } from './register/register.module';
@@ -23,7 +23,7 @@ import { IInputValidation, InputValidationToken, UserProvidedValidationToken, ng
 export class NgUserManagementModule { 
   static forRoot(
     //configFactory: FirebaseAppConfig,
-    config: INgUserManagementConfig = {},
+    config: ngUserManagementConfig = {},
     inputValidationConfig?: IInputValidation,
     appNameFactory?: () => string
   ): ModuleWithProviders<any> {

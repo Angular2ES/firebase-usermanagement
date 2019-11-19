@@ -38,10 +38,6 @@ const userModuleConfig: UserModuleConfig = {
   loginRedirectUrl: environment.loginRedirectUrl,
   redirectAfterLogin: '/home',
   redirectAfterLogout: '/login',
-  firebaseCfg: environment.firebase
-};
-
-const userModuleCfg = {
   firebaseConfig: environment.firebase
 };
 
@@ -70,14 +66,13 @@ const userModuleCfg = {
     MaterializeModule,
     BrowserAnimationsModule,
     ToasterModule.forRoot(),
-    
-    AngularFireModule.initializeApp(environment.firebase),
+
     AngularFirestoreModule, // imports firebase/firestore, only needed for database features
     AngularFireAuthModule, 
     StorageModule.forRoot({ IDBNoWrap: true }), // imports firebase/auth, only needed for auth features,
     //AngularFireStorageModule // imports firebase/storage only needed for storage features
     
-    NgUserManagementModule.forRoot(userModuleCfg),
+    NgUserManagementModule.forRoot(userModuleConfig),
   ],
   providers: [
     AuthenticationService, FormBuilder, ToasterService,
