@@ -9,8 +9,6 @@ import { AngularFireAuth } from '@angular/fire/auth';
 })
 export class AuthenticationService {
 
-  private firebaseApp: firebase.app.App;
-  
   constructor(
     private angularFireAuth: AngularFireAuth,
     @Inject(NgUserManagementConfigToken) public config: ngUserManagementConfig) {
@@ -30,24 +28,21 @@ export class AuthenticationService {
    * @usageNotes
    * Create a new account and add name to the database
    * ```
-   * const userName = {
-   *  name: 'Jan'
-   * }
-   * createAccount('email', 'password', userName)
+   * createAccount('email', 'password', { userName: 'Jan' })
    *  .then((userCredentials) => console.log('succesfull login'))
    * ```
    */
   async createAccount(email: string, password: string, extraUserData?: any): Promise<auth.UserCredential>{
-    return await this.getSecondaryApp().auth().createUserWithEmailAndPassword(email, password)
+    return await this.SecondaryApp.auth().createUserWithEmailAndPassword(email, password)
       .then((userCredentials) => this.setExtraDataToUserCol(userCredentials, extraUserData))
-      .then((userCredentials) => this.getSecondaryApp().auth().signOut()
+      .then((userCredentials) => this.SecondaryApp.auth().signOut()
         .then(() => userCredentials)
         )
   }
 
   private setExtraDataToUserCol(userCredentials: auth.UserCredential, extraUserData?: any): auth.UserCredential {
     if (extraUserData != null) {
-      this.getSecondaryApp().firestore().collection('users').doc(userCredentials.user.uid).set(extraUserData, {merge: true})
+      this.SecondaryApp.firestore().collection('users').doc(userCredentials.user.uid).set(extraUserData, {merge: true})
         .catch((err) => alert(err))
     }
     return userCredentials;
@@ -86,10 +81,12 @@ export class AuthenticationService {
     .then(() => console.log(`email send to ${user.email}`)) //TODO show alert of send email
   }
 
-  private getSecondaryApp(): firebase.app.App {
-    if(!this.firebaseApp) {
-      this.firebaseApp = firebase.initializeApp(this.config.firebaseConfig, "secondary");
+  get SecondaryApp(): firebase.app.App {
+    try {
+      return firebase.app('secondary')
     }
-    return this.firebaseApp;
+    catch(error){
+      return firebase.initializeApp(this.config.firebaseConfig, "secondary");
+    }
   }
 }
