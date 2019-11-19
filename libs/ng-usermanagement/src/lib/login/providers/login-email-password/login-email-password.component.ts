@@ -19,6 +19,8 @@ export class LoginEmailPasswordComponent implements OnInit {
 
   public loginForm: FormGroup;
 
+  public loading: boolean = false;
+
   constructor(
     public authService: AuthenticationService,
     private formBuilder: FormBuilder,
@@ -35,8 +37,10 @@ export class LoginEmailPasswordComponent implements OnInit {
   }
 
   public loginUser(email: string, password: string){
+    this.loading = true;
     this.authService.loginWithEmailAndPassword(email, password)
     .then((Credential) => {
+      this.loading = false;
       this.snackBar.open('welcome', '', { duration: 2000 });
       this.onSuccess.next(Credential);
       if (this.redirectOnSucces != null) {
@@ -44,6 +48,7 @@ export class LoginEmailPasswordComponent implements OnInit {
       }
     })
     .catch((err) => {
+      this.loading = false;
       this.snackBar.open(err.message, '', { duration: 2000 });
       this.onSuccess.next(err);
     })

@@ -17,6 +17,7 @@ import { MatSnackBarModule } from '@angular/material';
     ReactiveFormsModule,
     SpinnerModule,
     MatSnackBarModule,
+    SpinnerModule,
   ],
   exports: [
     LoginEmailPasswordComponent,
