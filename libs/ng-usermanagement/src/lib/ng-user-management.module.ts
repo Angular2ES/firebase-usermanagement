@@ -6,7 +6,7 @@ import { LoginProvidersModule } from './login/login-providers.module';
 import { RegisterModule } from './register/register.module';
 import { SpinnerModule } from './spinner/spinner.module';
 import { LoginRegisterModule } from './templates/login-register.module';
-import { IInputValidation, InputValidationToken, UserProvidedValidationToken, ngInputValidationFactory} from './interfaces/input-validation.interface'
+import { inputValidation, InputValidationToken, UserProvidedValidationToken, ngInputValidationFactory} from './interfaces/input-validation.interface'
 
 @NgModule({
   declarations: [
@@ -24,7 +24,7 @@ export class NgUserManagementModule {
   static forRoot(
     //configFactory: FirebaseAppConfig,
     config: ngUserManagementConfig = {},
-    inputValidationConfig?: IInputValidation,
+    inputValidationConfig?: inputValidation,
     appNameFactory?: () => string
   ): ModuleWithProviders<any> {
     return {

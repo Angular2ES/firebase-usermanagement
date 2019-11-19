@@ -1,6 +1,6 @@
 import { Component, Input, OnInit, Inject } from '@angular/core';
 import { FormControl } from '@angular/forms';
-import { IInputValidation, InputValidationToken } from '../interfaces/input-validation.interface';
+import { inputValidation, InputValidationToken } from '../interfaces/input-validation.interface';
 
 @Component({
   selector: 'ng-validation-message',
@@ -12,7 +12,7 @@ export class ValidationMessageComponent implements OnInit {
   @Input() control: FormControl;
 
   constructor(
-    @Inject(InputValidationToken) public config: IInputValidation
+    @Inject(InputValidationToken) public config: inputValidation
   ) { }
   
   ngOnInit() {
