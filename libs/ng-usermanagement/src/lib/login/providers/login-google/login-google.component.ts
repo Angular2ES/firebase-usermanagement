@@ -43,13 +43,13 @@ export class LoginGoogleComponent{
   // Start a sign in process for an unauthenticated user.
   // with redirect to google login service
   signInWithRedirect(){
-    this.authService.AngularFireAuth.auth.signInWithRedirect(this.googleProvider)
+    this.authService.loginWithRedirect(this.googleProvider)
     .catch(error => this.errorHandler(error));
   }
 
   // Using a popup.
   signInWithPopup(){
-    this.authService.AngularFireAuth.auth.signInWithPopup(this.googleProvider)
+    this.authService.loginWithPopup(this.googleProvider)
     .then((Credential) => this.resultHandler(Credential))
     .catch(error => this.errorHandler(error));
   }

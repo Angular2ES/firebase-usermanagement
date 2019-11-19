@@ -61,6 +61,14 @@ export class AuthenticationService {
     return await this.angularFireAuth.auth.signInWithEmailAndPassword(email, password);
   }
 
+  async loginWithRedirect(authProvider: auth.AuthProvider): Promise<void> {
+    return await this.angularFireAuth.auth.signInWithRedirect(authProvider);
+  }
+
+  async loginWithPopup(authProvider: auth.AuthProvider): Promise<auth.UserCredential> {
+    return await this.angularFireAuth.auth.signInWithPopup(authProvider);
+  }
+
   /**
    * @param user
    */
