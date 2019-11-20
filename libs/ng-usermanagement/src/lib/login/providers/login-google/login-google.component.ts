@@ -11,8 +11,8 @@ import { AuthenticationService } from '../../../services/auth.service';
 })
 export class LoginGoogleComponent{
 
-  @Input('googleProviderConfig') config: string;
-  @Input('redirectOnSucces') redirectOnSucces: string;
+  @Input('googleProviderConfig') config: string; // to use redirect; 'redirect', to use popup; 'popup'
+  @Input('redirectOnSucces') redirectOnSucces: string; // redirect the user to another page
   
   @Output('onSucces') onSuccess: EventEmitter<auth.UserCredential> = new EventEmitter();
   @Output('onFailed') onFailed: EventEmitter<string> = new EventEmitter();
@@ -30,7 +30,7 @@ export class LoginGoogleComponent{
     this.googleProvider.addScope('email');
 
     // Using a redirect.
-    this.authService.AngularFireAuth.auth.getRedirectResult().then((result) => {
+    this.authService.RedirectResult.then((result) => {
       this.resultHandler(result);
     }).catch(error => this.errorHandler(error));
   }

@@ -13,11 +13,7 @@ export class AuthenticationService {
     private angularFireAuth: AngularFireAuth,
     @Inject(NgUserManagementConfigToken) public config: ngUserManagementConfig) {
   }
-
-  get AngularFireAuth(): AngularFireAuth {
-    return this.angularFireAuth;
-  }
-
+  
   /**
    * Create a new account.
    * The user will not be logged in after creating an account
@@ -56,31 +52,32 @@ export class AuthenticationService {
     return await this.angularFireAuth.auth.signInWithEmailAndPassword(email, password);
   }
 
+  /**
+   * Redirect user to the given provider
+   * @param authProvider
+   */
   async loginWithRedirect(authProvider: auth.AuthProvider): Promise<void> {
     return await this.angularFireAuth.auth.signInWithRedirect(authProvider);
   }
+  
+  /**
+   * Returns the redirect result after redirecting the user
+   */
+  get RedirectResult(): Promise<auth.UserCredential> {
+    return this.angularFireAuth.auth.getRedirectResult();
+  }
 
+  /**
+   * Creates a popup for the given provider
+   * @param authProvider 
+   */
   async loginWithPopup(authProvider: auth.AuthProvider): Promise<auth.UserCredential> {
     return await this.angularFireAuth.auth.signInWithPopup(authProvider);
   }
 
   /**
-   * @param user
+   * Get an "secondary" App initialzized with the firebase configs
    */
-  async sendChangePasswordLink(user: User): Promise<void>{
-    // after user changed password he/she will be logged in again
-    return this.angularFireAuth.auth.sendPasswordResetEmail(user.email) 
-    .then(() => console.log(`email send to ${user.email}`)) //TODO show alert of send email
-  }
-  
-  /**
-   * @param user 
-   */
-  async sendVerifyEmailLink(user: User): Promise<void> {
-    return user.sendEmailVerification()
-    .then(() => console.log(`email send to ${user.email}`)) //TODO show alert of send email
-  }
-
   get SecondaryApp(): firebase.app.App {
     try {
       return firebase.app('secondary')
