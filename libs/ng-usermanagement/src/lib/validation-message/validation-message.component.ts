@@ -1,5 +1,7 @@
-import { Component, Input, OnInit, Inject } from '@angular/core';
+import { Component, Inject, Input, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
+import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 import { inputValidation, InputValidationToken } from '../interfaces/input-validation.interface';
 
 @Component({
@@ -11,19 +13,23 @@ export class ValidationMessageComponent implements OnInit {
 
   @Input() control: FormControl;
 
+  public errorMessage: Observable<string | void>;
+
   constructor(
     @Inject(InputValidationToken) public config: inputValidation
-  ) { }
+  ) {}
   
   ngOnInit() {
-  }
-  
-  get errorMessage() {
-    for (let propertyName in this.control.errors) {
-      if (this.control.errors.hasOwnProperty(propertyName) && this.control.touched) {
-        return this.config[propertyName] //this.validationService.getValidatorErrorMessage(propertyName, this.control.errors[propertyName]);
-      }
-    }
-    return null;
+    this.errorMessage = this.control.valueChanges.pipe(
+      map((control) => {
+        for (let propertyName in this.control.errors) {
+          if (this.control.touched) {
+            console.log('prop', propertyName);
+            return this.config[propertyName]
+          }
+        }
+        return
+      })
+    )
   }
 }

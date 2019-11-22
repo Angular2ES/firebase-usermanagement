@@ -1,7 +1,7 @@
 import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthenticationService } from '../services/auth.service';
-import { Validators, FormBuilder, FormGroup } from '@angular/forms';
+import { Validators, FormBuilder, FormGroup, FormControl } from '@angular/forms';
 import { verifyPassword } from '../validation-message/validators';
 
 
@@ -26,10 +26,10 @@ export class RegisterComponent implements OnInit {
     private router: Router) 
   { 
     this.registerForm = new FormBuilder().group({
-      email: ['', [Validators.required, Validators.email]],
-      password: ['', [Validators.required]],
-      confirmPassword: ['', [Validators.required]]
-    }, {validators: verifyPassword})
+      email: new FormControl('', {updateOn: 'blur', validators: [Validators.required, Validators.email]}),
+      password: new FormControl('', {updateOn: 'blur', validators: [Validators.required]}),
+      confirmPassword: new FormControl('', {updateOn: 'blur', validators: [Validators.required]})
+    }, {updateOn: 'blur', validators: verifyPassword})
   }
 
   ngOnInit() {
