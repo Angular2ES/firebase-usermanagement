@@ -36,16 +36,17 @@ export class LoginEmailPasswordComponent implements OnInit {
   ngOnInit() {
   }
 
-  public loginUser(email: string, password: string){
+  public loginUser(email: string, password: string): Promise<auth.UserCredential | void> {
     this.loading = true;
-    this.authService.loginWithEmailAndPassword(email, password)
-    .then((Credential) => {
+    return this.authService.loginWithEmailAndPassword(email, password)
+    .then((credential) => {
       this.loading = false;
       this.snackBar.open('welcome', '', { duration: 2000 });
-      this.onSuccess.next(Credential);
+      this.onSuccess.next(credential);
       if (this.redirectOnSucces != null) {
         this.router.navigate([this.redirectOnSucces])
       }
+      return credential;
     })
     .catch((err) => {
       this.loading = false;
