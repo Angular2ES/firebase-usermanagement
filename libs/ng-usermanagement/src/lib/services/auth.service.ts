@@ -75,6 +75,20 @@ export class AuthenticationService {
     return await this.angularFireAuth.auth.signInWithPopup(authProvider);
   }
 
+  async sendChangePasswordLink(email: string): Promise<void>{
+    // after user changed password he/she will be logged in again
+    // if you don't want this log the user out
+    // const url = { url : this.config.loginRedirectUrl }
+    return this.angularFireAuth.auth.sendPasswordResetEmail(email) 
+  }
+
+  async deleteAccount(): Promise<void> {
+    return await this.angularFireAuth.auth.currentUser.delete()
+  }
+
+  async logout(): Promise<void> {
+    return await this.angularFireAuth.auth.signOut()
+  }
   /**
    * Get an "secondary" App initialzized with the firebase configs
    */
