@@ -8,7 +8,7 @@ import { AngularFireAuth } from '@angular/fire/auth';
   providedIn: 'root'
 })
 export class AuthenticationService {
-
+  
   constructor(
     private angularFireAuth: AngularFireAuth,
     @Inject(NgUserManagementConfigToken) public config: ngUserManagementConfig) {
@@ -32,26 +32,26 @@ export class AuthenticationService {
     return await this.SecondaryApp.auth().createUserWithEmailAndPassword(email, password)
       .then((userCredentials) => this.setExtraDataToUserCol(userCredentials, extraUserData))
       .then((userCredentials) => this.SecondaryApp.auth().signOut()
-        .then(() => userCredentials)
-        )
-  }
-
-  private setExtraDataToUserCol(userCredentials: auth.UserCredential, extraUserData?: any): auth.UserCredential {
-    if (extraUserData != null) {
-      this.SecondaryApp.firestore().collection('users').doc(userCredentials.user.uid).set(extraUserData, {merge: true})
-        .catch((err) => alert(err))
+      .then(() => userCredentials)
+      )
     }
-    return userCredentials;
+    
+    private setExtraDataToUserCol(userCredentials: auth.UserCredential, extraUserData?: any): auth.UserCredential {
+      if (extraUserData != null) {
+        this.SecondaryApp.firestore().collection('users').doc(userCredentials.user.uid).set(extraUserData, {merge: true})
+        .catch((err) => alert(err))
+      }
+      return userCredentials;
+    }
+    
+    /**
+     * @param email
+     * @param password
+     */
+    async loginWithEmailAndPassword(email: string, password: string): Promise<auth.UserCredential>{
+      return await this.angularFireAuth.auth.signInWithEmailAndPassword(email, password);
   }
-
-  /**
-   * @param email
-   * @param password
-   */
-  async loginWithEmailAndPassword(email: string, password: string): Promise<auth.UserCredential>{
-    return await this.angularFireAuth.auth.signInWithEmailAndPassword(email, password);
-  }
-
+  
   /**
    * Redirect user to the given provider
    * @param authProvider
@@ -66,7 +66,7 @@ export class AuthenticationService {
   get RedirectResult(): Promise<auth.UserCredential> {
     return this.angularFireAuth.auth.getRedirectResult();
   }
-
+  
   /**
    * Creates a popup for the given provider
    * @param authProvider 
@@ -74,7 +74,7 @@ export class AuthenticationService {
   async loginWithPopup(authProvider: auth.AuthProvider): Promise<auth.UserCredential> {
     return await this.angularFireAuth.auth.signInWithPopup(authProvider);
   }
-
+  
   async sendChangePasswordLink(email: string): Promise<void>{
     // after user changed password he/she will be logged in again
     // if you don't want this log the user out
@@ -89,6 +89,7 @@ export class AuthenticationService {
   async logout(): Promise<void> {
     return await this.angularFireAuth.auth.signOut()
   }
+
   /**
    * Get an "secondary" App initialzized with the firebase configs
    */
