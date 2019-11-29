@@ -1,7 +1,5 @@
 import { HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
-// firebase imports
-import { AngularFireModule } from '@angular/fire';
 import { AngularFireAuthModule } from '@angular/fire/auth';
 import { AngularFirestoreModule } from '@angular/fire/firestore';
 import { FormBuilder, FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -29,8 +27,6 @@ import { GroupSettingsComponent } from './group-settings/group-settings.componen
 import { HeaderComponent } from './header/header.component';
 import { LoginTestComponent } from './login.test.component';
 import { UserListContainerComponent } from './user-list-container/user-list-container.component';
-import { UserSettingsComponent } from './user-settings/user.settings.Component';
-import { UserSettingsTestComponent } from './user.settings.test.component';
 import { ValidationMessagesComponent } from './validation-messages/validation-messages.component';
 
 // TODO remove this after refactoring
@@ -44,8 +40,6 @@ const userModuleConfig: UserModuleConfig = {
 @NgModule({
   declarations: [
     LoginTestComponent,
-    UserSettingsTestComponent,
-    UserSettingsComponent,
     AppHomeComponent,
     HeaderComponent,
     CreateAccountComponent,

@@ -1,6 +1,6 @@
-import { NgModule } from '@angular/core';
-import { MatProgressSpinnerModule, MatButtonModule, MatButtonToggleModule, MatBottomSheetModule } from '@angular/material';
 import { CommonModule } from '@angular/common';
+import { NgModule } from '@angular/core';
+import { MatProgressSpinnerModule } from '@angular/material';
 import { SpinnerComponent } from './spinner.component';
 
 @NgModule({
