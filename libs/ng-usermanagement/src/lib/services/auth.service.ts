@@ -8,6 +8,8 @@ import { AngularFireAuth } from '@angular/fire/auth';
   providedIn: 'root'
 })
 export class AuthenticationService {
+
+  private adminToken: string = '';
   
   constructor(
     private angularFireAuth: AngularFireAuth,
@@ -30,26 +32,26 @@ export class AuthenticationService {
    */
   async createAccount(email: string, password: string, extraUserData?: any): Promise<auth.UserCredential>{
     return await this.SecondaryApp.auth().createUserWithEmailAndPassword(email, password)
-      .then((userCredentials) => this.setExtraDataToUserCol(userCredentials, extraUserData))
-      .then((userCredentials) => this.SecondaryApp.auth().signOut()
-      .then(() => userCredentials)
-      )
-    }
+    .then((userCredentials) => this.setExtraDataToUserCol(userCredentials, extraUserData))
+    .then((userCredentials) => this.SecondaryApp.auth().signOut()
+    .then(() => userCredentials)
+    )
+  }
     
-    private setExtraDataToUserCol(userCredentials: auth.UserCredential, extraUserData?: any): auth.UserCredential {
-      if (extraUserData != null) {
-        this.SecondaryApp.firestore().collection('users').doc(userCredentials.user.uid).set(extraUserData, {merge: true})
-        .catch((err) => alert(err))
-      }
-      return userCredentials;
+  private setExtraDataToUserCol(userCredentials: auth.UserCredential, extraUserData?: any): auth.UserCredential {
+    if (extraUserData != null) {
+      this.SecondaryApp.firestore().collection('users').doc(userCredentials.user.uid).set(extraUserData, {merge: true})
+      .catch((err) => alert(err))
     }
+    return userCredentials;
+  }
     
-    /**
-     * @param email
-     * @param password
-     */
-    async loginWithEmailAndPassword(email: string, password: string): Promise<auth.UserCredential>{
-      return await this.angularFireAuth.auth.signInWithEmailAndPassword(email, password);
+  /**
+   * @param email
+   * @param password
+   */
+  async loginWithEmailAndPassword(email: string, password: string): Promise<auth.UserCredential>{
+    return await this.angularFireAuth.auth.signInWithEmailAndPassword(email, password);
   }
   
   /**
@@ -74,12 +76,10 @@ export class AuthenticationService {
   async loginWithPopup(authProvider: auth.AuthProvider): Promise<auth.UserCredential> {
     return await this.angularFireAuth.auth.signInWithPopup(authProvider);
   }
-  
-  async sendChangePasswordLink(email: string): Promise<void>{
-    // after user changed password he/she will be logged in again
-    // if you don't want this log the user out
-    // const url = { url : this.config.loginRedirectUrl }
-    return this.angularFireAuth.auth.sendPasswordResetEmail(email) 
+
+  async loginWithCustomToken(uid: string, adminToken?: string): Promise<auth.UserCredential> {
+    this.adminToken = adminToken ? adminToken : '';
+    return await firebase.auth().signInWithCustomToken(uid)
   }
 
   async deleteAccount(): Promise<void> {
@@ -88,6 +88,12 @@ export class AuthenticationService {
 
   async logout(): Promise<void> {
     return await this.angularFireAuth.auth.signOut()
+      .then(() => {
+        if (this.adminToken !== '') {
+          this.loginWithCustomToken(this.adminToken)
+          this.adminToken = '';
+        }
+      })
   }
 
   /**

@@ -1,5 +1,6 @@
 <div class="admin-settings-collection" *ngIf="currentUser$ | async | json">
-  <ng-user-settings></ng-user-settings>
   <input type="text" class="form-control mb-2" #impUser>
   <button class="waves-effect waves-light btn" (click)="impersonateUser(impUser.value)"></button>
 </div>
+
+<ng-spinner *ngIf="loading"></ng-spinner>
