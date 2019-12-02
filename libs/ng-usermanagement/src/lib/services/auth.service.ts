@@ -1,8 +1,8 @@
 import { Inject, Injectable } from '@angular/core';
-import * as firebase from 'firebase';
-import { auth, User } from 'firebase';
-import { ngUserManagementConfig, NgUserManagementConfigToken } from '../interfaces/firebase-config.interface';
 import { AngularFireAuth } from '@angular/fire/auth';
+import * as firebase from 'firebase';
+import { auth } from 'firebase';
+import { ngUserManagementConfig, NgUserManagementConfigToken } from '../interfaces/firebase-config.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -31,17 +31,16 @@ export class AuthenticationService {
    * ```
    */
   async createAccount(email: string, password: string, extraUserData?: any): Promise<auth.UserCredential>{
-    return await this.SecondaryApp.auth().createUserWithEmailAndPassword(email, password)
-    .then((userCredentials) => this.setExtraDataToUserCol(userCredentials, extraUserData))
-    .then((userCredentials) => this.SecondaryApp.auth().signOut()
-    .then(() => userCredentials)
-    )
+    return this.SecondaryApp.auth().createUserWithEmailAndPassword(email, password)
+      .then((userCredentials) => this.setExtraDataToUserCol(userCredentials, extraUserData))
+      .then((userCredentials) => this.SecondaryApp.auth().signOut()
+        .then(() => userCredentials)
+        )
   }
     
   private setExtraDataToUserCol(userCredentials: auth.UserCredential, extraUserData?: any): auth.UserCredential {
     if (extraUserData != null) {
       this.SecondaryApp.firestore().collection('users').doc(userCredentials.user.uid).set(extraUserData, {merge: true})
-      .catch((err) => alert(err))
     }
     return userCredentials;
   }
@@ -51,7 +50,7 @@ export class AuthenticationService {
    * @param password
    */
   async loginWithEmailAndPassword(email: string, password: string): Promise<auth.UserCredential>{
-    return await this.angularFireAuth.auth.signInWithEmailAndPassword(email, password);
+    return this.angularFireAuth.auth.signInWithEmailAndPassword(email, password);
   }
   
   /**
@@ -59,7 +58,7 @@ export class AuthenticationService {
    * @param authProvider
    */
   async loginWithRedirect(authProvider: auth.AuthProvider): Promise<void> {
-    return await this.angularFireAuth.auth.signInWithRedirect(authProvider);
+    return this.angularFireAuth.auth.signInWithRedirect(authProvider);
   }
   
   /**
@@ -74,7 +73,7 @@ export class AuthenticationService {
    * @param authProvider 
    */
   async loginWithPopup(authProvider: auth.AuthProvider): Promise<auth.UserCredential> {
-    return await this.angularFireAuth.auth.signInWithPopup(authProvider);
+    return this.angularFireAuth.auth.signInWithPopup(authProvider);
   }
 
   async loginWithCustomToken(uid: string, adminToken?: string): Promise<auth.UserCredential> {
