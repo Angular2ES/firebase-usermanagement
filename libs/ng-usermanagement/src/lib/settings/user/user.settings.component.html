@@ -6,5 +6,8 @@
     <button type="submit" class="waves-effect waves-light btn">update settings</button>
     <button class="waves-effect waves-light btn" (click)="sendResetPasswordMail()">new password</button>
     <button class="waves-effect waves-light btn" (click)="deleteAccount()">delete account</button>         
+    <button class="waves-effect waves-light btn" (click)="logout()">logout</button>         
   </form>
 </div>
+
+<ng-spinner *ngIf="loading"></ng-spinner>

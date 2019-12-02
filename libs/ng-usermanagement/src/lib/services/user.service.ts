@@ -12,7 +12,8 @@ export class UserService {
   private user$: Observable<any>;
   private userCollection: AngularFirestoreCollection = this.db.collection('users');
   
-  constructor(private db: AngularFirestore,
+  constructor(
+    private db: AngularFirestore,
     private angularFireAuth: AngularFireAuth) {
       
     this.user$ = this.firebaseUser.pipe(
@@ -24,14 +25,14 @@ export class UserService {
 /**
  * Get the firebase user that is current logged in
  */
-  get firebaseUser(): Observable<User> {
+  get firebaseUser(): Observable<User | null> {
     return this.angularFireAuth.authState;
   }
   
   /**
    * @param uid 
    * @param userData 
-   */
+   */ 
   public async updateUser(uid: string, userData): Promise<void> {
     return this.userCollection.doc(uid).update(userData);
   }
@@ -39,7 +40,7 @@ export class UserService {
   /**
    * Get current user that is logged in
    */
-  public getCurrentUser(): Observable<any> {
+  get currentUser(): Observable<any> {
     return this.user$;
   }
 
@@ -52,6 +53,17 @@ export class UserService {
       map(user => user),
       shareReplay(1)
     )
+  }
+
+  async sendChangePasswordLink(email: string): Promise<void>{
+    // after user changed password he/she will be logged in again
+    // if you don't want this log the user out
+    // const url = { url : this.config.loginRedirectUrl }
+    return this.angularFireAuth.auth.sendPasswordResetEmail(email) 
+  }
+
+  async deleteAccount(): Promise<void> {
+    return await this.angularFireAuth.auth.currentUser.delete()
   }
 
   public deleteUserFromDatabase(uid: string): Promise<void> {

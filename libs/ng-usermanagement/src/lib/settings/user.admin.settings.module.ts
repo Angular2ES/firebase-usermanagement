@@ -4,6 +4,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatSnackBarModule } from '@angular/material';
 import { AdminSettingsComponent } from './admin/admin.settings.Component';
 import { UserSettingsComponent } from './user/user.settings.Component';
+import { SpinnerModule } from '../spinner/spinner.module';
 
 @NgModule({
   declarations: [
@@ -15,6 +16,7 @@ import { UserSettingsComponent } from './user/user.settings.Component';
     FormsModule,
     ReactiveFormsModule,
     MatSnackBarModule,
+    SpinnerModule,
   ],
   exports: [
     UserSettingsComponent,
