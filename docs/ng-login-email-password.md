@@ -17,5 +17,5 @@
 | option | bind  |  type  |   default    | description  |
 |:---------------------|:------:|:------:|:------------:|:-------------------------------------------------------------------------------------------------|
 | redirectOnSucces     | `Input()`  | `string` | - | choose the url after succesful register
-| onSucces             | `Output()` | - | this event will be fired when the login was succesful, The userCredentials is emitted
-| onFailed             | `Output()` | - | this event will be fired when the login was failed, The error is emitted
+| onSucces            | `Output()`  | `userCredentials`   | - | this event will be fired when the login was succesful, The userCredentials is emitted
+| onFailed            | `Output()`  | `any` | - | this event will be fired when the login was failed, The error is emitted
