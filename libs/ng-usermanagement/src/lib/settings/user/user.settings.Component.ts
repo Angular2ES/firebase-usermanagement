@@ -42,7 +42,7 @@ export class UserSettingsComponent {
   async updateUserData(data: any): Promise<void> {
     this.loading = true;
     return this.userService.updateUser(this.userSettingsForm.controls['uid'].value, { ...data, ...this.addExtraData})
-      .then(() => { this.loading = false; this.snackBarMessage('update succesfull') })
+      .then(() => { this.loading = false; this.snackBarMessage('update succesful') })
       .catch((e) => this.errorHandler(e));
   }
 

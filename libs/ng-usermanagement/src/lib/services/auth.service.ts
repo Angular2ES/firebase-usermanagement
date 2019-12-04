@@ -31,16 +31,16 @@ export class AuthenticationService {
    * ```
    */
   async createAccount(email: string, password: string, extraUserData?: any): Promise<auth.UserCredential>{
-    return this.SecondaryApp.auth().createUserWithEmailAndPassword(email, password)
+    return this.secondaryApp.auth().createUserWithEmailAndPassword(email, password)
       .then((userCredentials) => this.setExtraDataToUserCol(userCredentials, extraUserData))
-      .then((userCredentials) => this.SecondaryApp.auth().signOut()
+      .then((userCredentials) => this.secondaryApp.auth().signOut()
         .then(() => userCredentials)
         )
   }
     
   private setExtraDataToUserCol(userCredentials: auth.UserCredential, extraUserData?: any): auth.UserCredential {
     if (extraUserData != null) {
-      this.SecondaryApp.firestore().collection('users').doc(userCredentials.user.uid).set(extraUserData, {merge: true})
+      this.secondaryApp.firestore().collection('users').doc(userCredentials.user.uid).set(extraUserData, {merge: true})
     }
     return userCredentials;
   }
@@ -98,7 +98,7 @@ export class AuthenticationService {
   /**
    * Get an "secondary" App initialzized with the firebase configs
    */
-  get SecondaryApp(): firebase.app.App {
+  get secondaryApp(): firebase.app.App {
     try {
       return firebase.app('secondary')
     }

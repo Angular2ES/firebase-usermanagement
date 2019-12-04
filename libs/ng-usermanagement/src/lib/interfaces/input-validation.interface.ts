@@ -14,7 +14,7 @@ export interface inputValidation {
 export const defaultInputValidation: inputValidation = {
   required: 'Required',
   email: 'Invalid email address',
-  verifyPassword: 'verify password',
+  verifyPassword: 'Verify your password',
 }
 
 // Merge default config with user provided config.

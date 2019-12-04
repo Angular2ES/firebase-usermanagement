@@ -17,11 +17,10 @@ export class AdminSettingsComponent implements OnDestroy {
   public currentUser$: Observable<any>
   public loading: boolean = false;
 
-  private impUser: Subscription;
+  private curImpersonatedUser: Subscription;
   
   public adminSettingsForm: FormGroup = this.formBuilder.group({
     uid: new FormControl(),
-    displayName: new FormControl(),
   });
   
   constructor(
@@ -36,12 +35,12 @@ export class AdminSettingsComponent implements OnDestroy {
     }
     
     ngOnDestroy(): void {
-      this.impUser.unsubscribe()
+      this.curImpersonatedUser.unsubscribe()
     }
 
     public async impersonateUser(uid: string) {
       this.loading = true;
-      this.impUser = this.userService.getUserWithId(uid).pipe(
+      this.curImpersonatedUser = this.userService.getUserWithId(uid).pipe(
         map(user => {
           if (user){
             this.adminAuthService.impersonateUser(uid, this.adminSettingsForm.controls['uid'].value)
@@ -54,7 +53,7 @@ export class AdminSettingsComponent implements OnDestroy {
             this.errorHandler({message: 'user does not exist'})
           }
         })
-      ).subscribe()
+      ).subscribe();
   }
   
   private errorHandler(error: any): void {

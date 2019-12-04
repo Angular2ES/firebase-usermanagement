@@ -3,11 +3,11 @@
   <ng-validation-message [control]="registerForm.get('email')"></ng-validation-message>
 
   <input type="password" [ngClass]="{'form-submitted': formSubmitted}" class="form-control mb-2" placeholder="Password" formControlName="password">
-  <!-- <ng-validation-message [control]="registerForm.get('password')"></ng-validation-message> -->
+  <ng-validation-message [control]="registerForm.get('password')"></ng-validation-message>
 
   <input type="password" [ngClass]="{'form-submitted': formSubmitted}" class="form-control mb-2" placeholder="Password" formControlName="confirmPassword">
-  <!-- <ng-validation-message [control]="registerForm.get('confirmPassword')"></ng-validation-message> -->
-  <!-- <ng-validation-message [control]="registerForm"></ng-validation-message> -->
+  <ng-validation-message [control]="registerForm.get('confirmPassword')"></ng-validation-message>
+  <ng-validation-message [control]="registerForm"></ng-validation-message>
   <button class="waves-effect waves-light btn" type="submit" [disabled]="!registerForm.valid">create account</button>
 </form>
 

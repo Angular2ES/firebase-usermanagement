@@ -24,7 +24,6 @@ export class ValidationMessageComponent implements OnInit {
       map((control) => {
         for (let propertyName in this.control.errors) {
           if (this.control.touched) {
-            console.log('prop', propertyName);
             return this.config[propertyName]
           }
         }
