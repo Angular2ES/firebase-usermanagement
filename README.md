@@ -56,11 +56,63 @@ Make sure to isntall the following peerDependencies
     "rxjs": "~6.4.0"
   }
 ```
+----
 
 <a name="installation"/>
 
 ## Installation
+## 1. Install with *ng add*
+If Angular Material Design is not setup, just run ng add @angular/material
+
+## 2. Install with *npm*
 NaN
+
+## 3. Configs
+```typescript
+import { BrowserModule } from '@angular/platform-browser';
+import { NgModule } from '@angular/core';
+
+import { AppComponent } from './app.component';
+
+// Import your library
+import { NgxAuthFirebaseUIModule } from 'ngx-auth-firebaseui';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+
+const firebaseConfig = {
+  authGuardLoggedInURL: "[fallback Url]" // Fallback to this url if the user isn't logged in
+  firebaseConfig: {
+    apiKey: "[Project Key]",
+    authDomain: "[Project Id].firebaseapp.com",
+    databaseURL: "https://[Project Id].firebaseio.com",
+    projectId: "[Project Id]",
+    storageBucket: "[Project Id].appspot.com",
+    messagingSenderId: "[messageSender Id]",
+    appId: "[App Id]"
+  }
+};
+
+const inputValidationConfig = {
+  required: 'Required',
+  email: 'Invalid email address',
+  verifyPassword: 'Verify your password',
+}
+
+@NgModule({
+  declarations: [
+    AppComponent
+  ],
+  imports: [
+    BrowserModule,
+    BrowserAnimationsModule,
+
+    // Specify the ngx-auth-firebaseui library as an import
+    NgUserManagementModule.forRoot(firebaseConfig, inputValidationConfig),
+  ],
+  providers: [],
+  bootstrap: [AppComponent]
+})
+export class AppModule { }
+```
 
 # FirebaseUsermanagement
 

@@ -1,7 +1,6 @@
 ## Table of Contents
 - [Usage](#usage)
 - [API](#api)
-- [Example](#example)
 
 <a name="usage"/>
 
