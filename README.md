@@ -37,12 +37,6 @@
 
 <a name="peer-dependencies"/>
 
-## Peer Dependencies
-Make sure to isntall the following peerDependencies
----
-
-<a name="peerDependencies"/>
-
 ## Peer Dependencies - please make sure that peerDependencies are installed if you are not using the schematics
 
 ```json
@@ -64,10 +58,20 @@ Make sure to isntall the following peerDependencies
 ## 1. Install with *ng add*
 If Angular Material Design is not setup, just run ng add @angular/material
 
-## 2. Install with *npm*
-NaN
+Now you can add the library with *ng add*
+```shell
+ng add ng-usermanagement
+```
+
+## 2. Install with *npm* (Alternative)
+Install all of the above dependencies with *npm*
+Install the library with *npm*
+```shell
+npm install @ng-usermanagement
+```
 
 ## 3. Configs
+Once you have installed the library you need to import the module into the main module.
 ```typescript
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';

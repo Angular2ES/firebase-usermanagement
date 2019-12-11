@@ -8,7 +8,7 @@
 You may have to use the '[IAM and admin](https://console.cloud.google.com/project/_/iam-admin)' section of Google Clout Platform Console to grant the necessary permissions.
 Search for the [Your project name]@appspot.gserviceaccount.com and check if it has the following role active 'Service Account Token Creater'.
 <p align="center">
-  <img width="384px" style="text-align: center;" 
+  <img width="600px" style="text-align: center;" 
   src="assets/IAM-ServiceAccountTokenCreator.png">
 </p>
 If It doens't add the 'Service Account Token Creater'.
