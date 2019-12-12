@@ -1,7 +1,5 @@
 import { HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
-// firebase imports
-import { AngularFireModule } from '@angular/fire';
 import { AngularFireAuthModule } from '@angular/fire/auth';
 import { AngularFirestoreModule } from '@angular/fire/firestore';
 import { FormBuilder, FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -27,13 +25,8 @@ import { GroupListContainerComponent } from './group-list/group-list-container/g
 import { GroupListComponent } from './group-list/group-list.component';
 import { GroupSettingsComponent } from './group-settings/group-settings.component';
 import { HeaderComponent } from './header/header.component';
-import { LoginComponent } from './login-email-password/email-password-login.component';
-import { LoginEmailComponent } from './login-email/login-email.component';
-import { LoginGoogleComponent } from './login-google/login-google.component';
 import { LoginTestComponent } from './login.test.component';
 import { UserListContainerComponent } from './user-list-container/user-list-container.component';
-import { UserSettingsComponent } from './user-settings/user.settings.Component';
-import { UserSettingsTestComponent } from './user.settings.test.component';
 import { ValidationMessagesComponent } from './validation-messages/validation-messages.component';
 
 // TODO remove this after refactoring
@@ -41,24 +34,15 @@ const userModuleConfig: UserModuleConfig = {
   loginRedirectUrl: environment.loginRedirectUrl,
   redirectAfterLogin: '/home',
   redirectAfterLogout: '/login',
-  firebaseCfg: environment.firebase
-};
-
-const userModuleCfg = {
   firebaseConfig: environment.firebase
 };
 
 @NgModule({
   declarations: [
     LoginTestComponent,
-    UserSettingsTestComponent,
-    LoginComponent,
-    UserSettingsComponent,
     AppHomeComponent,
     HeaderComponent,
-    LoginEmailComponent,
     CreateAccountComponent,
-    LoginGoogleComponent,
     GroupSettingsComponent,
     ValidationMessagesComponent,
     GroupListContainerComponent,
@@ -76,14 +60,13 @@ const userModuleCfg = {
     MaterializeModule,
     BrowserAnimationsModule,
     ToasterModule.forRoot(),
-    
-    AngularFireModule.initializeApp(environment.firebase),
+
     AngularFirestoreModule, // imports firebase/firestore, only needed for database features
     AngularFireAuthModule, 
     StorageModule.forRoot({ IDBNoWrap: true }), // imports firebase/auth, only needed for auth features,
     //AngularFireStorageModule // imports firebase/storage only needed for storage features
     
-    NgUserManagementModule.forRoot(userModuleCfg),
+    NgUserManagementModule.forRoot(userModuleConfig),
   ],
   providers: [
     AuthenticationService, FormBuilder, ToasterService,

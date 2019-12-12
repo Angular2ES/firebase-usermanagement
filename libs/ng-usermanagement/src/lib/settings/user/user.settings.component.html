@@ -1,0 +1,13 @@
+<div class="user-settings-collection" *ngIf="currentUser$ | async | json">
+
+  <form [formGroup]="userSettingsForm" (submit)="updateUserData({displayName: userSettingsForm.controls['displayName'].value})">
+    <label>Name</label>
+    <input type="text" class="form-control mb-2" formControlName="displayName" value="{{userSettingsForm.controls['displayName'].value}}">
+    <button type="submit" class="waves-effect waves-light btn">Update settings</button>
+    <button class="waves-effect waves-light btn" (click)="sendResetPasswordMail()">New password</button>
+    <button class="waves-effect waves-light btn" (click)="deleteAccount()">Delete account</button>         
+    <button class="waves-effect waves-light btn" (click)="logout()">Logout</button>         
+  </form>
+</div>
+
+<ng-spinner *ngIf="loading"></ng-spinner>

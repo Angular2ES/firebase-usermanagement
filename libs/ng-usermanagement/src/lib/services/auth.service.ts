@@ -1,67 +1,109 @@
 import { Inject, Injectable } from '@angular/core';
-import * as firebase from 'firebase';
-import { auth, User } from 'firebase';
-import { INgUserManagementConfig, NgUserManagementConfigToken } from '../interfaces/firebase-config.interface';
 import { AngularFireAuth } from '@angular/fire/auth';
-import { AngularFirestore } from '@angular/fire/firestore';
+import * as firebase from 'firebase';
+import { auth } from 'firebase';
+import { ngUserManagementConfig, NgUserManagementConfigToken } from '../interfaces/firebase-config.interface';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthenticationService {
 
-  private firebaseApp: firebase.app.App;
+  private adminToken: string = '';
   
   constructor(
     private angularFireAuth: AngularFireAuth,
-    @Inject(NgUserManagementConfigToken) public config: INgUserManagementConfig) {
-  }
-
-  /**
-   * Create a new account
-   * The function createUserWithEmailAndPassword will log the user into the app
-   * We do not want this so we create a new FirebaseApp
-   * After succesfull creation of the user we log the user out of the secondary app
-   * @param email 
-   * @param password 
-   */
-  async createAccount(email: string, password: string, extraUserData?: any): Promise<auth.UserCredential>{
-    return await this.getSecondaryApp().auth().createUserWithEmailAndPassword(email, password)
-      .then((userCredentials) => this.setExtraDataToUserCol(userCredentials, extraUserData))
-      .then((userCredentials) => this.getSecondaryApp().auth().signOut()
-        .then(() => userCredentials)
-        )
-  }
-
-  private setExtraDataToUserCol(userCredentials: auth.UserCredential, extraUserData?: any): auth.UserCredential {
-    if (extraUserData != null) {
-      this.getSecondaryApp().firestore().collection('users').doc(userCredentials.user.uid).set(extraUserData, {merge: true})
-        .catch((err) => alert(err))
-    }
-    return userCredentials;
-  }
-
-  /**
-   * @param user 
-   */
-  async sendChangePasswordLink(user: User): Promise<void>{
-    // after user changed password he/she will be logged in again
-    return this.angularFireAuth.auth.sendPasswordResetEmail(user.email) 
-    .then(() => console.log(`email send to ${user.email}`)) //TODO show alert of send email
+    @Inject(NgUserManagementConfigToken) public config: ngUserManagementConfig) {
   }
   
   /**
-   * @param user 
+   * Create a new account.
+   * The user will not be logged in after creating an account
+   * @param email 
+   * @param password 
+   * @param extraUserData
+   * 
+   * @usageNotes
+   * Create a new account and add name to the database
+   * ```
+   * createAccount('email', 'password', { userName: 'Jan' })
+   *  .then((userCredentials) => console.log('succesfull login'))
+   * ```
    */
-  async sendVerifyEmailLink(user: User): Promise<void> {
-    return user.sendEmailVerification()
-    .then(() => console.log(`email send to ${user.email}`)) //TODO show alert of send email
+  async createAccount(email: string, password: string, extraUserData?: any): Promise<auth.UserCredential>{
+    return this.secondaryApp.auth().createUserWithEmailAndPassword(email, password)
+      .then((userCredentials) => this.setExtraDataToUserCol(userCredentials, extraUserData))
+      .then((userCredentials) => this.secondaryApp.auth().signOut()
+        .then(() => userCredentials)
+        )
+  }
+    
+  private setExtraDataToUserCol(userCredentials: auth.UserCredential, extraUserData?: any): auth.UserCredential {
+    if (extraUserData != null) {
+      this.secondaryApp.firestore().collection('users').doc(userCredentials.user.uid).set(extraUserData, {merge: true})
+    }
+    return userCredentials;
+  }
+    
+  /**
+   * @param email
+   * @param password
+   */
+  async loginWithEmailAndPassword(email: string, password: string): Promise<auth.UserCredential>{
+    return this.angularFireAuth.auth.signInWithEmailAndPassword(email, password);
+  }
+  
+  /**
+   * Redirect user to the given provider
+   * @param authProvider
+   */
+  async loginWithRedirect(authProvider: auth.AuthProvider): Promise<void> {
+    return this.angularFireAuth.auth.signInWithRedirect(authProvider);
+  }
+  
+  /**
+   * Returns the redirect result after redirecting the user
+   */
+  get RedirectResult(): Promise<auth.UserCredential> {
+    return this.angularFireAuth.auth.getRedirectResult();
+  }
+  
+  /**
+   * Creates a popup for the given provider
+   * @param authProvider 
+   */
+  async loginWithPopup(authProvider: auth.AuthProvider): Promise<auth.UserCredential> {
+    return this.angularFireAuth.auth.signInWithPopup(authProvider);
   }
 
-  private getSecondaryApp(): firebase.app.App {
-    if(!this.firebaseApp) {
-      this.firebaseApp = firebase.initializeApp(this.config.firebaseConfig, "secondary");
+  async loginWithCustomToken(uid: string, adminToken?: string): Promise<auth.UserCredential> {
+    this.adminToken = adminToken ? adminToken : '';
+    return await firebase.auth().signInWithCustomToken(uid)
+  }
+
+  async deleteAccount(): Promise<void> {
+    return await this.angularFireAuth.auth.currentUser.delete()
+  }
+
+  async logout(): Promise<void> {
+    return await this.angularFireAuth.auth.signOut()
+      .then(() => {
+        if (this.adminToken !== '') {
+          this.loginWithCustomToken(this.adminToken)
+          this.adminToken = '';
+        }
+      })
+  }
+
+  /**
+   * Get an "secondary" App initialzized with the firebase configs
+   */
+  get secondaryApp(): firebase.app.App {
+    try {
+      return firebase.app('secondary')
     }
-    return this.firebaseApp;
+    catch(error){
+      return firebase.initializeApp(this.config.firebaseConfig, "secondary");
+    }
   }
 }

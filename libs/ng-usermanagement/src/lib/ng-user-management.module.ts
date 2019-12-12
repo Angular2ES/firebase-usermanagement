@@ -1,25 +1,34 @@
-import { ModuleWithProviders, NgModule } from '@angular/core';
+import { ModuleWithProviders, NgModule, TypeDecorator } from '@angular/core';
 import { FirebaseNameOrConfigToken, FirebaseOptionsToken } from '@angular/fire';
-import { INgUserManagementConfig, ngUserManagementConfigFactory, NgUserManagementConfigToken, UserProvidedConfigToken } from './interfaces/firebase-config.interface';
-import { LoginEmailPasswordModule } from './login-email-password/login-email-password.module';
+import { ngUserManagementConfig, ngUserManagementConfigFactory, NgUserManagementConfigToken, UserProvidedConfigToken } from './interfaces/firebase-config.interface';
+
+import { LoginProvidersModule } from './login/login-providers.module';
 import { RegisterModule } from './register/register.module';
 import { SpinnerModule } from './spinner/spinner.module';
+import { LoginRegisterModule } from './templates/login-register.module';
+import { inputValidation, InputValidationToken, UserProvidedValidationToken, ngInputValidationFactory} from './interfaces/input-validation.interface'
+import { UserAdminSettingsModule } from './settings/user.admin.settings.module';
+
 @NgModule({
-  declarations: [],
+  declarations: [
+  ],
   imports: [],
   exports: [
-    LoginEmailPasswordModule,
+    LoginProvidersModule,
     RegisterModule,
     SpinnerModule,
+    LoginRegisterModule,
+    UserAdminSettingsModule,
   ],
   providers: []
 })
 export class NgUserManagementModule { 
   static forRoot(
     //configFactory: FirebaseAppConfig,
-    config: INgUserManagementConfig = {},
+    config: ngUserManagementConfig = {},
+    inputValidationConfig?: inputValidation,
     appNameFactory?: () => string
-  ): ModuleWithProviders {
+  ): ModuleWithProviders<any> {
     return {
       ngModule: NgUserManagementModule,
       providers:
@@ -38,6 +47,13 @@ export class NgUserManagementModule {
             useFactory: ngUserManagementConfigFactory,
             deps: [UserProvidedConfigToken]
           },
+          {provide: UserProvidedValidationToken, useValue: inputValidationConfig},
+          {
+            provide: InputValidationToken,
+            useFactory: ngInputValidationFactory,
+            deps: [UserProvidedValidationToken]
+          }
+
         ]
     };
   }
