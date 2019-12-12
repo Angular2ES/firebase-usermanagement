@@ -56,7 +56,10 @@
 
 ## Installation
 ## 1. Install with *ng add*
-If Angular Material Design is not setup, just run ng add @angular/material
+If Angular Material Design is not setup, just run
+```shell
+ng add @angular/material
+``` 
 
 Now you can add the library with *ng add*
 ```shell
@@ -67,7 +70,7 @@ ng add ng-usermanagement
 Install all of the above dependencies with *npm*
 Install the library with *npm*
 ```shell
-npm install @ng-usermanagement
+npm install ng-usermanagement
 ```
 
 ## 3. Configs
@@ -78,9 +81,9 @@ import { NgModule } from '@angular/core';
 
 import { AppComponent } from './app.component';
 
-// Import your library
-import { NgxAuthFirebaseUIModule } from 'ngx-auth-firebaseui';
-import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+// Import the library
+import { NgUserManagementModule } from 'ng-usermanagement';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 const firebaseConfig = {
   authGuardLoggedInURL: "[fallback Url]" // Fallback to this url if the user isn't logged in
@@ -108,8 +111,6 @@ const inputValidationConfig = {
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
-
-    // Specify the ngx-auth-firebaseui library as an import
     NgUserManagementModule.forRoot(firebaseConfig, inputValidationConfig),
   ],
   providers: [],
