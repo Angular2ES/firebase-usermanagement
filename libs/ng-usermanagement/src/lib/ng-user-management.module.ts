@@ -7,7 +7,9 @@ import { RegisterModule } from './register/register.module';
 import { SpinnerModule } from './spinner/spinner.module';
 import { LoginRegisterModule } from './templates/login-register.module';
 import { inputValidation, InputValidationToken, UserProvidedValidationToken, ngInputValidationFactory} from './interfaces/input-validation.interface'
-import { UserAdminSettingsModule } from './settings/user.admin.settings.module';
+// import { UserAdminSettingsModule } from './settings/user.admin.settings.module';
+import { AdminSettingsModule } from './settings/admin/admin.settings.module';
+import { UserSettingsModule } from './settings/user/user.settings.module';
 
 @NgModule({
   declarations: [
@@ -18,7 +20,8 @@ import { UserAdminSettingsModule } from './settings/user.admin.settings.module';
     RegisterModule,
     SpinnerModule,
     LoginRegisterModule,
-    UserAdminSettingsModule,
+    AdminSettingsModule,
+    UserSettingsModule,
   ],
   providers: []
 })
