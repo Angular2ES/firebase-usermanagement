@@ -1,6 +1,6 @@
 <div class="admin-settings-collection" *ngIf="currentUser$ | async | json">
-  <input type="text" matInput #impUser>
-  <button mat-button (click)="impersonateUser(impUser.value)"></button>
+  <input type="text" matInput #impUser placeholder="user Id">
+  <button mat-button (click)="impersonateUser(impUser.value)">Impersonate this user</button>
 </div>
 
 <ng-spinner *ngIf="loading"></ng-spinner>
