@@ -1,8 +1,7 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/firestore';
-import { Observable } from 'rxjs';
 import * as firebase from 'firebase';
-import { map } from 'rxjs/operators';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -13,7 +12,20 @@ export class GroupService {
 
   constructor(private db: AngularFirestore) {}
 
-    
+  /**
+   * @param userId owner of the group
+   * @param groupName
+   * @param extraGroupData 
+   * 
+   * @usageNotes
+   * Remove a user from a group
+   * ```
+   * let groupData = {
+   *  description: 'hello'
+   * }
+   * createGroup('userId', 'Name', groupData);
+   * ```
+   */
   async createGroup(userId: string, groupName: string, extraGroupData?: any): Promise<void> {
     const newId = this.db.createId();
     let groupData = {
@@ -27,14 +39,35 @@ export class GroupService {
     return this.groupCol.doc(newId).set(groupData);
   }
   
+  /**
+   * @param groupId
+   */
   public getGroup(groupId: string): Observable<any> {
     return this.groupCol.doc(groupId).valueChanges();
   }
 
+  /**
+   * @param groupId
+   * @param data
+   * 
+   * @usageNotes
+   * Remove a user from a group
+   * ```
+   * let groupData = {
+   *  groupName: 'hello'
+   * }
+   * updateGroupData('groupId', groupData);
+   * ```
+   */
   async updateGroupData(groupId: string, data: any): Promise<void> {
     return this.groupCol.doc(groupId).update(data);
   }
 
+  /**
+   * @param userId
+   * @param role
+   * @param groupId
+   */
   async addUsersToGroup(userId: string[], role: string, groupId: string): Promise<void> {
     const groupData = {
       groupId: groupId,
@@ -44,24 +77,41 @@ export class GroupService {
     return this.groupCol.doc(groupId).set(groupData, { merge: true});
   }
   
-  async removeUsersFromGroup(userId: string[], groupId: string): Promise<void> {
+  /**
+   * Create a new account.
+   * The user will not be logged in after creating an account
+   * @param userId 
+   * @param group 
+   * 
+   * @usageNotes
+   * Remove a user from a group
+   * ```
+   * let group = {
+   *  groupId: '123'
+   *  users: {
+   *    admins: ['userId']
+   *  }
+   * }
+   * removeUsersFromGroup('userId', group);
+   * ```
+   */
+  async removeUsersFromGroup(userId: string[], group: any): Promise<void> {
     try {
       const groupData = {
         users: {}
       }
-      this.getGroup(groupId).pipe(
-        map(group => {
-          for (var roleKey in group.users) {
-            groupData.users[roleKey] = firebase.firestore.FieldValue.arrayRemove.apply(null, userId)
-          }
-          return this.groupCol.doc(groupId).set(groupData, { merge: true});
-        })
-      ).subscribe()
+      for (var roleKey in group.users) {
+        groupData.users[roleKey] = firebase.firestore.FieldValue.arrayRemove.apply(null, userId)
+      }
+      return this.groupCol.doc(group.groupId).set(groupData, { merge: true});
     } catch(err) {
       console.error(err.message);
     }
   }
 
+  /**
+   * @param groupId
+   */
   async deleteGroup(groupId: string): Promise<void> {
     return this.groupCol.doc(groupId).delete();
   }

@@ -8,7 +8,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { StorageModule } from '@ngx-pwa/local-storage';
 import { MaterializeModule } from 'angular2-materialize';
 import { ToasterModule, ToasterService } from 'angular2-toaster';
-import { NgUserManagementModule } from 'libs/ng-usermanagement/src/public-api';
+import { NgUserManagementModule, GroupModule } from 'libs/ng-usermanagement/src/public-api';
 import { environment } from '../environments/environment';
 // services
 import { AuthenticationService } from '../services/auth.service';
@@ -27,7 +27,6 @@ import { GroupSettingsComponent } from './group-settings/group-settings.componen
 import { HeaderComponent } from './header/header.component';
 import { LoginTestComponent } from './login.test.component';
 import { ValidationMessagesComponent } from './validation-messages/validation-messages.component';
-import { GroupModule } from 'libs/ng-usermanagement/src/lib/group/group.Module';
 
 // TODO remove this after refactoring
 const userModuleConfig: UserModuleConfig = {

@@ -33,7 +33,6 @@ export class GroupCreateComponent {
 
   async createGroup(groupName: string): Promise<void>{
     try {
-      console.log('useID', groupName)
       this.loading = true;
       if (this.extraGroupData != null){
         await this.groupService.createGroup(this.curUserId, groupName, this.extraGroupData);

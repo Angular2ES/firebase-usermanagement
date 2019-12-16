@@ -27,7 +27,8 @@ export class GroupSettingsComponent {
     private formBuilder: FormBuilder) {
 
     this.curGroupForm = this.formBuilder.group ({
-      'groupId' : new FormControl() ,
+      groupId : new FormControl(),
+      users: new FormControl()
     });
     this.currentGroup$ = this.route.params.pipe(
       tap (params => this.curGroupForm.patchValue({groupId: params['id']})),
@@ -68,7 +69,7 @@ export class GroupSettingsComponent {
 
   async removeUser(userId: string): Promise<void> {
     this.loading = true;
-    return this.groupService.removeUsersFromGroup([userId], this.curGroupForm.value.groupId)
+    return this.groupService.removeUsersFromGroup([userId], this.curGroupForm.value)
     .then(() => {
       this.loading = false;
       this.snackBar.open('user has been removed from the group', '', { duration: 2000 })
