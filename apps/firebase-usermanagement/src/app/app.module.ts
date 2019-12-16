@@ -26,8 +26,8 @@ import { GroupListComponent } from './group-list/group-list.component';
 import { GroupSettingsComponent } from './group-settings/group-settings.component';
 import { HeaderComponent } from './header/header.component';
 import { LoginTestComponent } from './login.test.component';
-import { UserListContainerComponent } from './user-list-container/user-list-container.component';
 import { ValidationMessagesComponent } from './validation-messages/validation-messages.component';
+import { GroupModule } from 'libs/ng-usermanagement/src/lib/group/group.Module';
 
 // TODO remove this after refactoring
 const userModuleConfig: UserModuleConfig = {
@@ -47,7 +47,6 @@ const userModuleConfig: UserModuleConfig = {
     ValidationMessagesComponent,
     GroupListContainerComponent,
     GroupListComponent,
-    UserListContainerComponent,
     AppComponent,
     
   ],
@@ -66,6 +65,7 @@ const userModuleConfig: UserModuleConfig = {
     StorageModule.forRoot({ IDBNoWrap: true }), // imports firebase/auth, only needed for auth features,
     //AngularFireStorageModule // imports firebase/storage only needed for storage features
     
+    GroupModule,
     NgUserManagementModule.forRoot(userModuleConfig),
   ],
   providers: [

@@ -1,0 +1,10 @@
+.group-settings-collection {
+  padding: 80px 0;
+}
+
+.group-settings-collection form {
+  max-width: 400px;
+  width: 70%;
+  padding: 40px;
+  margin: 0 auto;
+}
