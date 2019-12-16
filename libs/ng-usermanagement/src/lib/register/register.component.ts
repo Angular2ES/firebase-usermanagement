@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { AuthenticationService } from '../services/auth.service';
 import { Validators, FormBuilder, FormGroup, FormControl } from '@angular/forms';
 import { verifyPassword } from '../validation-message/validators';
+import { MatSnackBar } from '@angular/material';
 
 
 @Component({
@@ -23,6 +24,7 @@ export class RegisterComponent implements OnInit {
   
   constructor(
     private authService: AuthenticationService,
+    private snackBar: MatSnackBar,
     private router: Router) 
   { 
     this.registerForm = new FormBuilder().group({
@@ -39,14 +41,16 @@ export class RegisterComponent implements OnInit {
   registerUser(email: string, password: string): void{
     this.loading = true;
     this.authService.createAccount(email, password, this.addExtraData)
-      .then((userCredentials) => this.onSuccesCreateAccount.emit(userCredentials))
-      .then(() => this.loading = false)
-      .then(() => { 
+      .then((userCredentials) => {
+        this.onSuccesCreateAccount.emit(userCredentials)
+        this.loading = false
         if (this.redirectOnSucces != null) {
           this.router.navigate([this.redirectOnSucces])
         }
       })
-      
-      .catch((err) => alert(err))
+      .catch((err) => {
+        this.loading = false;
+        this.snackBar.open(err.message, '', { duration: 2000 });
+      })
   }
 }

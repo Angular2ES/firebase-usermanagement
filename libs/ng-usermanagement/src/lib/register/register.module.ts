@@ -4,7 +4,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SpinnerModule } from '../spinner/spinner.module';
 import { ValidationMessageModule } from '../validation-message/validation-message.module';
 import { RegisterComponent } from './register.component';
-import { MatButtonModule, MatInputModule } from '@angular/material';
+import { MatButtonModule, MatInputModule, MatSnackBarModule } from '@angular/material';
 
 @NgModule({
   declarations: [
@@ -16,6 +16,7 @@ import { MatButtonModule, MatInputModule } from '@angular/material';
     FormsModule,
     MatButtonModule,
     MatInputModule,
+    MatSnackBarModule,
     ReactiveFormsModule,
     ValidationMessageModule,
   ],
