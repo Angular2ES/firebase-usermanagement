@@ -10,12 +10,21 @@ import { AuthenticationService } from '../../../services/auth.service';
   templateUrl: './login-email-password.component.html',
   styleUrls: ['./login-email-password.component.css']
 })
-export class LoginEmailPasswordComponent implements OnInit {
+export class LoginEmailPasswordComponent {
 
-  @Input('redirectOnSucces') redirectOnSucces: string;
+  /**
+   * redirect the user to another page
+   */
+  @Input() redirectOnSucces: string;
   
-  @Output('onSucces') onSuccess: EventEmitter<auth.UserCredential> = new EventEmitter();
-  @Output('onFailed') onFailed: EventEmitter<string> = new EventEmitter();
+  /**
+   * Emits the user credentials on a succesfull login
+   */
+  @Output() onSuccess: EventEmitter<auth.UserCredential> = new EventEmitter();
+  /**
+   * Emits the error on a failed login
+   */
+  @Output() onFailed: EventEmitter<any> = new EventEmitter();
 
   public loginForm: FormGroup;
 
@@ -33,9 +42,6 @@ export class LoginEmailPasswordComponent implements OnInit {
     });
   }
 
-  ngOnInit() {
-  }
-
   public loginUser(email: string, password: string): Promise<auth.UserCredential | void> {
     this.loading = true;
     return this.authService.loginWithEmailAndPassword(email, password)
@@ -51,7 +57,7 @@ export class LoginEmailPasswordComponent implements OnInit {
     .catch((err) => {
       this.loading = false;
       this.snackBar.open(err.message, '', { duration: 2000 });
-      this.onSuccess.next(err);
+      this.onFailed.next(err);
     })
   }
 

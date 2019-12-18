@@ -11,13 +11,26 @@ import { AuthenticationService } from '../../../services/auth.service';
 })
 export class LoginGoogleComponent{
 
-  @Input('googleProviderConfig') config: string; // to use redirect; 'redirect', to use popup; 'popup'
-  @Input('redirectOnSucces') redirectOnSucces: string; // redirect the user to another page
+  /**
+   * redirect the user or create a popup within the application.
+   * options are: 'redirect' or 'popup'
+   */
+  @Input() authenticationFlow: string = 'popup';
+  /**
+   * redirect the user to another page
+   */
+  @Input() redirectOnSucces: string;
   
-  @Output('onSucces') onSuccess: EventEmitter<auth.UserCredential> = new EventEmitter();
-  @Output('onFailed') onFailed: EventEmitter<string> = new EventEmitter();
+  /**
+   * Emits the user credentials on a succesfull login
+   */
+  @Output() onSuccess: EventEmitter<auth.UserCredential> = new EventEmitter();
+  /**
+   * Emits the error on a failed login
+   */
+  @Output() onFailed: EventEmitter<any> = new EventEmitter();
 
-  googleProvider: auth.GoogleAuthProvider;
+  private googleProvider: auth.GoogleAuthProvider;
   
   constructor(
     private authService: AuthenticationService,
@@ -36,7 +49,7 @@ export class LoginGoogleComponent{
   }
 
   loginWithGoogle(){
-    if (this.config === "redirect") this.signInWithRedirect();
+    if (this.authenticationFlow === "redirect") this.signInWithRedirect();
     else this.signInWithPopup()
   }
 
