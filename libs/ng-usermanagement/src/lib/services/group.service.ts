@@ -2,6 +2,8 @@ import { Injectable } from '@angular/core';
 import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/firestore';
 import * as firebase from 'firebase';
 import { Observable } from 'rxjs';
+import { Group } from '../models/group.model';
+import { map } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -42,8 +44,14 @@ export class GroupService {
   /**
    * @param groupId
    */
-  public getGroup(groupId: string): Observable<any> {
-    return this.groupCol.doc(groupId).valueChanges();
+  public getGroup(groupId: string): Observable<Group> {
+    return this.groupCol.doc(groupId).valueChanges().pipe(
+      map((group) => this.mapFromDatabase(group))
+    );
+  }
+
+  private mapFromDatabase(group: any): Group{
+    return {...group}
   }
 
   /**
@@ -95,7 +103,7 @@ export class GroupService {
    * removeUsersFromGroup('userId', group);
    * ```
    */
-  async removeUsersFromGroup(userId: string[], group: any): Promise<void> {
+  async removeUsersFromGroup(userId: string[], group: Group): Promise<void> {
     try {
       const groupData = {
         users: {}

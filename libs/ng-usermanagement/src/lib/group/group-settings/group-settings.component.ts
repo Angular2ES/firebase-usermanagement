@@ -5,6 +5,7 @@ import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
 import { switchMap, tap } from 'rxjs/operators';
 import { GroupService } from '../../services/group.service';
+import { Group } from '../../models/group.model';
 
 @Component({
   selector: 'ng-group-settings',
@@ -16,7 +17,7 @@ export class GroupSettingsComponent {
   
   @Input() extraGroupData: any;
 
-  currentGroup$: Observable<any>;
+  currentGroup$: Observable<Group>;
   private curGroupForm: FormGroup;
 
   loading: boolean = false;
@@ -27,8 +28,8 @@ export class GroupSettingsComponent {
     private formBuilder: FormBuilder) {
 
     this.curGroupForm = this.formBuilder.group ({
-      groupId : new FormControl(),
-      users: new FormControl()
+      groupId : [],
+      users: []
     });
     this.currentGroup$ = this.route.params.pipe(
       tap (params => this.curGroupForm.patchValue({groupId: params['id']})),
@@ -36,7 +37,7 @@ export class GroupSettingsComponent {
     )
   }
   
-  async updateGroupData(groupData: any): Promise<void> {
+  public updateGroupData(groupData: any): Promise<void> {
     this.loading = true;
     if (this.extraGroupData != null) groupData = { ...groupData, ...this.extraGroupData }
     return this.groupService.updateGroupData(this.curGroupForm.value.groupId, groupData)
@@ -47,7 +48,7 @@ export class GroupSettingsComponent {
     .catch((err) => this.errorHandler(err.message));
   }
 
-  async deleteGroup(): Promise<void> {
+  public deleteGroup(): Promise<void> {
     this.loading = true;
     return this.groupService.deleteGroup(this.curGroupForm.value.groupId)
     .then(() => {
@@ -57,7 +58,7 @@ export class GroupSettingsComponent {
     .catch((err) => this.errorHandler(err.message));
   }
 
-  async addUser(userId: string, role: string): Promise<void> {
+  public addUser(userId: string, role: string): Promise<void> {
     this.loading = true;
     return this.groupService.addUsersToGroup([userId], role, this.curGroupForm.value.groupId)
     .then(() => {
@@ -67,7 +68,7 @@ export class GroupSettingsComponent {
     .catch((err) => this.errorHandler(err.message));
   }
 
-  async removeUser(userId: string): Promise<void> {
+  public removeUser(userId: string): Promise<void> {
     this.loading = true;
     return this.groupService.removeUsersFromGroup([userId], this.curGroupForm.value)
     .then(() => {
