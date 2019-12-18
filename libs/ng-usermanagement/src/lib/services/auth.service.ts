@@ -34,23 +34,19 @@ export class AuthenticationService {
     try {
       const credentials = await this.secondaryApp.auth().createUserWithEmailAndPassword(email, password)
       if (credentials != null) {
-        await this.setExtraDataToUserCol(credentials, extraUserData);
+        let userData = {
+          uid: credentials.user.uid,
+          email: credentials.user.email
+        }
+        if (extraUserData != null) userData = { ...userData, ...extraUserData}
+
+        await this.secondaryApp.firestore().collection('users').doc(credentials.user.uid).set(userData)
         await this.secondaryApp.auth().signOut();
       }
       return credentials;
     } catch(err){
       console.error(err)
     }
-      
-  }
-    
-  private setExtraDataToUserCol(userCredentials: auth.UserCredential, extraUserData?: any): Promise<void> {
-    let userData = {
-      uid: userCredentials.user.uid,
-      email: userCredentials.user.email
-    }
-    if (extraUserData != null) userData = { ...userData, ...extraUserData}
-    return this.secondaryApp.firestore().collection('users').doc(userCredentials.user.uid).set(userData)
   }
     
   /**
