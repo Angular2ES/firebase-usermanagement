@@ -9,20 +9,24 @@ import { LoginRegisterModule } from './templates/login-register.module';
 import { inputValidation, InputValidationToken, UserProvidedValidationToken, ngInputValidationFactory} from './interfaces/input-validation.interface'
 import { UserAdminSettingsModule } from './settings/user.admin.settings.module';
 import { AdminAuthGuardService } from './guards/admin-auth-guard.service';
+import { AdminPopupModule } from './settings/admin/admin-popup/admin-popup.module';
+import { AdminPopupService } from './settings/admin/admin-popup/admin-popup.service';
 
 @NgModule({
   declarations: [
   ],
-  imports: [],
+  imports: [AdminPopupModule],
   exports: [
     LoginProvidersModule,
     RegisterModule,
     SpinnerModule,
     LoginRegisterModule,
     UserAdminSettingsModule,
+    AdminPopupModule
   ],
   providers: [
-    AdminAuthGuardService
+    AdminAuthGuardService,
+    AdminPopupService
   ]
 })
 export class NgUserManagementModule { 

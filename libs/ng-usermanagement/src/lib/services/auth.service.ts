@@ -3,6 +3,7 @@ import { AngularFireAuth } from '@angular/fire/auth';
 import * as firebase from 'firebase';
 import { auth } from 'firebase';
 import { ngUserManagementConfig, NgUserManagementConfigToken } from '../interfaces/firebase-config.interface';
+import { AdminPopupService } from '../settings/admin/admin-popup/admin-popup.service';
 
 @Injectable({
   providedIn: 'root'
@@ -13,6 +14,7 @@ export class AuthenticationService {
   
   constructor(
     private angularFireAuth: AngularFireAuth,
+    private adminPopup: AdminPopupService,
     @Inject(NgUserManagementConfigToken) public config: ngUserManagementConfig) {
   }
   
@@ -89,6 +91,7 @@ export class AuthenticationService {
     return await this.angularFireAuth.auth.signOut()
       .then(() => {
         if (this.adminToken !== '') {
+          this.adminPopup.close();
           this.loginWithCustomToken(this.adminToken)
         }
       })

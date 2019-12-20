@@ -23,7 +23,7 @@ export class UserSettingsComponent {
   /**
    * Add extra data to the database on update the user data
    */
-  @Input() addExtraData: any = {};
+  @Input() addExtraData: Object = {};
   
   public currentUser$: Observable<UserModel>
   public loading: boolean = false;
@@ -46,7 +46,7 @@ export class UserSettingsComponent {
       )
     }
 
-  public updateUserData(data: any): Promise<void> {
+  public updateUserData(data: Object): Promise<void> {
     this.loading = true;
     return this.userService.updateUser(this.userSettingsForm.controls['uid'].value, { ...data, ...this.addExtraData})
       .then(() => { this.loading = false; this.snackBarMessage('update succesful') })

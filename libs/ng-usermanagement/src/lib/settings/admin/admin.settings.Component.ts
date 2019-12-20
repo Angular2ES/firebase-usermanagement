@@ -6,6 +6,7 @@ import { tap } from 'rxjs/operators';
 import { UserModel } from '../../models/user.model';
 import { AdminAuthService } from '../../services/admin.auth.service';
 import { UserService } from '../../services/user.service';
+import { AdminPopupService } from './admin-popup/admin-popup.service';
 
 @Component({
   selector: 'ng-admin-settings',
@@ -33,7 +34,8 @@ export class AdminSettingsComponent {
     private userService: UserService,
     private adminAuthService: AdminAuthService,
     public formBuilder: FormBuilder,
-    private snackBar: MatSnackBar)
+    private snackBar: MatSnackBar,
+    private adminPopup: AdminPopupService)
     {
       this.currentUser$ = this.userService.user$.pipe(
         tap(user => { this.adminSettingsForm.patchValue(user)})
@@ -48,15 +50,18 @@ export class AdminSettingsComponent {
   public async impersonateUser(uid: string) {
     this.loading = true;
     this.adminAuthService.impersonateUser(uid, this.adminSettingsForm.controls['uid'].value)
-    .then(() => { 
+    .then(() => {
+      this.adminPopup.open()
       this.loading = false 
+      this.snackBar.open('login succesful', '', { duration: 2000 });
     })
-    .catch((e) => this.errorHandler(e)) 
+    .catch((e) => this.errorHandler({ message: 'login failed' })) 
   }
 
   public toggleUserSettingsPopup(user: UserModel): void {
-    this.selectedUser = user;
-    this.displayUserSettigs = !this.displayUserSettigs;
+    // this.selectedUser = user;
+    // this.displayUserSettigs = !this.displayUserSettigs;
+    this.adminPopup.open();
   }
 
   public updateUserSettings(uid: string, userData: Object): Promise<void> {

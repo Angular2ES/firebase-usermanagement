@@ -1,4 +1,4 @@
-<div class="admin-settings-collection" *ngIf="currentUser$ | async | json">
+<div class="admin-settings-collection" *ngIf="currentUser$ | async">
   <div *ngFor="let user of allUsers$ | async" style="column-count: 2;">
     <col> {{ user.email }} 
 
