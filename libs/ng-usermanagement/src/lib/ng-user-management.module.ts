@@ -8,6 +8,7 @@ import { SpinnerModule } from './spinner/spinner.module';
 import { LoginRegisterModule } from './templates/login-register.module';
 import { inputValidation, InputValidationToken, UserProvidedValidationToken, ngInputValidationFactory} from './interfaces/input-validation.interface'
 import { UserAdminSettingsModule } from './settings/user.admin.settings.module';
+import { AdminAuthGuardService } from './guards/admin-auth-guard.service';
 
 @NgModule({
   declarations: [
@@ -20,7 +21,9 @@ import { UserAdminSettingsModule } from './settings/user.admin.settings.module';
     LoginRegisterModule,
     UserAdminSettingsModule,
   ],
-  providers: []
+  providers: [
+    AdminAuthGuardService
+  ]
 })
 export class NgUserManagementModule { 
   static forRoot(

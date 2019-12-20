@@ -19,5 +19,6 @@ export * from './lib/settings/user.admin.settings.Module'
 export * from './lib/services/auth.service';
 export * from './lib/services/admin.auth.service';
 export * from './lib/services/user.service';
+export * from './lib/guards/admin-auth-guard.service';
 
 export * from './lib/ng-user-management.module';
