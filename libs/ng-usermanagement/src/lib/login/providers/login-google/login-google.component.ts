@@ -30,9 +30,9 @@ export class LoginGoogleComponent{
    */
   @Output() onSuccess: EventEmitter<auth.UserCredential> = new EventEmitter();
   /**
-   * Emits the error on a failed login
+   * Emits the error message on a failed login
    */
-  @Output() onFailed: EventEmitter<any> = new EventEmitter();
+  @Output() onFailed: EventEmitter<string> = new EventEmitter();
 
   private googleProvider: auth.GoogleAuthProvider;
   
@@ -85,7 +85,7 @@ export class LoginGoogleComponent{
   }
 
   private errorHandler(error: any): void {
-    this.onFailed.next(error);
+    this.onFailed.next(error.message);
     this.snackBar.open(error.message, '', { duration: 2000 });
   }
 }

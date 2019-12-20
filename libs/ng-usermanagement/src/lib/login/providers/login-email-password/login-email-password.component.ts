@@ -22,9 +22,9 @@ export class LoginEmailPasswordComponent {
    */
   @Output() onSuccess: EventEmitter<auth.UserCredential> = new EventEmitter();
   /**
-   * Emits the error on a failed login
+   * Emits the error message on a failed login
    */
-  @Output() onFailed: EventEmitter<any> = new EventEmitter();
+  @Output() onFailed: EventEmitter<string> = new EventEmitter();
 
   public loginForm: FormGroup;
 
@@ -57,7 +57,7 @@ export class LoginEmailPasswordComponent {
     .catch((err) => {
       this.loading = false;
       this.snackBar.open(err.message, '', { duration: 2000 });
-      this.onFailed.next(err);
+      this.onFailed.next(err.message);
     })
   }
 
