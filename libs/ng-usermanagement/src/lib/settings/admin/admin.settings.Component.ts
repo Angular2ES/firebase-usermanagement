@@ -20,8 +20,11 @@ export class AdminSettingsComponent {
 
   public loading: boolean = false;
 
-  private curImpersonatedUser: Subscription;
+  selectedUser: UserModel;
+  displayUserSettigs: boolean = false;;
 
+  public selectedUserForm: FormGroup;
+  
   public adminSettingsForm: FormGroup = this.formBuilder.group({
     uid: new FormControl(),
   });
@@ -37,8 +40,9 @@ export class AdminSettingsComponent {
         )
       this.allUsers$ = this.adminAuthService.allUsers;
 
-    ngOnDestroy(): void {
-      this.curImpersonatedUser.unsubscribe()
+      this.selectedUserForm = this.formBuilder.group({
+        displayName: []
+      })
     }
 
   public async impersonateUser(uid: string) {
@@ -48,11 +52,21 @@ export class AdminSettingsComponent {
       this.loading = false 
     })
     .catch((e) => this.errorHandler(e)) 
-          } else {
-            this.errorHandler({message: 'user does not exist'})
   }
+
+  public toggleUserSettingsPopup(user: UserModel): void {
+    this.selectedUser = user;
+    this.displayUserSettigs = !this.displayUserSettigs;
+  }
+
+  public updateUserSettings(uid: string, userData: Object): Promise<void> {
+    this.loading = true;
+    return this.adminAuthService.updateUserSettings(uid, userData)
+      .then(result => {
+        this.loading = false;
+        this.snackBar.open(result, '', { duration: 2000 })
       })
-      ).subscribe();
+      .catch((error) => this.errorHandler({message: error}))
   }
   
   private errorHandler(error: any): void {

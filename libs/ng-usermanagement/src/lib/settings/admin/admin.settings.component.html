@@ -8,4 +8,13 @@
   </div>
 </div>
 
+<div *ngIf="displayUserSettigs" class="user-settings-popup">
+  <form class="form-container" [formGroup]="selectedUserForm" (submit)="updateUserSettings(selectedUser.uid, selectedUserForm.value)">
+    <label><b>name</b></label>
+    <input type="text" placeholder="name" formControlName="displayName">
+
+    <button type="submit">Save</button>
+    <button (click)="toggleUserSettingsPopup(selectedUser)" style="right: 10px; position: absolute;">Close</button>
+  </form>
+</div>
 <ng-spinner *ngIf="loading"></ng-spinner>

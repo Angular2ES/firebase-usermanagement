@@ -50,12 +50,19 @@ export async function createUserToken(data: any, context: functions.https.Callab
   return;
 };
 
-export function createUserToken(req: functions.https.Request, res: functions.Response) {
-  const uid: string = req.body['uid']
-  admin.auth().createCustomToken(uid)
-    .then((customToken: string) => {
-      // Send token back to client
-      res.status(200).send(customToken)
-    })
-    .catch((e: any) => console.log(e));
+export async function updateUserData(data: any, context: functions.https.CallableContext){
+  const adminToken = context.auth ? context.auth.token : null
+  if (adminToken !== null && adminToken.admin === true) {
+    try {
+      const writeResult = await admin.firestore().collection('/users').doc(data.uid).set(data, {merge: true})
+      if (writeResult.writeTime !== null){
+        return {
+          message: 'update succesful'
+        }
+      }
+    } catch(err){
+      console.error(err)
+    }
+  }
+  return;
 };

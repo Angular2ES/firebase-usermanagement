@@ -38,6 +38,20 @@ export class AdminAuthService {
     }
   }
 
+  /**
+   * Update the firestore database
+   * @param uid user id
+   * @param data given data to update
+   */
+  async updateUserSettings(uid: string, data: Object): Promise<string> {
+    try {
+      const updateUserData = firebase.functions().httpsCallable('updateUserData');
+      const update = await updateUserData({uid: uid, ...data});
+      return update.data.message
+    } catch (err) {
+      this.errorHandler(err);
+    }
+  }
 
   /**
    * Get all of the users within the users collection
