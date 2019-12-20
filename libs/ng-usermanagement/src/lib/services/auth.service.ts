@@ -30,7 +30,7 @@ export class AuthenticationService {
    *  .then((userCredentials) => console.log('succesfull login'))
    * ```
    */
-  async createAccount(email: string, password: string, extraUserData?: any): Promise<auth.UserCredential>{
+  async createAccount(email: string, password: string, extraUserData?: any): Promise<auth.UserCredential>{ 
     return this.secondaryApp.auth().createUserWithEmailAndPassword(email, password)
       .then((userCredentials) => this.setExtraDataToUserCol(userCredentials, extraUserData))
       .then((userCredentials) => this.secondaryApp.auth().signOut()
@@ -76,13 +76,13 @@ export class AuthenticationService {
     return this.angularFireAuth.auth.signInWithPopup(authProvider);
   }
 
+  /**
+   * @param uid 
+   * @param adminToken 
+   */
   async loginWithCustomToken(uid: string, adminToken?: string): Promise<auth.UserCredential> {
     this.adminToken = adminToken ? adminToken : '';
     return await firebase.auth().signInWithCustomToken(uid)
-  }
-
-  async deleteAccount(): Promise<void> {
-    return await this.angularFireAuth.auth.currentUser.delete()
   }
 
   async logout(): Promise<void> {
@@ -90,7 +90,6 @@ export class AuthenticationService {
       .then(() => {
         if (this.adminToken !== '') {
           this.loginWithCustomToken(this.adminToken)
-          this.adminToken = '';
         }
       })
   }

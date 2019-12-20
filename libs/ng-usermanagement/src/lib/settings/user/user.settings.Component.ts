@@ -6,6 +6,7 @@ import { Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
 import { AuthenticationService } from '../../services/auth.service';
 import { UserService } from '../../services/user.service';
+import { UserModel } from '../../models/user.model';
 
 @Component({
   selector: 'ng-user-settings',
@@ -14,11 +15,17 @@ import { UserService } from '../../services/user.service';
 })
 
 export class UserSettingsComponent {
-  
+  /**
+   * redirect the user on a succesful logout
+   */
   @Input() redirectOnLogout: string;
-  @Input('extraData') addExtraData: any = {};
+
+  /**
+   * Add extra data to the database on update the user data
+   */
+  @Input() addExtraData: any = {};
   
-  public currentUser$: Observable<any>
+  public currentUser$: Observable<UserModel>
   public loading: boolean = false;
   
   public userSettingsForm: FormGroup = this.formBuilder.group({
@@ -34,45 +41,31 @@ export class UserSettingsComponent {
     private router: Router,
     private snackBar: MatSnackBar)
     {
-      this.currentUser$ = this.userService.currentUser.pipe(
+      this.currentUser$ = this.userService.user$.pipe(
         tap(user => { this.userSettingsForm.patchValue(user)})
       )
     }
 
-  async updateUserData(data: any): Promise<void> {
+  public updateUserData(data: any): Promise<void> {
     this.loading = true;
     return this.userService.updateUser(this.userSettingsForm.controls['uid'].value, { ...data, ...this.addExtraData})
       .then(() => { this.loading = false; this.snackBarMessage('update succesful') })
       .catch((e) => this.errorHandler(e));
   }
 
-  async sendResetPasswordMail(): Promise<void> {
-    this.loading = true;
-    return this.userService.sendChangePasswordLink(this.userSettingsForm.controls['email'].value)
-      .then(() => { this.loading = false; this.snackBarMessage('email has been send') })
-      .catch((e) => this.errorHandler(e))
-    }
-
-   async deleteAccount(): Promise<void> {
+  public async logout(): Promise<void> {
     this.loading = true;
     try {
-      await this.userService.deleteUserFromDatabase(this.userSettingsForm.controls['uid'].value)
-      await this.authService.deleteAccount()
+      await this.authService.logout();
       this.loading = false;
-      this.snackBarMessage('account has been deleted')
-      this.redirectOnLogout ? this.router.navigate([this.redirectOnLogout]) : null
-      return Promise.resolve();
-    } catch(err){
-      this.errorHandler(err);
+      this.snackBarMessage('logout succesfull')
+      if (this.redirectOnLogout != null) await this.router.navigate([this.redirectOnLogout])
+      return Promise.resolve()
+    } catch(err) {
+      this.loading = false
+      this.snackBarMessage(err.message);
+      return Promise.reject(err);
     }
-  }
-
-  async logout(): Promise<void> {
-    this.loading = true;
-    return this.authService.logout()
-    .then(() => this.redirectOnLogout ? this.router.navigate([this.redirectOnLogout]) : null)
-    .then(() => { this.loading = false; this.snackBarMessage('logout succesfull') })
-      .catch((e) => this.errorHandler(e));
   }
 
   private snackBarMessage(message: string): void {
