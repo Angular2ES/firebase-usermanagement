@@ -1,6 +1,11 @@
 <div class="admin-settings-collection" *ngIf="currentUser$ | async | json">
-  <input type="text" class="form-control mb-2" #impUser>
-  <button class="waves-effect waves-light btn" (click)="impersonateUser(impUser.value)"></button>
+  <div *ngFor="let user of allUsers$ | async" style="column-count: 2;">
+    <col> {{ user.email }} 
+
+    <col>
+    <button mat-button (click)="toggleUserSettingsPopup(user)">Edit settings</button>
+    <button mat-button (click)="impersonateUser(user.uid)">ImpersonateUser</button>
+  </div>
 </div>
 
 <ng-spinner *ngIf="loading"></ng-spinner>

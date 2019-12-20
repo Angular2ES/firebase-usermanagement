@@ -1,9 +1,13 @@
-import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { AngularFirestore } from '@angular/fire/firestore';
 import { MatSnackBar } from '@angular/material';
 import { auth } from 'firebase';
+import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
+import { UserModel } from '../models/user.model';
 import { AuthenticationService } from './auth.service';
 import { UserService } from './user.service';
+import * as firebase from 'firebase'
 
 @Injectable({
   providedIn: 'root'
@@ -12,7 +16,8 @@ export class AdminAuthService {
 
   constructor(
     private authService: AuthenticationService,
-    private http: HttpClient,
+    private db: AngularFirestore,
+    private userService: UserService,
     private snackBar: MatSnackBar
     )
   {}
@@ -23,12 +28,30 @@ export class AdminAuthService {
    */
   async impersonateUser(uid: string, adminUid: string): Promise<auth.UserCredential | void> {
     try {
-      const adminToken = await this.http.post('/firebaseApi/createUserToken', { uid: adminUid }, { responseType: 'text' }).toPromise()
-      const userToken = await this.http.post('/firebaseApi/createUserToken', { uid: uid }, { responseType: 'text' }).toPromise()
-      return this.authService.loginWithCustomToken(userToken, adminToken)
+      const createUserToken = firebase.functions().httpsCallable('createUserToken');
+      const userToken = await createUserToken({uid: uid})
+      const adminToken = await createUserToken({uid: adminUid})
+
+      return this.authService.loginWithCustomToken(userToken.data.customUserToken, adminToken.data.customUserToken)
     } catch(err) {
       this.errorHandler(err)
     }
+  }
+
+
+  /**
+   * Get all of the users within the users collection
+   */
+  get allUsers(): Observable<UserModel[]>  {
+    return this.db.collection('users').valueChanges().pipe(
+      map(users => {
+        let userList: UserModel[] = [];
+        users.forEach(user => {
+          userList.push(this.userService.mapFromDatabase(user));
+        });
+        return userList;
+      })
+    );
   }
   
   private errorHandler(error: any): void {
