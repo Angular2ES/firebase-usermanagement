@@ -4,6 +4,10 @@ import { Router } from '@angular/router';
 import { auth } from 'firebase';
 import { AuthenticationService } from '../../../services/auth.service';
 
+enum AuthenticationFlow {
+  popup = 'popup',
+  redirect = 'redirect',
+}
 @Component({
   selector: 'ng-login-google',
   templateUrl: '../login-google/login-google.component.html',
@@ -15,7 +19,7 @@ export class LoginGoogleComponent{
    * redirect the user or create a popup within the application.
    * options are: 'redirect' or 'popup'
    */
-  @Input() authenticationFlow: string = 'popup';
+  @Input() authenticationFlowGoogle: AuthenticationFlow = AuthenticationFlow.popup;
   /**
    * redirect the user to another page
    */
@@ -49,7 +53,7 @@ export class LoginGoogleComponent{
   }
 
   loginWithGoogle(){
-    if (this.authenticationFlow === "redirect") this.signInWithRedirect();
+    if (this.authenticationFlowGoogle === AuthenticationFlow.redirect) this.signInWithRedirect();
     else this.signInWithPopup()
   }
 
