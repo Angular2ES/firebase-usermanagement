@@ -6,5 +6,14 @@
   </li>
 </ul>
 
-<ng-user-settings></ng-user-settings>
-<ng-admin-settings></ng-admin-settings>
+<div style="
+max-width: 400px;
+width: 70%;
+padding-left: 40px;
+padding-right: 40px;
+margin: 0 auto;">
+  <label>Age</label>
+  <input id="age" #age>
+</div>
+<ng-user-settings [addExtraData]="{ age: age.value }"></ng-user-settings>
+
