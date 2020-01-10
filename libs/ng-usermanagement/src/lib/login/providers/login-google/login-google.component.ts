@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 import { auth } from 'firebase';
 import { AuthenticationService } from '../../../services/auth.service';
 
-enum AuthenticationFlow {
+export enum AuthenticationFlow {
   popup = 'popup',
   redirect = 'redirect',
 }
