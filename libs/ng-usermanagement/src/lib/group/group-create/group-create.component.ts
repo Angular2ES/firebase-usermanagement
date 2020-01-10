@@ -42,7 +42,6 @@ export class GroupCreateComponent {
       this.snackBar.open('group succesfully created', '', { duration: 2000 });
       this.loading = false;
       if (this.redirectOnSucces != null) this.router.navigate([this.redirectOnSucces])
-      return Promise.resolve()
     } catch(err) {
       this.errorHandler(err.message);
     }
