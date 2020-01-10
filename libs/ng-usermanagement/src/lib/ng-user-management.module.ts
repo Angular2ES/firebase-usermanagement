@@ -11,6 +11,7 @@ import { UserAdminSettingsModule } from './settings/user.admin.settings.module';
 import { AdminAuthGuardService } from './guards/admin-auth-guard.service';
 import { AdminPopupModule } from './settings/admin/admin-popup/admin-popup.module';
 import { AdminPopupService } from './settings/admin/admin-popup/admin-popup.service';
+import { UserAuthGuardService } from './guards/user-auth-guard.service';
 
 @NgModule({
   declarations: [
@@ -26,6 +27,7 @@ import { AdminPopupService } from './settings/admin/admin-popup/admin-popup.serv
   ],
   providers: [
     AdminAuthGuardService,
+    UserAuthGuardService,
     AdminPopupService
   ]
 })
