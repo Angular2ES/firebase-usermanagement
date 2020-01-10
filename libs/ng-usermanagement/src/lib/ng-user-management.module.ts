@@ -5,7 +5,6 @@ import { LoginProvidersModule } from './login/login-providers.module';
 import { RegisterModule } from './register/register.module';
 import { UserAdminSettingsModule } from './settings/user.admin.settings.module';
 import { SpinnerModule } from './spinner/spinner.module';
-import { LoginRegisterModule } from './templates/login-register.module';
 
 
 @NgModule({
@@ -16,7 +15,6 @@ import { LoginRegisterModule } from './templates/login-register.module';
     LoginProvidersModule,
     RegisterModule,
     SpinnerModule,
-    LoginRegisterModule,
     UserAdminSettingsModule,
   ],
   providers: []
