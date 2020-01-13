@@ -28,6 +28,7 @@ import { HeaderComponent } from './header/header.component';
 import { LoginTestComponent } from './login.test.component';
 import { UserListContainerComponent } from './user-list-container/user-list-container.component';
 import { ValidationMessagesComponent } from './validation-messages/validation-messages.component';
+import { AdminSettingsComponent } from './admin-settings.component';
 
 // TODO remove this after refactoring
 const userModuleConfig: UserModuleConfig = {
@@ -48,6 +49,7 @@ const userModuleConfig: UserModuleConfig = {
     GroupListContainerComponent,
     GroupListComponent,
     UserListContainerComponent,
+    AdminSettingsComponent,
     AppComponent,
     
   ],

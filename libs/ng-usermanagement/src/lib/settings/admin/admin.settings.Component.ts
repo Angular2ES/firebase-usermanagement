@@ -59,9 +59,8 @@ export class AdminSettingsComponent {
   }
 
   public toggleUserSettingsPopup(user: UserModel): void {
-    // this.selectedUser = user;
-    // this.displayUserSettigs = !this.displayUserSettigs;
-    this.adminPopup.open();
+    this.selectedUser = user;
+    this.displayUserSettigs = !this.displayUserSettigs;
   }
 
   public updateUserSettings(uid: string, userData: Object): Promise<void> {
