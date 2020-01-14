@@ -14,7 +14,7 @@
     <input type="text" placeholder="name" formControlName="displayName">
 
     <button type="submit">Save</button>
-    <button (click)="toggleUserSettingsPopup(selectedUser)" style="right: 10px; position: absolute;">Close</button>
+    <button (click)="toggleUserSettingsPopup(selectedUser)" name="Close" class="close-button">Close</button>
   </form>
 </div>
 <ng-spinner *ngIf="loading"></ng-spinner>
