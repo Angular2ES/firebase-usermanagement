@@ -3,8 +3,8 @@
     <col> {{ user.email }} 
 
     <col>
-    <button mat-button (click)="toggleUserSettingsPopup(user)">Edit settings</button>
-    <button mat-button (click)="impersonateUser(user.uid)">ImpersonateUser</button>
+    <button mat-button (click)="toggleUserSettingsPopup(user)" name="EditUserSettings">Edit settings</button>
+    <button mat-button (click)="impersonateUser(user.uid)" name="ImpersonateUser">ImpersonateUser</button>
   </div>
 </div>
 
