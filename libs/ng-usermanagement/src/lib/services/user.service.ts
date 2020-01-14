@@ -18,19 +18,11 @@ export class UserService {
       
     this.user$ = this.angularFireAuth.authState.pipe(
       switchMap((fbUser) => fbUser ? this.userCollection.doc(fbUser.uid).valueChanges() : of(null)),
-      map(user => this.mapFromDatabase(user)),
+      map(user => user as UserModel),
       shareReplay(1)
       );
   }
 
-  /**
-   * transform the data from the database
-   * @param user 
-   */
-  public mapFromDatabase(user: any): UserModel {
-    return {...user}
-  }
-  
   /**
    * @param uid 
    * @param userData 
@@ -45,7 +37,7 @@ export class UserService {
    */
   public getUserWithId(uid: string): Observable<UserModel> {
     return this.userCollection.doc(uid).valueChanges().pipe(
-      map(user => this.mapFromDatabase(user)),
+      map(user => user as UserModel),
       shareReplay(1)
     )
   }
