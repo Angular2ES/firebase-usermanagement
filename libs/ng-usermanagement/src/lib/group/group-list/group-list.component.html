@@ -1,0 +1,10 @@
+<div class="group-list">
+  <div *ngFor="let group$ of groupList$ | async; let i = index;">
+    <ul class="collection" *ngIf="group$ | async as group">
+      <li class="collection-item">
+        <span class="title">{{group.groupName}}</span>
+        <button mat-button class="group-settings-button" type="button" (click)="toggleGroupSettings(i)">Settings</button>
+      </li>
+    </ul>  
+  </div>
+</div>
