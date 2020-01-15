@@ -4,6 +4,7 @@
       <li class="collection-item">
         <span class="title">{{group.groupName}}</span>
         <button mat-button class="group-settings-button" type="button" (click)="toggleGroupSettings(i)">Settings</button>
+        <ng-group-settings [currentGroup]="group" [extraGroupData]="extraGroupData" *ngIf="groupSettingsActive === i"></ng-group-settings>
       </li>
     </ul>  
   </div>

@@ -1,12 +1,12 @@
 <div class="group-settings-collection">
-  <form *ngIf="currentGroup$ | async">
+  <form>
     <input type="text" matInput placeholder="name" #groupName>
     <button mat-button (click)="updateGroupData({ groupName: groupName.value})">update settings</button>
-    <button mat-button (click)="deleteGroup()">delete group</button>
+    <button mat-button class="delete-group-button" (click)="deleteGroup()">delete group</button>
   </form>
 </div>
 
-<div class="group-settings-collection">
+<!-- <div class="group-settings-collection">
   <form>
     <input matInput type="text" placeholder="userId" #userId>
     <input matInput type="text" placeholder="role" #userRole>
@@ -14,4 +14,4 @@
     <button mat-button (click)="removeUser(userId.value)">remove user</button>
   </form>
 </div>
-<ng-spinner *ngIf="loading"></ng-spinner>
+<ng-spinner *ngIf="loading"></ng-spinner> -->

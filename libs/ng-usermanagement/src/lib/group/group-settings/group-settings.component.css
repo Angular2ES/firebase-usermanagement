@@ -8,3 +8,7 @@
   padding: 40px;
   margin: 0 auto;
 }
+
+.delete-group-button {
+  float: right;
+}
