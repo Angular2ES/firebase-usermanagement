@@ -2,8 +2,8 @@ import { Injectable } from '@angular/core';
 import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/firestore';
 import * as firebase from 'firebase';
 import { Observable } from 'rxjs';
-import { Group } from '../models/group.model';
 import { map } from 'rxjs/operators';
+import { Group } from '../models/group.model';
 
 @Injectable({
   providedIn: 'root'
@@ -28,7 +28,7 @@ export class GroupService {
    * createGroup('userId', 'Name', groupData);
    * ```
    */
-  async createGroup(userId: string, groupName: string, extraGroupData?: any): Promise<void> {
+  createGroup(userId: string, groupName: string, extraGroupData?: any): Promise<void> {
     const newId = this.db.createId();
     let groupData = {
       groupId: newId,
@@ -37,7 +37,7 @@ export class GroupService {
         owner: [userId]
       }
     }
-    if (extraGroupData != null) groupData = {...groupData, ...extraGroupData}
+    groupData = {...groupData, ...extraGroupData}
     return this.groupCol.doc(newId).set(groupData);
   }
   
@@ -46,12 +46,8 @@ export class GroupService {
    */
   public getGroup(groupId: string): Observable<Group> {
     return this.groupCol.doc(groupId).valueChanges().pipe(
-      map((group) => this.mapFromDatabase(group))
+      map((group) => group as Group)
     );
-  }
-
-  private mapFromDatabase(group: any): Group{
-    return {...group}
   }
 
   /**
@@ -103,18 +99,14 @@ export class GroupService {
    * removeUsersFromGroup('userId', group);
    * ```
    */
-  async removeUsersFromGroup(userId: string[], group: Group): Promise<void> {
-    try {
-      const groupData = {
-        users: {}
-      }
-      for (var roleKey in group.users) {
-        groupData.users[roleKey] = firebase.firestore.FieldValue.arrayRemove.apply(null, userId)
-      }
-      return this.groupCol.doc(group.groupId).set(groupData, { merge: true});
-    } catch(err) {
-      console.error(err.message);
+  removeUsersFromGroup(userId: string[], group: Group): Promise<void> {
+    const groupData = {
+      users: {}
     }
+    for (var roleKey in group.users) {
+      groupData.users[roleKey] = firebase.firestore.FieldValue.arrayRemove.apply(null, userId)
+    }
+    return this.groupCol.doc(group.groupId).set(groupData, { merge: true});
   }
 
   /**
