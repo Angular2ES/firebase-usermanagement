@@ -5,11 +5,15 @@ import { MatButtonModule, MatInputModule, MatSnackBarModule } from '@angular/mat
 import { SpinnerModule } from '../spinner/spinner.module';
 import { GroupSettingsComponent } from './group-settings/group-settings.component';
 import { GroupCreateComponent } from './group-create/group-create.component';
+import { GroupListComponent } from './group-list/group-list.component';
+import { GroupUsersSettingsComponent } from './group-users/group-users.component';
 
 @NgModule({
   declarations: [
     GroupSettingsComponent,
-    GroupCreateComponent
+    GroupCreateComponent,
+    GroupListComponent,
+    GroupUsersSettingsComponent,
   ],
   imports: [
     CommonModule,
@@ -22,7 +26,9 @@ import { GroupCreateComponent } from './group-create/group-create.component';
   ],
   exports: [
     GroupSettingsComponent,
-    GroupCreateComponent
+    GroupCreateComponent,
+    GroupListComponent,
+    GroupUsersSettingsComponent
   ]
 })
 export class GroupModule { }

@@ -5,6 +5,7 @@
         <span class="title">{{group.groupName}}</span>
         <button mat-button class="group-settings-button" type="button" (click)="toggleGroupSettings(i)">Settings</button>
         <ng-group-settings [currentGroup]="group" [extraGroupData]="extraGroupData" *ngIf="groupSettingsActive === i"></ng-group-settings>
+        <ng-group-users-settings [currentGroup]="group" *ngIf="groupSettingsActive === i"></ng-group-users-settings>
       </li>
     </ul>  
   </div>

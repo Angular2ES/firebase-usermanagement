@@ -4,6 +4,10 @@ import { MatSnackBar } from '@angular/material';
 import { auth } from 'firebase';
 import { AuthenticationService } from './auth.service';
 import { UserService } from './user.service';
+import { Observable } from 'rxjs';
+import { UserModel } from 'functions/src/user/user.module';
+import { map } from 'rxjs/operators';
+import { AngularFirestore } from '@angular/fire/firestore';
 
 @Injectable({
   providedIn: 'root'
@@ -13,6 +17,7 @@ export class AdminAuthService {
   constructor(
     private authService: AuthenticationService,
     private http: HttpClient,
+    private db: AngularFirestore,
     private snackBar: MatSnackBar
     )
   {}
@@ -30,6 +35,21 @@ export class AdminAuthService {
     } catch(err) {
       this.errorHandler(err)
     }
+  }
+
+  /**
+   * Get all of the users within the users collection
+   */
+  get allUsers(): Observable<UserModel[]>  {
+    return this.db.collection('users').valueChanges().pipe(
+      map(users => {
+        let userList: UserModel[] = [];
+        users.forEach(user => {
+          userList.push(user as UserModel);
+        });
+        return userList;
+      })
+    );
   }
   
   private errorHandler(error: any): void {

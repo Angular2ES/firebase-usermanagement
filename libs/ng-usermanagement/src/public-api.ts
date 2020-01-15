@@ -21,6 +21,8 @@ export * from './lib/settings/admin/admin.settings.module'
 export * from './lib/group/group.Module';
 export * from './lib/group/group-settings/group-settings.component';
 export * from './lib/group/group-create/group-create.component';
+export * from './lib/group/group-list/group-list.component';
+export * from './lib/group/group-users/group-users.component';
 
 // Services
 export * from './lib/services/auth.service';
