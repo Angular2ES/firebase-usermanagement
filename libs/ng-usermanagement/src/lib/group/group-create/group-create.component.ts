@@ -14,7 +14,7 @@ import { map } from 'rxjs/operators';
 
 export class GroupCreateComponent {
 
-  @Input() extraGroupData: any;
+  @Input() extraGroupData: Object;
   @Input() redirectOnSucces: string;
 
   public curUser: Observable<any>;
@@ -28,17 +28,14 @@ export class GroupCreateComponent {
     private router: Router) {
       this.curUser = this.userService.currentUser.pipe(
         map(user => user ? this.curUserId = user.uid : null)
+        
       )
   }
 
-  async createGroup(groupName: string): Promise<void>{
+  async createGroup(groupName: string, extraGroupData: any): Promise<void>{
     try {
       this.loading = true;
-      if (this.extraGroupData != null){
-        await this.groupService.createGroup(this.curUserId, groupName, this.extraGroupData);
-      } else {
-        await this.groupService.createGroup(this.curUserId, groupName);
-      }
+      await this.groupService.createGroup(this.curUserId, groupName, extraGroupData);
       this.snackBar.open('group succesfully created', '', { duration: 2000 });
       this.loading = false;
       if (this.redirectOnSucces != null) this.router.navigate([this.redirectOnSucces])
