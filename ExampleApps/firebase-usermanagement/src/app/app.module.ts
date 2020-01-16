@@ -12,9 +12,7 @@ import { NgUserManagementModule } from 'libs/ng-usermanagement/src/public-api';
 import { environment } from '../environments/environment';
 // services
 import { AuthenticationService } from '../services/auth.service';
-import { AdminAuthGuardService } from '../services/auth.services/admin-auth-guard.service';
 import { GroupAdminAuthGuardService } from '../services/auth.services/groupAdmin-auth-gaurd.service';
-import { UserAuthGuardService } from '../services/auth.services/user-auth-guard.service';
 import { UserModuleConfig } from '../users-module-config';
 import { AppHomeComponent } from './app-home/app-home.component';
 // modules
@@ -72,7 +70,7 @@ const userModuleConfig: UserModuleConfig = {
   ],
   providers: [
     AuthenticationService, FormBuilder, ToasterService,
-    UserAuthGuardService, AdminAuthGuardService, GroupAdminAuthGuardService,
+    , GroupAdminAuthGuardService,
     { provide: UserModuleConfig, useValue: userModuleConfig },
   ],
   bootstrap: [AppComponent]
