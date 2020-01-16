@@ -15,7 +15,7 @@ export class UserAuthGuardService implements CanActivate {
 
   canActivate(next: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> {
     return this.userService.user$.pipe(
-      map(user => !!user.uid),
+      map(user => !!user),
       tap(isUser => {
         if(!isUser) {
           this.snackBar.open('You are not logged in', '', { duration: 2000 })

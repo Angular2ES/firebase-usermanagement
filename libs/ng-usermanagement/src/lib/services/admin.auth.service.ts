@@ -1,13 +1,12 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { MatSnackBar } from '@angular/material';
+import * as firebase from 'firebase';
 import { auth } from 'firebase';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { UserModel } from '../models/user.model';
 import { AuthenticationService } from './auth.service';
-import { UserService } from './user.service';
-import * as firebase from 'firebase'
 
 @Injectable({
   providedIn: 'root'
@@ -17,7 +16,6 @@ export class AdminAuthService {
   constructor(
     private authService: AuthenticationService,
     private db: AngularFirestore,
-    private userService: UserService,
     private snackBar: MatSnackBar
     )
   {}
@@ -61,7 +59,7 @@ export class AdminAuthService {
       map(users => {
         let userList: UserModel[] = [];
         users.forEach(user => {
-          userList.push(this.userService.mapFromDatabase(user));
+          userList.push(user as UserModel);
         });
         return userList;
       })
