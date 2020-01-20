@@ -28,7 +28,7 @@ export class GroupService {
    * createGroup('userId', 'Name', groupData);
    * ```
    */
-  createGroup(userId: string, groupName: string, extraGroupData?: any): Promise<void> {
+  createGroup(userId: string, groupName: string, extraGroupData?: Object): Promise<void> {
     const newId = this.db.createId();
     let groupData = {
       groupId: newId,
@@ -63,7 +63,7 @@ export class GroupService {
    * updateGroupData('groupId', groupData);
    * ```
    */
-  async updateGroupData(groupId: string, data: any): Promise<void> {
+  updateGroupData(groupId: string, data: Object): Promise<void> {
     return this.groupCol.doc(groupId).update(data);
   }
 
@@ -72,7 +72,7 @@ export class GroupService {
    * @param role
    * @param groupId
    */
-  async addUsersToGroup(userId: string[], role: string, groupId: string): Promise<void> {
+  addUsersToGroup(userId: string[], role: string, groupId: string): Promise<void> {
     const groupData = {
       groupId: groupId,
       users: {}

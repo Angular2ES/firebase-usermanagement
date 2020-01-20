@@ -20,7 +20,7 @@ export class GroupSettingsComponent {
     private snackBar: MatSnackBar) {
   }
   
-  public updateGroupData(groupData: any): Promise<void> {
+  public updateGroupData(groupData: Object): Promise<void> {
     this.loading = true;
     groupData = { ...groupData, ...this.extraGroupData }
     return this.groupService.updateGroupData(this.currentGroup.groupId, groupData)
