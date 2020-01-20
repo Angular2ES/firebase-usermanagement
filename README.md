@@ -37,7 +37,7 @@
 
 <a name="peer-dependencies"/>
 
-## Peer Dependencies - please make sure that peerDependencies are installed if you are not using the schematics
+## Peer Dependencies - please make sure that peerDependencies are installed
 
 ```json
 "peerDependencies": {
@@ -55,25 +55,14 @@
 <a name="installation"/>
 
 ## Installation
-## 1. Install with *ng add*
-If Angular Material Design is not setup, just run
-```shell
-ng add @angular/material
-``` 
-
-Now you can add the library with *ng add*
-```shell
-ng add ng-usermanagement
-```
-
-## 2. Install with *npm* (Alternative)
+## 1. Install with *npm*
 Install all of the above dependencies with *npm*
 Install the library with *npm*
 ```shell
 npm install ng-usermanagement
 ```
 
-## 3. Configs
+## 2. Configs
 Once you have installed the library you need to import the module into the main module.
 ```typescript
 import { BrowserModule } from '@angular/platform-browser';
@@ -117,4 +106,37 @@ const inputValidationConfig = {
   bootstrap: [AppComponent]
 })
 export class AppModule { }
+```
+## 3. firebase cloud functions
+Copy and paste the firebase cloud functions into your cloud functions folder.
+If the folder doens't exist yet run the following command.
+```shell
+firebase init functions
+```
+copy the following cloud functions [here](functions/src)
+
+deploy the cloud functions with the following command.
+```shell
+firebase deploy --only functions
+```
+
+## 4. firestore rules
+Copy and paste the firestore rules into your firestore rules file.
+If the file doesn't exist yet run the following command.
+```shell
+firebase init firestore
+```
+copy the following firestore rules [here](firestore.rules)
+
+deploy the firestore rules with the following command.
+```shell
+firebase deploy --only firestore:rules
+```
+<a name="testing"/>
+
+## start cypress testing
+```shell
+ng serve
+npm run build:testConfig
+npx cypress open
 ```
