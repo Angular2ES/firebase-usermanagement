@@ -5,13 +5,20 @@
 - [Supported Angular Guards](#supported-angular-guards)
 - [Peer Dependencies](#peer-dependencies)
 - [Installation](#installation)
+- [testing](#testing)
 
 <a name="components"/>
 
 ## Library's Components
-- `<ng-register>` standalone registration component to create new accounts [see more](docs/ng-register.md)
-- `<ng-login-email-password>` standalone login component with email & password [see more](docs/ng-login-email-password.md)
-- `<ng-login-google>` standalone login component with the google provider [see more](docs/ng-login-google.md)
+- `<ng-register>` standalone registration component to create new accounts
+- `<ng-login-email-password>` standalone login component with email & password
+- `<ng-login-google>` standalone login component with the google provider
+- `<ng-user-settings>` standalone user settings component
+- `<ng-admin-settings>` standalone admin settings component
+- `<ng-create-group>` standalone create group component
+- `<ng-group-list>` standalone group list of current logged in user
+- `<ng-group-settings>` standalone group settings component of given group
+- `<ng-group-users-settings>` standalone user settings of given group
 
 <a name="supported-providers"/>
 
@@ -139,4 +146,17 @@ firebase deploy --only firestore:rules
 ng serve
 npm run build:testConfig
 npx cypress open
+```
+
+## Publishing
+
+Build the library.
+```shell
+ng build ng-usermanagement
+```
+
+navigate to the dist folder `cd dist/ng-usermanagement`
+```shell
+cd dist/ng-usermanagement
+npm publish
 ```
