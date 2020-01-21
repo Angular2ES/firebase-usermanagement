@@ -6,27 +6,27 @@
     "firebase-usermanagement": {
       "projectType": "application",
       "schematics": {},
-      "root": "apps/firebase-usermanagement",
-      "sourceRoot": "apps/firebase-usermanagement/src",
+      "root": "ExampleApps/firebase-usermanagement",
+      "sourceRoot": "ExampleApps/firebase-usermanagement/src",
       "prefix": "app",
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
             "outputPath": "dist/firebase-usermanagement",
-            "index": "apps/firebase-usermanagement/src/index.html",
-            "main": "apps/firebase-usermanagement/src/main.ts",
-            "polyfills": "apps/firebase-usermanagement/src/polyfills.ts",
-            "tsConfig": "apps/firebase-usermanagement/tsconfig.app.json",
+            "index": "ExampleApps/firebase-usermanagement/src/index.html",
+            "main": "ExampleApps/firebase-usermanagement/src/main.ts",
+            "polyfills": "ExampleApps/firebase-usermanagement/src/polyfills.ts",
+            "tsConfig": "ExampleApps/firebase-usermanagement/tsconfig.app.json",
             "aot": false,
             "assets": [
-              "apps/firebase-usermanagement/src/favicon.ico",
-              "apps/firebase-usermanagement/src/assets"
+              "ExampleApps/firebase-usermanagement/src/favicon.ico",
+              "ExampleApps/firebase-usermanagement/src/assets"
             ],
             "styles": [
               "./node_modules/@angular/material/prebuilt-themes/deeppurple-amber.css",
               "node_modules/materialize-css/dist/css/materialize.css",
-              "apps/firebase-usermanagement/src/styles.css"
+              "ExampleApps/firebase-usermanagement/src/styles.css"
             ],
             "scripts": [
               "node_modules/jquery/dist/jquery.js",
@@ -38,8 +38,8 @@
             "production": {
               "fileReplacements": [
                 {
-                  "replace": "apps/firebase-usermanagement/src/environments/environment.ts",
-                  "with": "apps/firebase-usermanagement/src/environments/environment.prod.ts"
+                  "replace": "ExampleApps/firebase-usermanagement/src/environments/environment.ts",
+                  "with": "ExampleApps/firebase-usermanagement/src/environments/environment.prod.ts"
                 }
               ],
               "optimization": true,
@@ -87,17 +87,17 @@
         "test": {
           "builder": "@angular-devkit/build-angular:karma",
           "options": {
-            "main": "apps/firebase-usermanagement/src/test.ts",
-            "polyfills": "apps/firebase-usermanagement/src/polyfills.ts",
-            "tsConfig": "apps/firebase-usermanagement/tsconfig.spec.json",
-            "karmaConfig": "apps/firebase-usermanagement/karma.conf.js",
+            "main": "ExampleApps/firebase-usermanagement/src/test.ts",
+            "polyfills": "ExampleApps/firebase-usermanagement/src/polyfills.ts",
+            "tsConfig": "ExampleApps/firebase-usermanagement/tsconfig.spec.json",
+            "karmaConfig": "ExampleApps/firebase-usermanagement/karma.conf.js",
             "assets": [
-              "apps/firebase-usermanagement/src/favicon.ico",
-              "apps/firebase-usermanagement/src/assets"
+              "ExampleApps/firebase-usermanagement/src/favicon.ico",
+              "ExampleApps/firebase-usermanagement/src/assets"
             ],
             "styles": [
               "./node_modules/@angular/material/prebuilt-themes/deeppurple-amber.css",
-              "apps/firebase-usermanagement/src/styles.css"
+              "ExampleApps/firebase-usermanagement/src/styles.css"
             ],
             "scripts": []
           }
@@ -106,8 +106,8 @@
           "builder": "@angular-devkit/build-angular:tslint",
           "options": {
             "tsConfig": [
-              "apps/firebase-usermanagement/tsconfig.app.json",
-              "apps/firebase-usermanagement/tsconfig.spec.json",
+              "ExampleApps/firebase-usermanagement/tsconfig.app.json",
+              "ExampleApps/firebase-usermanagement/tsconfig.spec.json",
               "e2e/tsconfig.json"
             ],
             "exclude": [
