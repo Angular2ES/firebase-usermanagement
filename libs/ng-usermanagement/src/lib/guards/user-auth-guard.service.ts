@@ -21,6 +21,6 @@ export class UserAuthGuardService implements CanActivate {
           this.snackBar.open('You are not logged in', '', { duration: 2000 })
         }
       })
-      );
+    );
   }
 }
