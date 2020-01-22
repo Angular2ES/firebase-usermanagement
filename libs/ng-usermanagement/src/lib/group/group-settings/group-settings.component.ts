@@ -41,26 +41,6 @@ export class GroupSettingsComponent {
     .catch((err) => this.errorHandler(err.message));
   }
 
-  public addUser(userId: string, role: string): Promise<void> {
-    this.loading = true;
-    return this.groupService.addUsersToGroup([userId], role, this.currentGroup.groupId)
-    .then(() => {
-      this.loading = false;
-      this.snackBar.open('user has been added to the group', '', { duration: 2000 })
-    })
-    .catch((err) => this.errorHandler(err.message));
-  }
-
-  public removeUser(userId: string): Promise<void> {
-    this.loading = true;
-    return this.groupService.removeUsersFromGroup([userId], this.currentGroup)
-    .then(() => {
-      this.loading = false;
-      this.snackBar.open('user has been removed from the group', '', { duration: 2000 })
-    })
-    .catch((err) => this.errorHandler(err.message));
-  }
-
   private errorHandler(errorMessage: string){
     this.loading = false;
     this.snackBar.open(errorMessage, '', { duration: 2000 });
