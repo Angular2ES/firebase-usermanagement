@@ -9,7 +9,7 @@ import { User } from 'firebase';
   providedIn: 'root'
 })
 export class UserService {
-  private user$: Observable<any>;
+  public readonly user$: Observable<any>;
   private userCollection: AngularFirestoreCollection = this.db.collection('users');
   
   constructor(

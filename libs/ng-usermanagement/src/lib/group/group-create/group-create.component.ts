@@ -5,7 +5,7 @@ import { GroupService } from '../../services/group.service';
 import { UserService } from '../../services/user.service';
 import { Observable } from 'rxjs';
 import { map, tap } from 'rxjs/operators';
-import { UserModel } from 'apps/firebase-usermanagement/src/models/user.model';
+import { UserModel } from '../../models/user.model'
 
 @Component({
   selector: 'ng-create-group',
@@ -27,7 +27,7 @@ export class GroupCreateComponent {
     private userService: UserService,
     private snackBar: MatSnackBar,
     private router: Router) {
-      this.curUser = this.userService.currentUser.pipe(
+      this.curUser = this.userService.user$.pipe(
         map(user => user as UserModel),
         tap(user => user ? this.curUserId = user.uid : null)
       )

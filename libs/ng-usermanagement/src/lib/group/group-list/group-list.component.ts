@@ -4,7 +4,7 @@ import { FormGroup, FormBuilder, FormArray } from '@angular/forms';
 import { GroupService } from '../../services/group.service';
 import { UserService } from '../../services/user.service';
 import { tap, map, switchMap } from 'rxjs/operators';
-import { UserModel } from 'functions/src/user/user.module';
+import { UserModel } from '../../models/user.model'
 import { Group } from '../../models/group.model';
 
 @Component({
