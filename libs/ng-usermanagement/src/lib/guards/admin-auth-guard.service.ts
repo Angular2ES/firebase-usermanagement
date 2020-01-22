@@ -18,21 +18,23 @@ export class AdminAuthGuardService implements CanActivate {
     return this.afAuth.user.pipe(
       switchMap(user => {
         if (user === null) { 
-          this.snackBar.open('insufficient permission', '', { duration: 2000 }); 
-          return of(false)
+          throw new Error();
         }
         return from(user.getIdTokenResult()).pipe(
           map(idTokenResult => idTokenResult.claims.admin),
-          tap((isAdmin: boolean) => { if (!isAdmin) throw new Error(); else return of(true) }),
-          catchError((err, source) => { 
-            this.snackBar.open('insufficient permission', '', { duration: 2000 }); 
-            return of(false)
-          }),
+          tap((isAdmin: boolean) => { 
+            if (!isAdmin) {
+              this.snackBar.open('insufficient permission', '', { duration: 2000 }); 
+            } 
+            return of(isAdmin)
+          })
           )
-        }),
-      retry(2)
+      }),
+      retry(2),
+      catchError((err, source) => { 
+        this.snackBar.open('insufficient permission', '', { duration: 2000 }); 
+        return of(false)
+      }),
     )
   }
 }
-
-//this.snackBar.open('insufficient permission', '', { duration: 2000 }

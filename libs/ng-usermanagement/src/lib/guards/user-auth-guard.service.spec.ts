@@ -1,8 +1,6 @@
-import { TestBed } from '@angular/core/testing';
-
+import { of } from 'rxjs';
 import { UserAuthGuardService } from './user-auth-guard.service';
-import { of, Subscription } from 'rxjs';
-import { AngularFireAuth } from '@angular/fire/auth';
+
 var sinon = require('sinon')
 
 class MockUserService {
@@ -22,18 +20,13 @@ class MockSnackBar {
 describe('UserGuardService', () => {
 
   let testService: UserAuthGuardService;
-  let spy: any;
 
   beforeEach(() => {
-    
-    // spyService = jasmine.createSpyObj('afAuth', ['user'])
-    const fakeService = sinon.fake.returns(new MockUserService());
-    const fakeSnackbar = sinon.fake.returns(new MockSnackBar());
-    testService = new UserAuthGuardService(fakeService(), fakeSnackbar());
+    testService = new UserAuthGuardService(new MockUserService() as any, new MockSnackBar() as any);
   })
   
   it('should have been called', () => {
-    spy = spyOn(UserAuthGuardService.prototype, 'canActivate')
+    spyOn(UserAuthGuardService.prototype, 'canActivate')
     testService.canActivate(null, null);
     expect(testService.canActivate).toHaveBeenCalled();
   });
@@ -45,9 +38,7 @@ describe('UserGuardService', () => {
   })
 
   it('should return false', () => {
-    const fakeService = sinon.fake.returns(new MockEmptyUserService());
-    const fakeSnackbar = sinon.fake.returns(new MockSnackBar());
-    testService = new UserAuthGuardService(fakeService(), fakeSnackbar());
+    testService = new UserAuthGuardService(new MockEmptyUserService() as any, new MockSnackBar() as any);
 
     testService.canActivate(null,null).subscribe( result => {
       expect(result).toEqual(false)
