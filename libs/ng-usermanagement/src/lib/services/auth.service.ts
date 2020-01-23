@@ -51,7 +51,7 @@ export class AuthenticationService {
    * @param email
    * @param password
    */
-  async loginWithEmailAndPassword(email: string, password: string): Promise<auth.UserCredential>{
+  public loginWithEmailAndPassword(email: string, password: string): Promise<auth.UserCredential>{
     return this.angularFireAuth.auth.signInWithEmailAndPassword(email, password);
   }
   
@@ -59,7 +59,7 @@ export class AuthenticationService {
    * Redirect user to the given provider
    * @param authProvider
    */
-  async loginWithRedirect(authProvider: auth.AuthProvider): Promise<void> {
+  public loginWithRedirect(authProvider: auth.AuthProvider): Promise<void> {
     return this.angularFireAuth.auth.signInWithRedirect(authProvider);
   }
   
@@ -74,18 +74,15 @@ export class AuthenticationService {
    * Creates a popup for the given provider
    * @param authProvider 
    */
-  async loginWithPopup(authProvider: auth.AuthProvider): Promise<auth.UserCredential> {
+  public loginWithPopup(authProvider: auth.AuthProvider): Promise<auth.UserCredential> {
     return this.angularFireAuth.auth.signInWithPopup(authProvider);
   }
 
-  /**
-   * @param uid 
-   * @param adminToken 
-   */
-  async loginWithCustomToken(uid: string, adminToken?: string): Promise<auth.UserCredential> {
+  public loginWithCustomToken(uid: string, adminToken?: string): Promise<auth.UserCredential> {
     this.adminToken = adminToken ? adminToken : '';
-    return await firebase.auth().signInWithCustomToken(uid)
+    return firebase.auth().signInWithCustomToken(uid)
   }
+
 
   async logout(): Promise<void> {
     return await this.angularFireAuth.auth.signOut()

@@ -2,7 +2,6 @@ import { Component, Inject, Input, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { inputValidation, InputValidationToken } from '../interfaces/input-validation.interface';
 
 @Component({
   selector: 'ng-validation-message',
@@ -11,20 +10,30 @@ import { inputValidation, InputValidationToken } from '../interfaces/input-valid
 })
 export class ValidationMessageComponent implements OnInit {
 
+  /**
+   * The formControl the application is validating
+   */
   @Input() control: FormControl;
+
+  /**
+   * All of the possible messages the error can give
+   */
+  @Input() validationMessage = {
+    required: 'Required',
+    email: 'Invalid email address',
+    verifyPassword: 'Verify your password',
+  }
 
   public errorMessage: Observable<string | void>;
 
-  constructor(
-    @Inject(InputValidationToken) public config: inputValidation
-  ) {}
+  constructor() {}
   
   ngOnInit() {
     this.errorMessage = this.control.valueChanges.pipe(
       map((control) => {
         for (let propertyName in this.control.errors) {
           if (this.control.touched) {
-            return this.config[propertyName]
+            return this.validationMessage[propertyName]
           }
         }
         return
