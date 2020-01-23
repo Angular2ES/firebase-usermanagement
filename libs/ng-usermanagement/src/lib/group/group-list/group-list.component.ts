@@ -23,14 +23,13 @@ export class GroupListComponent implements OnInit {
   ngOnInit(): void {
     this.groupList$ = this.userService.user$.pipe(
       map((user: UserModel) => {
-        let groupList: Group[] = []
-        let group: Observable<Group>[] = [];
+        let groups: Observable<Group>[] = [];
         if(user.groups){
           user.groups.forEach(groupId => {
-            group.push(this.groupService.getGroup(groupId).pipe(map(group => group)))
+            groups.push(this.groupService.getGroup(groupId).pipe(map(group => group)))
           })
         }
-        return group;
+        return groups;
       })
     )
   }

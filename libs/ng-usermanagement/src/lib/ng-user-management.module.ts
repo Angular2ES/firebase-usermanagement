@@ -5,11 +5,8 @@ import { LoginProvidersModule } from './login/login-providers.module';
 import { RegisterModule } from './register/register.module';
 
 import { SpinnerModule } from './spinner/spinner.module';
-import { AdminSettingsModule } from './settings/admin/admin.settings.module';
-import { UserSettingsModule } from './settings/user/user.settings.module';
 import { UserAdminSettingsModule } from './settings/user.admin.settings.module';
 import { GroupModule } from './group/group.Module';
-
 
 import { AdminAuthGuardService } from './guards/admin-auth-guard.service';
 import { AdminPopupModule } from './settings/admin/admin-popup/admin-popup.module';
@@ -25,8 +22,6 @@ import { UserAuthGuardService } from './guards/user-auth-guard.service';
     LoginProvidersModule,
     RegisterModule,
     SpinnerModule,
-    AdminSettingsModule,
-    UserSettingsModule,
     UserAdminSettingsModule,
     AdminPopupModule,
     GroupModule,
