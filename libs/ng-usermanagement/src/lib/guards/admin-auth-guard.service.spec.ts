@@ -46,7 +46,7 @@ class MockSnackBar {
 }
 
 
-fdescribe('adminGuardService', () => {
+describe('adminGuardService', () => {
 
   let angularFireAuth: MockAngularFireAuth;
 
