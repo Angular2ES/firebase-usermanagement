@@ -4,6 +4,10 @@ import { Router } from '@angular/router';
 import { auth } from 'firebase';
 import { AuthenticationService } from '../../../services/auth.service';
 
+export enum AuthenticationFlow {
+  popup = 'popup',
+  redirect = 'redirect',
+}
 @Component({
   selector: 'ng-login-google',
   templateUrl: '../login-google/login-google.component.html',
@@ -11,13 +15,26 @@ import { AuthenticationService } from '../../../services/auth.service';
 })
 export class LoginGoogleComponent{
 
-  @Input('googleProviderConfig') config: string; // to use redirect; 'redirect', to use popup; 'popup'
-  @Input('redirectOnSucces') redirectOnSucces: string; // redirect the user to another page
+  /**
+   * redirect the user or create a popup within the application.
+   * options are: 'redirect' or 'popup'
+   */
+  @Input() authenticationFlowGoogle: AuthenticationFlow = AuthenticationFlow.popup;
+  /**
+   * redirect the user to another page
+   */
+  @Input() redirectOnSucces: string;
   
-  @Output('onSucces') onSuccess: EventEmitter<auth.UserCredential> = new EventEmitter();
-  @Output('onFailed') onFailed: EventEmitter<string> = new EventEmitter();
+  /**
+   * Emits the user credentials on a succesfull login
+   */
+  @Output() onSuccess: EventEmitter<auth.UserCredential> = new EventEmitter();
+  /**
+   * Emits the error message on a failed login
+   */
+  @Output() onFailed: EventEmitter<string> = new EventEmitter();
 
-  googleProvider: auth.GoogleAuthProvider;
+  private googleProvider: auth.GoogleAuthProvider;
   
   constructor(
     private authService: AuthenticationService,
@@ -36,7 +53,7 @@ export class LoginGoogleComponent{
   }
 
   loginWithGoogle(){
-    if (this.config === "redirect") this.signInWithRedirect();
+    if (this.authenticationFlowGoogle === AuthenticationFlow.redirect) this.signInWithRedirect();
     else this.signInWithPopup()
   }
 
@@ -68,7 +85,7 @@ export class LoginGoogleComponent{
   }
 
   private errorHandler(error: any): void {
-    this.onFailed.next(error);
+    this.onFailed.next(error.message);
     this.snackBar.open(error.message, '', { duration: 2000 });
   }
 }
