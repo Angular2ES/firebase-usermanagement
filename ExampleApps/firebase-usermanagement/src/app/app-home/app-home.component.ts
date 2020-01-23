@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 import { UserModel } from '../../models/user.model';
 import { filter, tap } from 'rxjs/operators';
-import { GroupService } from '../../services/group.service';
 import { UserService } from '../../services/user.service';
 
 @Component({
@@ -16,8 +15,7 @@ export class AppHomeComponent implements OnInit {
   user$: Observable<UserModel>;
   uid: string;
 
-  constructor(private userService: UserService,
-    private groupService: GroupService) {
+  constructor(private userService: UserService) {
   }
 
   ngOnInit(): void {

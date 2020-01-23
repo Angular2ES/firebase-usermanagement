@@ -32,19 +32,24 @@ export class AuthenticationService {
    *  .then((userCredentials) => console.log('succesfull login'))
    * ```
    */
-  async createAccount(email: string, password: string, extraUserData?: any): Promise<auth.UserCredential>{ 
-    return this.secondaryApp.auth().createUserWithEmailAndPassword(email, password)
-      .then((userCredentials) => this.setExtraDataToUserCol(userCredentials, extraUserData))
-      .then((userCredentials) => this.secondaryApp.auth().signOut()
-        .then(() => userCredentials)
-        )
-  }
-    
-  private setExtraDataToUserCol(userCredentials: auth.UserCredential, extraUserData?: any): auth.UserCredential {
-    if (extraUserData != null) {
-      this.secondaryApp.firestore().collection('users').doc(userCredentials.user.uid).set(extraUserData, {merge: true})
+
+  async createAccount(email: string, password: string, extraUserData?: any): Promise<auth.UserCredential>{
+    try {
+      const credentials = await this.secondaryApp.auth().createUserWithEmailAndPassword(email, password)
+      if (credentials != null) {
+        let userData = {
+          uid: credentials.user.uid,
+          email: credentials.user.email
+        }
+        if (extraUserData != null) userData = { ...userData, ...extraUserData}
+
+        await this.secondaryApp.firestore().collection('users').doc(credentials.user.uid).set(userData)
+        await this.secondaryApp.auth().signOut();
+      }
+      return credentials;
+    } catch(err){
+      console.error(err)
     }
-    return userCredentials;
   }
     
   /**

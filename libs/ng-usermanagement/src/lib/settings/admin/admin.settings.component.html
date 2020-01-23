@@ -1,7 +1,7 @@
+
 <div class="admin-settings-collection" *ngIf="currentUser$ | async">
   <div *ngFor="let user of allUsers$ | async" style="column-count: 2;">
     <col> {{ user.email }} 
-
     <col>
     <button mat-button (click)="toggleUserSettingsPopup(user)" name="EditUserSettings">Edit settings</button>
     <button mat-button (click)="impersonateUser(user.uid)" name="ImpersonateUser">ImpersonateUser</button>

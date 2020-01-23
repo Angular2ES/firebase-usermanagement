@@ -6,3 +6,7 @@
   align-content: center;
 }
 
+.group-settings-button {
+  float: right;
+  bottom: 5px
+}

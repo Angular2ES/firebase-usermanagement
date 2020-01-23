@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { MatSnackBarModule } from '@angular/material';
+import { MatSnackBarModule, MatButtonModule, MatInputModule } from '@angular/material';
 import { AdminSettingsComponent } from './admin/admin.settings.Component';
 import { UserSettingsComponent } from './user/user.settings.Component';
 import { SpinnerModule } from '../spinner/spinner.module';
@@ -17,6 +17,8 @@ import { AdminPopupComponent } from './admin/admin-popup/admin-popup.component';
     FormsModule,
     ReactiveFormsModule,
     MatSnackBarModule,
+    MatButtonModule,
+    MatInputModule,
     SpinnerModule,
   ],
   exports: [

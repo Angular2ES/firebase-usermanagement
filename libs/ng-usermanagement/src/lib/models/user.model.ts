@@ -11,5 +11,4 @@ export class UserModel {
     street?: string;
     number?: string;
   }]
-  isAdmin?: boolean;
 }

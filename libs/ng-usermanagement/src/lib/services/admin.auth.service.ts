@@ -22,7 +22,8 @@ export class AdminAuthService {
 
   /**
    * Login as an other user
-   * @param uid 
+   * @param uid the user being impersonated
+   * @param adminUid the admin/user impersonating used to login again
    */
   async impersonateUser(uid: string, adminUid: string): Promise<auth.UserCredential | void> {
     try {

@@ -3,13 +3,15 @@ import { FirebaseNameOrConfigToken, FirebaseOptionsToken } from '@angular/fire';
 import { ngUserManagementConfig, ngUserManagementConfigFactory, NgUserManagementConfigToken, UserProvidedConfigToken } from './interfaces/firebase-config.interface';
 import { LoginProvidersModule } from './login/login-providers.module';
 import { RegisterModule } from './register/register.module';
+
+import { SpinnerModule } from './spinner/spinner.module';
 import { UserAdminSettingsModule } from './settings/user.admin.settings.module';
+import { GroupModule } from './group/group.Module';
 
 import { AdminAuthGuardService } from './guards/admin-auth-guard.service';
 import { AdminPopupModule } from './settings/admin/admin-popup/admin-popup.module';
 import { AdminPopupService } from './settings/admin/admin-popup/admin-popup.service';
 import { UserAuthGuardService } from './guards/user-auth-guard.service';
-import { SpinnerModule } from './spinner/spinner.module';
 
 
 @NgModule({
@@ -21,7 +23,8 @@ import { SpinnerModule } from './spinner/spinner.module';
     RegisterModule,
     SpinnerModule,
     UserAdminSettingsModule,
-    AdminPopupModule
+    AdminPopupModule,
+    GroupModule,
   ],
   providers: [
     AdminAuthGuardService,

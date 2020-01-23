@@ -1,16 +1,2 @@
-<div class="group-settings-collection">
-  <form>
-    <li class="text" >
-        <pre>{{ currentGroup$ | async | json }}</pre>
-    </li>
-    <input type="text" class="form-control mb-2" placeholder="name" #groupName>
-    <button class="waves-effect waves-light btn" (click)="changeName(groupName.value)">update settings</button>
-    <button class="waves-effect waves-light btn" (click)="deleteGroup()">delete group</button>
-  </form>
-</div>
-
-<div *ngIf="userList$ | async">
-  <div class="col-6" *ngFor="let user of userForm.value; let i = index;">
-    <user-list-container [user]="userForm.value[i]" [groupSettingsInstance]="this"></user-list-container>
-  </div>
-</div>
+<ng-create-group></ng-create-group>
+<ng-group-list></ng-group-list>

@@ -1,14 +1,14 @@
 <form [formGroup]="registerForm" (submit)="registerUser(registerForm.get('email').value, registerForm.get('password').value)">
-  <input type="text" [ngClass]="{'form-submitted': formSubmitted}" class="form-control mb-2" placeholder="Email" formControlName="email">
+  <input type="text" matInput placeholder="Email" formControlName="email">
   <ng-validation-message [control]="registerForm.get('email')"></ng-validation-message>
 
-  <input type="password" [ngClass]="{'form-submitted': formSubmitted}" class="form-control mb-2" placeholder="Password" formControlName="password">
+  <input type="password" matInput placeholder="Password" formControlName="password">
   <ng-validation-message [control]="registerForm.get('password')"></ng-validation-message>
 
-  <input type="password" [ngClass]="{'form-submitted': formSubmitted}" class="form-control mb-2" placeholder="Password" formControlName="confirmPassword">
+  <input type="password" matInput placeholder="Password" formControlName="confirmPassword">
   <ng-validation-message [control]="registerForm.get('confirmPassword')"></ng-validation-message>
   <ng-validation-message [control]="registerForm"></ng-validation-message>
-  <button class="waves-effect waves-light btn" type="submit" [disabled]="!registerForm.valid">create account</button>
+  <button mat-button type="submit" [disabled]="!registerForm.valid">create account</button>
 </form>
 
 <ng-spinner *ngIf="loading"></ng-spinner>

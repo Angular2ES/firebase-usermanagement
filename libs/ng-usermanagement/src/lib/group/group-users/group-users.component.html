@@ -1,0 +1,17 @@
+<div *ngIf="users$ | async">
+  <form [formGroup]="userGroups">
+    <div formArrayName="users">
+      <div *ngFor="let user of users$ | async; let i = index">
+        <div [formGroupName]="i" class="group-settings-collection"> 
+          {{user.email}}
+          <input formControlName="role" *ngIf="!isPartOfGroup(user)" type="text" placeholder="role">
+          <button *ngIf="!isPartOfGroup(user)" mat-button class="add-or-remove-from-group-button" type="button"
+          (click)="addUser(user.uid, userGroups.get('users').value[i].role)">Add user</button>
+          <button *ngIf="isPartOfGroup(user)" mat-button class="add-or-remove-from-group-button" type="button" 
+          (click)="removeUser(user.uid)">remove user</button>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>
+<ng-spinner *ngIf="loading"></ng-spinner>
