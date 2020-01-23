@@ -8,19 +8,28 @@ import { SpinnerModule } from './spinner/spinner.module';
 import { LoginRegisterModule } from './templates/login-register.module';
 import { inputValidation, InputValidationToken, UserProvidedValidationToken, ngInputValidationFactory} from './interfaces/input-validation.interface'
 import { UserAdminSettingsModule } from './settings/user.admin.settings.module';
+import { AdminAuthGuardService } from './guards/admin-auth-guard.service';
+import { AdminPopupModule } from './settings/admin/admin-popup/admin-popup.module';
+import { AdminPopupService } from './settings/admin/admin-popup/admin-popup.service';
+import { UserAuthGuardService } from './guards/user-auth-guard.service';
 
 @NgModule({
   declarations: [
   ],
-  imports: [],
+  imports: [AdminPopupModule],
   exports: [
     LoginProvidersModule,
     RegisterModule,
     SpinnerModule,
     LoginRegisterModule,
     UserAdminSettingsModule,
+    AdminPopupModule
   ],
-  providers: []
+  providers: [
+    AdminAuthGuardService,
+    UserAuthGuardService,
+    AdminPopupService
+  ]
 })
 export class NgUserManagementModule { 
   static forRoot(

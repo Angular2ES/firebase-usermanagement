@@ -5,6 +5,7 @@ import { MatSnackBarModule } from '@angular/material';
 import { AdminSettingsComponent } from './admin/admin.settings.Component';
 import { UserSettingsComponent } from './user/user.settings.Component';
 import { SpinnerModule } from '../spinner/spinner.module';
+import { AdminPopupComponent } from './admin/admin-popup/admin-popup.component';
 
 @NgModule({
   declarations: [
@@ -22,5 +23,8 @@ import { SpinnerModule } from '../spinner/spinner.module';
     UserSettingsComponent,
     AdminSettingsComponent
   ],
+  entryComponents: [
+    AdminPopupComponent
+  ]
 })
 export class UserAdminSettingsModule { }

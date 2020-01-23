@@ -3,6 +3,7 @@ import { AngularFireAuth } from '@angular/fire/auth';
 import * as firebase from 'firebase';
 import { auth } from 'firebase';
 import { ngUserManagementConfig, NgUserManagementConfigToken } from '../interfaces/firebase-config.interface';
+import { AdminPopupService } from '../settings/admin/admin-popup/admin-popup.service';
 
 @Injectable({
   providedIn: 'root'
@@ -13,6 +14,7 @@ export class AuthenticationService {
   
   constructor(
     private angularFireAuth: AngularFireAuth,
+    private adminPopup: AdminPopupService,
     @Inject(NgUserManagementConfigToken) public config: ngUserManagementConfig) {
   }
   
@@ -30,7 +32,7 @@ export class AuthenticationService {
    *  .then((userCredentials) => console.log('succesfull login'))
    * ```
    */
-  async createAccount(email: string, password: string, extraUserData?: any): Promise<auth.UserCredential>{
+  async createAccount(email: string, password: string, extraUserData?: any): Promise<auth.UserCredential>{ 
     return this.secondaryApp.auth().createUserWithEmailAndPassword(email, password)
       .then((userCredentials) => this.setExtraDataToUserCol(userCredentials, extraUserData))
       .then((userCredentials) => this.secondaryApp.auth().signOut()
@@ -76,21 +78,21 @@ export class AuthenticationService {
     return this.angularFireAuth.auth.signInWithPopup(authProvider);
   }
 
+  /**
+   * @param uid 
+   * @param adminToken 
+   */
   async loginWithCustomToken(uid: string, adminToken?: string): Promise<auth.UserCredential> {
     this.adminToken = adminToken ? adminToken : '';
     return await firebase.auth().signInWithCustomToken(uid)
-  }
-
-  async deleteAccount(): Promise<void> {
-    return await this.angularFireAuth.auth.currentUser.delete()
   }
 
   async logout(): Promise<void> {
     return await this.angularFireAuth.auth.signOut()
       .then(() => {
         if (this.adminToken !== '') {
+          this.adminPopup.close();
           this.loginWithCustomToken(this.adminToken)
-          this.adminToken = '';
         }
       })
   }

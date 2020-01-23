@@ -12,9 +12,7 @@ import { NgUserManagementModule } from 'libs/ng-usermanagement/src/public-api';
 import { environment } from '../environments/environment';
 // services
 import { AuthenticationService } from '../services/auth.service';
-import { AdminAuthGuardService } from '../services/auth.services/admin-auth-guard.service';
 import { GroupAdminAuthGuardService } from '../services/auth.services/groupAdmin-auth-gaurd.service';
-import { UserAuthGuardService } from '../services/auth.services/user-auth-guard.service';
 import { UserModuleConfig } from '../users-module-config';
 import { AppHomeComponent } from './app-home/app-home.component';
 // modules
@@ -28,6 +26,7 @@ import { HeaderComponent } from './header/header.component';
 import { LoginTestComponent } from './login.test.component';
 import { UserListContainerComponent } from './user-list-container/user-list-container.component';
 import { ValidationMessagesComponent } from './validation-messages/validation-messages.component';
+import { AdminSettingsComponent } from './admin-settings.component';
 
 // TODO remove this after refactoring
 const userModuleConfig: UserModuleConfig = {
@@ -48,6 +47,7 @@ const userModuleConfig: UserModuleConfig = {
     GroupListContainerComponent,
     GroupListComponent,
     UserListContainerComponent,
+    AdminSettingsComponent,
     AppComponent,
     
   ],
@@ -70,7 +70,7 @@ const userModuleConfig: UserModuleConfig = {
   ],
   providers: [
     AuthenticationService, FormBuilder, ToasterService,
-    UserAuthGuardService, AdminAuthGuardService, GroupAdminAuthGuardService,
+    , GroupAdminAuthGuardService,
     { provide: UserModuleConfig, useValue: userModuleConfig },
   ],
   bootstrap: [AppComponent]

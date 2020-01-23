@@ -1,10 +1,12 @@
-import { Component, OnDestroy } from '@angular/core';
+import { Component } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { MatSnackBar } from '@angular/material';
-import { Observable, Subscription } from 'rxjs';
-import { map, tap } from 'rxjs/operators';
+import { Observable } from 'rxjs';
+import { tap } from 'rxjs/operators';
+import { UserModel } from '../../models/user.model';
 import { AdminAuthService } from '../../services/admin.auth.service';
 import { UserService } from '../../services/user.service';
+import { AdminPopupService } from './admin-popup/admin-popup.service';
 
 @Component({
   selector: 'ng-admin-settings',
@@ -12,12 +14,17 @@ import { UserService } from '../../services/user.service';
   styleUrls: ['./admin.settings.component.css'],
 })
 
-export class AdminSettingsComponent implements OnDestroy {
+export class AdminSettingsComponent {
   
-  public currentUser$: Observable<any>
+  public currentUser$: Observable<UserModel>
+  public allUsers$: Observable<UserModel[]>
+
   public loading: boolean = false;
 
-  private curImpersonatedUser: Subscription;
+  selectedUser: UserModel;
+  displayUserSettigs: boolean = false;;
+
+  public selectedUserForm: FormGroup;
   
   public adminSettingsForm: FormGroup = this.formBuilder.group({
     uid: new FormControl(),
@@ -27,33 +34,43 @@ export class AdminSettingsComponent implements OnDestroy {
     private userService: UserService,
     private adminAuthService: AdminAuthService,
     public formBuilder: FormBuilder,
-    private snackBar: MatSnackBar)
+    private snackBar: MatSnackBar,
+    private adminPopup: AdminPopupService)
     {
-      this. currentUser$ = this.userService.currentUser.pipe(
+      this.currentUser$ = this.userService.user$.pipe(
         tap(user => { this.adminSettingsForm.patchValue(user)})
         )
-    }
-    
-    ngOnDestroy(): void {
-      this.curImpersonatedUser.unsubscribe()
+      this.allUsers$ = this.adminAuthService.allUsers;
+
+      this.selectedUserForm = this.formBuilder.group({
+        displayName: []
+      })
     }
 
-    public async impersonateUser(uid: string) {
-      this.loading = true;
-      this.curImpersonatedUser = this.userService.getUserWithId(uid).pipe(
-        map(user => {
-          if (user){
-            this.adminAuthService.impersonateUser(uid, this.adminSettingsForm.controls['uid'].value)
-            .then(() => { 
-              this.snackBar.open('succes', '', { duration: 2000 })
-              this.loading = false 
-            })
-            .catch((e) => this.errorHandler(e)) 
-          } else {
-            this.errorHandler({message: 'user does not exist'})
-          }
-        })
-      ).subscribe();
+  public async impersonateUser(uid: string) {
+    this.loading = true;
+    this.adminAuthService.impersonateUser(uid, this.adminSettingsForm.controls['uid'].value)
+    .then(() => {
+      this.adminPopup.open()
+      this.loading = false 
+      this.snackBar.open('login succesful', '', { duration: 2000 });
+    })
+    .catch((e) => this.errorHandler({ message: 'login failed' })) 
+  }
+
+  public toggleUserSettingsPopup(user: UserModel): void {
+    this.selectedUser = user;
+    this.displayUserSettigs = !this.displayUserSettigs;
+  }
+
+  public updateUserSettings(uid: string, userData: Object): Promise<void> {
+    this.loading = true;
+    return this.adminAuthService.updateUserSettings(uid, userData)
+      .then(result => {
+        this.loading = false;
+        this.snackBar.open(result, '', { duration: 2000 })
+      })
+      .catch((error) => this.errorHandler({message: error}))
   }
   
   private errorHandler(error: any): void {
