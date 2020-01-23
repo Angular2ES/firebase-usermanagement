@@ -1,0 +1,14 @@
+.group-settings-collection {
+  padding-top: 20px;
+}
+
+.group-settings-collection form {
+  padding-top: 10px;
+  padding-bottom: 10px;
+  min-height: 40px;
+}
+
+.add-or-remove-from-group-button {
+  position: absolute;
+  right: 10px;
+}

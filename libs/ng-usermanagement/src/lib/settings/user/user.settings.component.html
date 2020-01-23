@@ -1,0 +1,11 @@
+<div class="user-settings-collection" *ngIf="currentUser$ | async | json">
+
+  <form [formGroup]="userSettingsForm" (submit)="updateUserData({displayName: userSettingsForm.controls['displayName'].value})">
+    <label>Name</label>
+    <input type="text" class="form-control mb-2" formControlName="displayName" value="{{userSettingsForm.controls['displayName'].value}}">
+    <button type="submit" mat-button>Update settings</button>
+    <button mat-button (click)="logout()" style="float: right;">Logout</button>         
+  </form>
+</div>
+
+<ng-spinner *ngIf="loading"></ng-spinner>

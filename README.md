@@ -36,8 +36,6 @@
 - Impersonate a user (admin only)
 - firestore sync
 
-<a name="supported-angular-guards"/>
-
 ## Supported Angular Guards
 - `LoggedInGuard` used to protect angular routes from unauthenticated users (with fallback routes via `NgxAuthFirebaseUIConfig`)
 - `AdminAuthGuard` used to protect angular routes from non admin users (with fallback routes via `NgxAuthFirebaseUIConfig`)
@@ -139,6 +137,9 @@ deploy the firestore rules with the following command.
 ```shell
 firebase deploy --only firestore:rules
 ```
+
+## For development only
+
 <a name="testing"/>
 
 ## start cypress testing
@@ -148,7 +149,12 @@ npm run build:testConfig
 npx cypress open
 ```
 
-## Publishing
+## start unit test
+```shell
+ng test ng-usermanagement
+```
+
+## Publishing to npm
 
 Build the library.
 ```shell

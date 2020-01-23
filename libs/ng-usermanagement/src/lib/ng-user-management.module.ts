@@ -1,25 +1,43 @@
 import { ModuleWithProviders, NgModule } from '@angular/core';
 import { FirebaseNameOrConfigToken, FirebaseOptionsToken } from '@angular/fire';
-import { INgUserManagementConfig, ngUserManagementConfigFactory, NgUserManagementConfigToken, UserProvidedConfigToken } from './interfaces/firebase-config.interface';
-import { LoginEmailPasswordModule } from './login-email-password/login-email-password.module';
+import { ngUserManagementConfig, ngUserManagementConfigFactory, NgUserManagementConfigToken, UserProvidedConfigToken } from './interfaces/firebase-config.interface';
+import { LoginProvidersModule } from './login/login-providers.module';
 import { RegisterModule } from './register/register.module';
+
 import { SpinnerModule } from './spinner/spinner.module';
+import { UserAdminSettingsModule } from './settings/user.admin.settings.module';
+import { GroupModule } from './group/group.Module';
+
+import { AdminAuthGuardService } from './guards/admin-auth-guard.service';
+import { AdminPopupModule } from './settings/admin/admin-popup/admin-popup.module';
+import { AdminPopupService } from './settings/admin/admin-popup/admin-popup.service';
+import { UserAuthGuardService } from './guards/user-auth-guard.service';
+
+
 @NgModule({
-  declarations: [],
-  imports: [],
+  declarations: [
+  ],
+  imports: [AdminPopupModule],
   exports: [
-    LoginEmailPasswordModule,
+    LoginProvidersModule,
     RegisterModule,
     SpinnerModule,
+    UserAdminSettingsModule,
+    AdminPopupModule,
+    GroupModule,
   ],
-  providers: []
+  providers: [
+    AdminAuthGuardService,
+    UserAuthGuardService,
+    AdminPopupService
+  ]
 })
 export class NgUserManagementModule { 
   static forRoot(
     //configFactory: FirebaseAppConfig,
-    config: INgUserManagementConfig = {},
+    config: ngUserManagementConfig = {},
     appNameFactory?: () => string
-  ): ModuleWithProviders {
+  ): ModuleWithProviders<any> {
     return {
       ngModule: NgUserManagementModule,
       providers:
@@ -37,7 +55,7 @@ export class NgUserManagementModule {
             provide: NgUserManagementConfigToken,
             useFactory: ngUserManagementConfigFactory,
             deps: [UserProvidedConfigToken]
-          },
+          }
         ]
     };
   }

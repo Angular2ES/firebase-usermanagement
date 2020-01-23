@@ -1,0 +1,6 @@
+
+<div class="admin-popup" *ngIf="currentUser$ | async">
+  Current logged in user: {{ userEmail }}
+  <hr>
+  <button (click)="returnToAdminAccount()">Return</button>
+</div>
