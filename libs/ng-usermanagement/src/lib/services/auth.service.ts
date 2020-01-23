@@ -3,6 +3,7 @@ import { AngularFireAuth } from '@angular/fire/auth';
 import * as firebase from 'firebase';
 import { auth } from 'firebase';
 import { ngUserManagementConfig, NgUserManagementConfigToken } from '../interfaces/firebase-config.interface';
+import { AdminPopupService } from '../settings/admin/admin-popup/admin-popup.service';
 
 @Injectable({
   providedIn: 'root'
@@ -13,6 +14,7 @@ export class AuthenticationService {
   
   constructor(
     private angularFireAuth: AngularFireAuth,
+    private adminPopup: AdminPopupService,
     @Inject(NgUserManagementConfigToken) public config: ngUserManagementConfig) {
   }
   
@@ -30,6 +32,7 @@ export class AuthenticationService {
    *  .then((userCredentials) => console.log('succesfull login'))
    * ```
    */
+
   async createAccount(email: string, password: string, extraUserData?: any): Promise<auth.UserCredential>{
     try {
       const credentials = await this.secondaryApp.auth().createUserWithEmailAndPassword(email, password)
@@ -53,7 +56,7 @@ export class AuthenticationService {
    * @param email
    * @param password
    */
-  async loginWithEmailAndPassword(email: string, password: string): Promise<auth.UserCredential>{
+  public loginWithEmailAndPassword(email: string, password: string): Promise<auth.UserCredential>{
     return this.angularFireAuth.auth.signInWithEmailAndPassword(email, password);
   }
   
@@ -61,7 +64,7 @@ export class AuthenticationService {
    * Redirect user to the given provider
    * @param authProvider
    */
-  async loginWithRedirect(authProvider: auth.AuthProvider): Promise<void> {
+  public loginWithRedirect(authProvider: auth.AuthProvider): Promise<void> {
     return this.angularFireAuth.auth.signInWithRedirect(authProvider);
   }
   
@@ -76,25 +79,22 @@ export class AuthenticationService {
    * Creates a popup for the given provider
    * @param authProvider 
    */
-  async loginWithPopup(authProvider: auth.AuthProvider): Promise<auth.UserCredential> {
+  public loginWithPopup(authProvider: auth.AuthProvider): Promise<auth.UserCredential> {
     return this.angularFireAuth.auth.signInWithPopup(authProvider);
   }
 
-  async loginWithCustomToken(uid: string, adminToken?: string): Promise<auth.UserCredential> {
+  public loginWithCustomToken(uid: string, adminToken?: string): Promise<auth.UserCredential> {
     this.adminToken = adminToken ? adminToken : '';
-    return await firebase.auth().signInWithCustomToken(uid)
+    return firebase.auth().signInWithCustomToken(uid)
   }
 
-  async deleteAccount(): Promise<void> {
-    return await this.angularFireAuth.auth.currentUser.delete()
-  }
 
   async logout(): Promise<void> {
     return await this.angularFireAuth.auth.signOut()
       .then(() => {
         if (this.adminToken !== '') {
+          this.adminPopup.close();
           this.loginWithCustomToken(this.adminToken)
-          this.adminToken = '';
         }
       })
   }

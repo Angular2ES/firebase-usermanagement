@@ -1,11 +1,10 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
-import { FormGroup, FormBuilder, FormArray } from '@angular/forms';
+import { map } from 'rxjs/operators';
+import { Group } from '../../models/group.model';
+import { UserModel } from '../../models/user.model';
 import { GroupService } from '../../services/group.service';
 import { UserService } from '../../services/user.service';
-import { tap, map, switchMap } from 'rxjs/operators';
-import { UserModel } from '../../models/user.model'
-import { Group } from '../../models/group.model';
 
 @Component({
   selector: 'ng-group-list',
@@ -22,7 +21,7 @@ export class GroupListComponent implements OnInit {
     private userService: UserService) {}
       
   ngOnInit(): void {
-    this.groupList$ = this.userService.currentUser.pipe(
+    this.groupList$ = this.userService.user$.pipe(
       map((user: UserModel) => {
         let groupList: Group[] = []
         let group: Observable<Group>[] = [];

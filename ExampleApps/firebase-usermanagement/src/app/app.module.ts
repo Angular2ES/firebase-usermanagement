@@ -12,8 +12,6 @@ import { NgUserManagementModule, GroupModule } from 'libs/ng-usermanagement/src/
 import { environment } from '../environments/environment';
 // services
 import { AuthenticationService } from '../services/auth.service';
-import { AdminAuthGuardService } from '../services/auth.services/admin-auth-guard.service';
-import { UserAuthGuardService } from '../services/auth.services/user-auth-guard.service';
 import { UserModuleConfig } from '../users-module-config';
 import { AppHomeComponent } from './app-home/app-home.component';
 // modules
@@ -64,7 +62,6 @@ const userModuleConfig: UserModuleConfig = {
   ],
   providers: [
     AuthenticationService, FormBuilder, ToasterService,
-    UserAuthGuardService, AdminAuthGuardService,
     { provide: UserModuleConfig, useValue: userModuleConfig },
   ],
   bootstrap: [AppComponent]

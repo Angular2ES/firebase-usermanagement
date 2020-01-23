@@ -2,11 +2,9 @@
 
   <form [formGroup]="userSettingsForm" (submit)="updateUserData({displayName: userSettingsForm.controls['displayName'].value})">
     <label>Name</label>
-    <input type="text" matInput formControlName="displayName" value="{{userSettingsForm.controls['displayName'].value}}">
-    <button mat-button type="submit">Update settings</button>
-    <button mat-button (click)="sendResetPasswordMail()">New password</button>
-    <button mat-button (click)="deleteAccount()">Delete account</button>         
-    <button mat-button (click)="logout()">Logout</button>         
+    <input type="text" class="form-control mb-2" formControlName="displayName" value="{{userSettingsForm.controls['displayName'].value}}">
+    <button type="submit" mat-button>Update settings</button>
+    <button mat-button (click)="logout()" style="float: right;">Logout</button>         
   </form>
 </div>
 
