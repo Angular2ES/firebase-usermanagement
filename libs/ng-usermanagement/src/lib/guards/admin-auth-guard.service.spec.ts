@@ -1,16 +1,27 @@
-import { of } from 'rxjs';
+import { of, Subject } from 'rxjs';
 import { AdminAuthGuardService } from './admin-auth-guard.service';
 
-
-class MockEmptyAngularFireAuth {
-  user = of(null);
-}
-
 class MockAngularFireAuth {
-  user = of(new FakeFirebaseUser(true));
+  user = new Subject()
+
+  addNewAdminUser() {
+    this.user.next(new MockFirebaseUser(true));
+  }
+
+  addNewNormalUser() {
+    this.user.next(new MockFirebaseUser(false));
+  }
+
+  addRejectTokenResultUser() {
+    this.user.next(new MockFirebaseUserRejectTokenResult());
+  }
+
+  addNullUser() {
+    this.user.next(null);
+  }
 }
 
-class FakeFirebaseUser {
+class MockFirebaseUser {
   constructor(private isAdmin: boolean) {}
 
   getIdTokenResult() {
@@ -22,6 +33,14 @@ class FakeFirebaseUser {
   }
 }
 
+class MockFirebaseUserRejectTokenResult {
+  constructor() {}
+
+  getIdTokenResult() {
+    return Promise.reject()
+  }
+}
+
 class MockSnackBar {
   open() {}
 }
@@ -29,32 +48,68 @@ class MockSnackBar {
 
 fdescribe('adminGuardService', () => {
 
-  let testService: AdminAuthGuardService;
+  let angularFireAuth: MockAngularFireAuth;
 
   beforeEach(() => {
-    testService = new AdminAuthGuardService(new MockEmptyAngularFireAuth() as any, new MockSnackBar() as any);
+    angularFireAuth = new MockAngularFireAuth();
   })
-  
+
   it('should have been called', () => {
+    let testService = new AdminAuthGuardService(angularFireAuth as any, new MockSnackBar() as any);
     spyOn(AdminAuthGuardService.prototype, 'canActivate')
     testService.canActivate(null, null);
     expect(testService.canActivate).toHaveBeenCalled();
   });
 
-  it('should return false', () => {
+  it('should return false', (done) => {
+    let testService = new AdminAuthGuardService(angularFireAuth as any, new MockSnackBar() as any);
     // Subscribe to the observable
     testService.canActivate(null,null).subscribe( result => {
-      expect(result).toEqual(false)
+      expect(result).toEqual(false);
+      done();
     })
+
+    // add a new user with a value of Null
+    angularFireAuth.addNullUser();
   })
 
   it('should return true', (done) => {
-    testService = new AdminAuthGuardService(new MockAngularFireAuth() as any, new MockSnackBar() as any);
+    let testService = new AdminAuthGuardService(angularFireAuth as any, new MockSnackBar() as any);
 
     // Subscribe to the observable and wait for the promise to resolve
     testService.canActivate(null,null).subscribe(result => {
       expect(result).toEqual(true)
       done()
     })
+    
+    // add a new admin user
+    angularFireAuth.addNewAdminUser();
+  })
+
+  it('should return true if the user is updated before the stream ends', (done) => {
+    let testService = new AdminAuthGuardService(angularFireAuth as any, new MockSnackBar() as any);
+
+    // Subscribe to the observable and wait for the promise to resolve
+    testService.canActivate(null,null).subscribe(result => {
+      expect(result).toEqual(true)
+      done();
+    })
+    
+    // send a user and immediately send an admin user
+    angularFireAuth.addNewNormalUser();
+    angularFireAuth.addNewAdminUser();
+  })
+
+  it('should return false when the token is rejected', (done) => {
+    let testService = new AdminAuthGuardService(angularFireAuth as any, new MockSnackBar() as any);
+
+    // Subscribe to the observable and wait for the promise to resolve
+    testService.canActivate(null,null).subscribe(result => {
+      expect(result).toEqual(false)
+      done();
+    })
+    
+    // send a user and immediately send an admin user
+    angularFireAuth.addRejectTokenResultUser();
   })
 });
