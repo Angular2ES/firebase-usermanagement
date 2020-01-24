@@ -1,8 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, Inject } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
-import { MatSnackBar } from '@angular/material';
 import { Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
+import { NgSnackBarToken, SnackBarInterface } from '../../interfaces/snackbar-config.interface';
 import { UserModel } from '../../models/user.model';
 import { AdminAuthService } from '../../services/admin.auth.service';
 import { UserService } from '../../services/user.service';
@@ -34,7 +34,7 @@ export class AdminSettingsComponent {
     private userService: UserService,
     private adminAuthService: AdminAuthService,
     public formBuilder: FormBuilder,
-    private snackBar: MatSnackBar,
+    @Inject(NgSnackBarToken) public snackBar: SnackBarInterface,
     private adminPopup: AdminPopupService)
     {
       this.currentUser$ = this.userService.user$.pipe(

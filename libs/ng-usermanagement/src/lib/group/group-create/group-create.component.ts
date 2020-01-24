@@ -1,11 +1,11 @@
-import { Component, Input } from '@angular/core';
-import { MatSnackBar } from '@angular/material';
+import { Component, Inject, Input } from '@angular/core';
 import { Router } from '@angular/router';
-import { GroupService } from '../../services/group.service';
-import { UserService } from '../../services/user.service';
 import { Observable } from 'rxjs';
 import { map, tap } from 'rxjs/operators';
-import { UserModel } from '../../models/user.model'
+import { NgSnackBarToken, SnackBarInterface } from '../../interfaces/snackbar-config.interface';
+import { UserModel } from '../../models/user.model';
+import { GroupService } from '../../services/group.service';
+import { UserService } from '../../services/user.service';
 
 @Component({
   selector: 'ng-create-group',
@@ -25,7 +25,7 @@ export class GroupCreateComponent {
 
   constructor(private groupService: GroupService,
     private userService: UserService,
-    private snackBar: MatSnackBar,
+    @Inject(NgSnackBarToken) public snackBar: SnackBarInterface,
     private router: Router) {
       this.curUser = this.userService.user$.pipe(
         map(user => user as UserModel),

@@ -1,9 +1,9 @@
-import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, EventEmitter, Inject, Input, Output } from '@angular/core';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { NgSnackBarToken, SnackBarInterface } from '../interfaces/snackbar-config.interface';
 import { AuthenticationService } from '../services/auth.service';
-import { Validators, FormBuilder, FormGroup, FormControl } from '@angular/forms';
 import { verifyPassword } from '../validation-message/validators';
-import { MatSnackBar } from '@angular/material';
 
 @Component({
   selector: 'ng-register',
@@ -22,7 +22,7 @@ export class RegisterComponent {
   
   constructor(
     private authService: AuthenticationService,
-    private snackBar: MatSnackBar,
+    @Inject(NgSnackBarToken) public snackBar: SnackBarInterface,
     private router: Router) 
   { 
     this.registerForm = new FormBuilder().group({

@@ -1,12 +1,12 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { MatSnackBar } from '@angular/material';
-import { Group } from '../../models/group.model';
-import { GroupService } from '../../services/group.service';
-import { AdminAuthService } from '../../services/admin.auth.service';
-import { Observable } from 'rxjs';
-import { UserModel } from '../../models/user.model';
+import { Component, Inject, Input, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup } from '@angular/forms';
-import { tap, map } from 'rxjs/operators';
+import { Observable } from 'rxjs';
+import { map, tap } from 'rxjs/operators';
+import { NgSnackBarToken, SnackBarInterface } from '../../interfaces/snackbar-config.interface';
+import { Group } from '../../models/group.model';
+import { UserModel } from '../../models/user.model';
+import { AdminAuthService } from '../../services/admin.auth.service';
+import { GroupService } from '../../services/group.service';
 
 @Component({
   selector: 'ng-group-users-settings',
@@ -26,7 +26,7 @@ export class GroupUsersSettingsComponent implements OnInit {
   constructor(
     private adminService: AdminAuthService,
     private groupService: GroupService, 
-    private snackBar: MatSnackBar,
+    @Inject(NgSnackBarToken) public snackBar: SnackBarInterface,
     private fb: FormBuilder) {
       
   }
