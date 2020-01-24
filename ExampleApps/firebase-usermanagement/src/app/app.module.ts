@@ -23,6 +23,7 @@ import { HeaderComponent } from './header/header.component';
 import { LoginTestComponent } from './login.test.component';
 import { ValidationMessagesComponent } from './validation-messages/validation-messages.component';
 import { AdminSettingsComponent } from './admin-settings.component';
+import { SnackBarComponent } from './snackBar.component';
 
 // TODO remove this after refactoring
 const userModuleConfig: UserModuleConfig = {
@@ -41,7 +42,8 @@ const userModuleConfig: UserModuleConfig = {
     GroupSettingsComponent,
     ValidationMessagesComponent,
     AppComponent,
-    AdminSettingsComponent
+    AdminSettingsComponent,
+    SnackBarComponent,
   ],
   imports: [
     BrowserModule,
@@ -58,6 +60,7 @@ const userModuleConfig: UserModuleConfig = {
     StorageModule.forRoot({ IDBNoWrap: true }), // imports firebase/auth, only needed for auth features,
     //AngularFireStorageModule // imports firebase/storage only needed for storage features
     
+    // NgUserManagementModule.forRoot(userModuleConfig, new SnackBarComponent()),
     NgUserManagementModule.forRoot(userModuleConfig),
   ],
   providers: [
