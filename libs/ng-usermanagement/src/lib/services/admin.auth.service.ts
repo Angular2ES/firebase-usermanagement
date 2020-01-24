@@ -1,10 +1,10 @@
-import { Injectable } from '@angular/core';
+import { Inject, Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
-import { MatSnackBar } from '@angular/material';
 import * as firebase from 'firebase';
 import { auth } from 'firebase';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
+import { NgSnackBarToken, SnackBarInterface } from '../interfaces/snackbar-config.interface';
 import { UserModel } from '../models/user.model';
 import { AuthenticationService } from './auth.service';
 
@@ -16,7 +16,7 @@ export class AdminAuthService {
   constructor(
     private authService: AuthenticationService,
     private db: AngularFirestore,
-    private snackBar: MatSnackBar
+    @Inject(NgSnackBarToken) public snackBar: SnackBarInterface
     )
   {}
 

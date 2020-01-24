@@ -1,12 +1,12 @@
-import { Component, Input } from '@angular/core';
+import { Component, Inject, Input } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
-import { MatSnackBar } from '@angular/material';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
+import { NgSnackBarToken, SnackBarInterface } from '../../interfaces/snackbar-config.interface';
+import { UserModel } from '../../models/user.model';
 import { AuthenticationService } from '../../services/auth.service';
 import { UserService } from '../../services/user.service';
-import { UserModel } from '../../models/user.model';
 
 @Component({
   selector: 'ng-user-settings',
@@ -39,7 +39,7 @@ export class UserSettingsComponent {
     public userService: UserService, 
     public formBuilder: FormBuilder,
     private router: Router,
-    private snackBar: MatSnackBar)
+    @Inject(NgSnackBarToken) public snackBar: SnackBarInterface)
     {
       this.currentUser$ = this.userService.user$.pipe(
         tap(user => { this.userSettingsForm.patchValue(user)})

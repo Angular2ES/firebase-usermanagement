@@ -1,16 +1,16 @@
-import { Injectable } from '@angular/core';
+import { Inject, Injectable } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/auth';
-import { MatSnackBar } from '@angular/material';
 import { ActivatedRouteSnapshot, CanActivate, RouterStateSnapshot } from '@angular/router';
-import { Observable, from, of, asyncScheduler, defer, interval, race } from 'rxjs';
-import { switchMap, map, tap, catchError, retry, mergeMap, distinctUntilChanged, debounce, flatMap } from 'rxjs/operators';
+import { interval, Observable, of } from 'rxjs';
+import { debounce, distinctUntilChanged, flatMap, map, switchMap } from 'rxjs/operators';
+import { NgSnackBarToken, SnackBarInterface } from '../interfaces/snackbar-config.interface';
 
 @Injectable()
 export class AdminAuthGuardService implements CanActivate {
 
   constructor(
     public afAuth: AngularFireAuth,
-    private snackBar: MatSnackBar
+    @Inject(NgSnackBarToken) public snackBar: SnackBarInterface
     ) {
   }
 
