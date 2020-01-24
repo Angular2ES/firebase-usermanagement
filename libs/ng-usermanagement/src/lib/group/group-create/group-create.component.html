@@ -1,0 +1,8 @@
+<div class="group-create-collection">
+  <form *ngIf="curUser | async">
+    <input type="text" matInput placeholder="name" #groupName>
+    <button mat-button (click)="createGroup(groupName.value, extraGroupData)">create group</button>
+  </form>
+</div>
+
+<ng-spinner *ngIf="loading"></ng-spinner>

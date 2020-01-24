@@ -1,6 +1,20 @@
-<div class="admin-settings-collection" *ngIf="currentUser$ | async | json">
-  <input type="text" class="form-control mb-2" #impUser>
-  <button class="waves-effect waves-light btn" (click)="impersonateUser(impUser.value)"></button>
+
+<div class="admin-settings-collection" *ngIf="currentUser$ | async">
+  <div *ngFor="let user of allUsers$ | async" style="column-count: 2;">
+    <col> {{ user.email }} 
+    <col>
+    <button mat-button (click)="toggleUserSettingsPopup(user)" name="EditUserSettings">Edit settings</button>
+    <button mat-button (click)="impersonateUser(user.uid)" name="ImpersonateUser">ImpersonateUser</button>
+  </div>
 </div>
 
+<div *ngIf="displayUserSettigs" class="user-settings-popup">
+  <form class="form-container" [formGroup]="selectedUserForm" (submit)="updateUserSettings(selectedUser.uid, selectedUserForm.value)">
+    <label><b>name</b></label>
+    <input type="text" placeholder="name" formControlName="displayName">
+
+    <button type="submit">Save</button>
+    <button (click)="toggleUserSettingsPopup(selectedUser)" name="Close" class="close-button">Close</button>
+  </form>
+</div>
 <ng-spinner *ngIf="loading"></ng-spinner>
