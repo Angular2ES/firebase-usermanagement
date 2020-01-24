@@ -16,16 +16,35 @@ import { AdminPopupService } from './admin-popup/admin-popup.service';
 
 export class AdminSettingsComponent {
   
+  /**
+   * The current user
+   */
   public currentUser$: Observable<UserModel>
+  /**
+   * A list of all the users
+   */
   public allUsers$: Observable<UserModel[]>
 
   public loading: boolean = false;
 
+  /**
+   * The current selected user
+   */
   selectedUser: UserModel;
+  /**
+   * Display the settings of the current selected user
+   */
   displayUserSettigs: boolean = false;;
 
+  /**
+   * A formgroup of the current selected user
+   * used for updating the user data
+   */
   public selectedUserForm: FormGroup;
   
+  /**
+   * A formgroup of the current admin with a uid controller
+   */
   public adminSettingsForm: FormGroup = this.formBuilder.group({
     uid: new FormControl(),
   });
@@ -47,6 +66,10 @@ export class AdminSettingsComponent {
       })
     }
 
+  /**
+   * Impersonate a user with the user id
+   * @param uid 
+   */
   public async impersonateUser(uid: string) {
     this.loading = true;
     this.adminAuthService.impersonateUser(uid, this.adminSettingsForm.controls['uid'].value)
@@ -58,11 +81,20 @@ export class AdminSettingsComponent {
     .catch((e) => this.errorHandler({ message: 'login failed' })) 
   }
 
+  /**
+   * Toggle the user settings popup
+   * @param user 
+   */
   public toggleUserSettingsPopup(user: UserModel): void {
     this.selectedUser = user;
     this.displayUserSettigs = !this.displayUserSettigs;
   }
 
+  /**
+   * Update the user settings
+   * @param uid 
+   * @param userData 
+   */
   public updateUserSettings(uid: string, userData: Object): Promise<void> {
     this.loading = true;
     return this.adminAuthService.updateUserSettings(uid, userData)
@@ -73,6 +105,10 @@ export class AdminSettingsComponent {
       .catch((error) => this.errorHandler({message: error}))
   }
   
+  /**
+   * remove the loading and show a snackbar of the error
+   * @param error - An object with a message variable
+   */
   private errorHandler(error: any): void {
     this.loading = false;
     this.snackBar.open(error.message, '', { duration: 2000 });

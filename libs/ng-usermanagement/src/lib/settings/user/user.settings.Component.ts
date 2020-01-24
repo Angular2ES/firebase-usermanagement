@@ -25,9 +25,15 @@ export class UserSettingsComponent {
    */
   @Input() addExtraData: Object = {};
   
+  /**
+   * The current logged in user
+   */
   public currentUser$: Observable<UserModel>
   public loading: boolean = false;
   
+  /**
+   * A formgroup with the users data
+   */
   public userSettingsForm: FormGroup = this.formBuilder.group({
     uid: new FormControl(),
     displayName: new FormControl(),
@@ -46,6 +52,10 @@ export class UserSettingsComponent {
       )
     }
 
+  /**
+   * Update the users data
+   * @param data 
+   */
   public updateUserData(data: Object): Promise<void> {
     this.loading = true;
     return this.userService.updateUser(this.userSettingsForm.controls['uid'].value, { ...data, ...this.addExtraData})
@@ -53,6 +63,9 @@ export class UserSettingsComponent {
       .catch((e) => this.errorHandler(e));
   }
 
+  /**
+   * Logout the current logged in user
+   */
   public async logout(): Promise<void> {
     this.loading = true;
     try {
@@ -68,10 +81,18 @@ export class UserSettingsComponent {
     }
   }
 
+  /**
+   * Open a snackbar message
+   * @param message
+   */
   private snackBarMessage(message: string): void {
     this.snackBar.open(message, '', { duration: 2000 })
   }
 
+  /**
+   * remove the loading and show a snackbar of the error
+   * @param error - An object with a message variable
+   */
   private errorHandler(error: any): void {
     this.loading = false;
     this.snackBarMessage(error.message);

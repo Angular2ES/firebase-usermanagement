@@ -1,13 +1,19 @@
 import { InjectionToken } from '@angular/core';
 
-// This token is the official token containing the final configuration; ie. the merge between default and user provided configurations
+/**
+ * This token is the official token containing the final configuration; ie. the merge between default and user provided configurations
+ */
 export const NgUserManagementConfigToken = new InjectionToken<ngUserManagementConfig>('NgUserManagementConfigToken');
-// This is an intermediate token containing only user-provided configuration
+
+/**
+ * This is an intermediate token containing only user-provided configuration
+ */
 export const UserProvidedConfigToken = new InjectionToken<ngUserManagementConfig>('UserProvidedConfigToken');
 
+/**
+ * An interface of the firebase configs
+ */
 export interface ngUserManagementConfig {
-  authGuardLoggedInURL?: string; // Fallback URL if user isn't logged into the app
-
   /**
    * @usageNotes
    * Firebase configurations
@@ -26,13 +32,17 @@ export interface ngUserManagementConfig {
   firebaseConfig?: any;
 }
 
+/**
+ * default firebase configs
+ */
 export const defaultUserManagementConfig: ngUserManagementConfig = {
-  authGuardLoggedInURL: '/',
-
   firebaseConfig: {}
 }
 
-// Merge default config with user provided config.
+/**
+ * Merge default config with user provided config.
+ * @param userProvidedConfig 
+ */
 export function ngUserManagementConfigFactory(userProvidedConfig: ngUserManagementConfig): ngUserManagementConfig {
   return Object.assign({}, defaultUserManagementConfig, userProvidedConfig);
 }

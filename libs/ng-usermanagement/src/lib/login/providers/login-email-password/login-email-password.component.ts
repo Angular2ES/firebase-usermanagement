@@ -26,6 +26,9 @@ export class LoginEmailPasswordComponent {
    */
   @Output() onFailed: EventEmitter<string> = new EventEmitter();
 
+  /**
+   * FromGroup of the user data
+   */
   public loginForm: FormGroup;
 
   public loading: boolean = false;
@@ -42,6 +45,11 @@ export class LoginEmailPasswordComponent {
     });
   }
 
+  /**
+   * Login the user with email and password
+   * @param email 
+   * @param password 
+   */
   public loginUser(email: string, password: string): Promise<auth.UserCredential | void> {
     this.loading = true;
     return this.authService.loginWithEmailAndPassword(email, password)

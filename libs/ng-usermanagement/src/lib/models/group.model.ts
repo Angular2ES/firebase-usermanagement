@@ -4,9 +4,3 @@ export class Group {
   description?: string;
   users?: {};
 }
-
-export const GroupUsersPermissions: Group['users'] = {
-  readOnly: [],
-  admins: [],
-  editors: [],
-}

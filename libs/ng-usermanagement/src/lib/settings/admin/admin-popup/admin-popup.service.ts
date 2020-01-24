@@ -11,6 +11,9 @@ import { AdminPopupComponent } from './admin-popup.component'
 
 @Injectable()
 export class AdminPopupService {
+  /**
+   * A reference to the admin popup component
+   */
   dialogComponentRef: ComponentRef<AdminPopupComponent>
 
   constructor(
@@ -19,6 +22,9 @@ export class AdminPopupService {
     private injector: Injector
   ) {}
 
+  /**
+   * open the admin popup
+   */
   private appendDialogComponentToBody(){
     const componentFactory = this.componentFactoryResolver.resolveComponentFactory(AdminPopupComponent);
     const componentRef = componentFactory.create(this.injector);
@@ -30,14 +36,24 @@ export class AdminPopupService {
     this.dialogComponentRef = componentRef;
   }
 
+  /**
+   * close the admin popup
+   */
   private removeDialogComponentFromBody() {
     this.appRef.detachView(this.dialogComponentRef.hostView);
     this.dialogComponentRef.destroy();
   }
 
+  /**
+   * open the admin popup
+   */
   public open() {
     this.appendDialogComponentToBody();
   }
+
+  /**
+   * close the admin popup
+   */
   public close() {
     this.removeDialogComponentFromBody();
   }
