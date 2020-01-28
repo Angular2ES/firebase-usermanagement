@@ -16,9 +16,19 @@ import { GroupService } from '../../services/group.service';
 
 export class GroupUsersSettingsComponent implements OnInit {
   
+  /**
+   * The current group selected
+   */
   @Input() currentGroup: Group;
 
+  /**
+   * An list of all the users
+   */
   users$: Observable<UserModel[]>;
+
+  /**
+   * A formGroup with an array of groups
+   */
   userGroups: FormGroup;
 
   loading: boolean = false;
@@ -31,6 +41,9 @@ export class GroupUsersSettingsComponent implements OnInit {
       
   }
 
+  /**
+   * Setup user$ and the userGroups
+   */
   ngOnInit(): void {
     this.users$ = this.adminService.allUsers.pipe(
       tap(users => { 
@@ -48,11 +61,20 @@ export class GroupUsersSettingsComponent implements OnInit {
     );
   }
 
+  /**
+   * Checks if the user is part of the currentGroup
+   * @param user 
+   */
   public isPartOfGroup(user: UserModel): boolean {
     if (!user.groups) return false;
     return user.groups.includes(this.currentGroup.groupId)     
   }
 
+  /**
+   * Add user to the currentGroup with a given role
+   * @param userId 
+   * @param role 
+   */
   public addUser(userId: string, role: string): Promise<void> {
     this.loading = true;
     return this.groupService.addUsersToGroup([userId], role, this.currentGroup.groupId)
@@ -63,6 +85,10 @@ export class GroupUsersSettingsComponent implements OnInit {
     .catch((err) => this.errorHandler(err.message));
   }
 
+  /**
+   * Remove a user from the current group
+   * @param userId 
+   */
   public removeUser(userId: string): Promise<void> {
     this.loading = true;
     return this.groupService.removeUsersFromGroup([userId], this.currentGroup)
@@ -73,6 +99,10 @@ export class GroupUsersSettingsComponent implements OnInit {
     .catch((err) => this.errorHandler(err.message));
   }
 
+  /**
+   * remove the loading and show a snackbar of the error
+   * @param errorMessage - An error message
+   */
   private errorHandler(errorMessage: string){
     this.loading = false;
     this.snackBar.open(errorMessage, '', { duration: 2000 });

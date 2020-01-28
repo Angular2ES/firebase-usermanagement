@@ -1,0 +1,323 @@
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>firebase-usermanagement documentation</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="icon" type="image/x-icon" href="../images/favicon.ico">
+	      <link rel="stylesheet" href="../styles/style.css">
+    </head>
+    <body>
+
+        <div class="navbar navbar-default navbar-fixed-top visible-xs">
+            <a href="../" class="navbar-brand">firebase-usermanagement documentation</a>
+            <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
+        </div>
+
+        <div class="xs-menu menu" id="mobile-menu">
+                <div id="book-search-input" role="search"><input type="text" placeholder="Type to search"></div>            <compodoc-menu></compodoc-menu>
+        </div>
+
+        <div class="container-fluid main">
+           <div class="row main">
+               <div class="hidden-xs menu">
+                   <compodoc-menu mode="normal"></compodoc-menu>
+               </div>
+               <!-- START CONTENT -->
+               <div class="content miscellaneous-variables">
+                   <div class="content-data">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                   
+
+<ol class="breadcrumb">
+  <li>Miscellaneous</li>
+  <li>Variables</li>
+</ol>
+
+<section>
+    <h3 id="index">Index</h3>
+    <table class="table table-sm table-bordered index-table">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <ul class="index-list">
+                        <li>
+                            <a href="#defaultUserManagementConfig" title="libs/ng-usermanagement/src/lib/interfaces/firebase-config.interface.ts"><b>defaultUserManagementConfig</b>&nbsp;&nbsp;&nbsp;(libs/.../firebase-config.interface.ts)</a>
+                        </li>
+                        <li>
+                            <a href="#NgSnackBarToken" title="libs/ng-usermanagement/src/lib/interfaces/snackbar-config.interface.ts"><b>NgSnackBarToken</b>&nbsp;&nbsp;&nbsp;(libs/.../snackbar-config.interface.ts)</a>
+                        </li>
+                        <li>
+                            <a href="#NgUserManagementConfigToken" title="libs/ng-usermanagement/src/lib/interfaces/firebase-config.interface.ts"><b>NgUserManagementConfigToken</b>&nbsp;&nbsp;&nbsp;(libs/.../firebase-config.interface.ts)</a>
+                        </li>
+                        <li>
+                            <a href="#UserProvidedConfigToken" title="libs/ng-usermanagement/src/lib/interfaces/firebase-config.interface.ts"><b>UserProvidedConfigToken</b>&nbsp;&nbsp;&nbsp;(libs/.../firebase-config.interface.ts)</a>
+                        </li>
+                        <li>
+                            <a href="#UserProvidedSnackBarToken" title="libs/ng-usermanagement/src/lib/interfaces/snackbar-config.interface.ts"><b>UserProvidedSnackBarToken</b>&nbsp;&nbsp;&nbsp;(libs/.../snackbar-config.interface.ts)</a>
+                        </li>
+                        <li>
+                            <a href="#verifyPassword" title="libs/ng-usermanagement/src/lib/validation-message/validators.ts"><b>verifyPassword</b>&nbsp;&nbsp;&nbsp;(libs/.../validators.ts)</a>
+                        </li>
+                    </ul>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</section>
+
+    <h3>libs/ng-usermanagement/src/lib/interfaces/firebase-config.interface.ts</h3>
+    <section>
+    <h3></h3>        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="defaultUserManagementConfig"></a>
+                        <span class="name">
+                            <b>
+                            defaultUserManagementConfig</b>
+                            <a href="#defaultUserManagementConfig"><span class="icon ion-ios-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Type : </i>        <code><a href="../interfaces/ngUserManagementConfig.html" target="_self" >ngUserManagementConfig</a></code>
+
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Default value : </i><code>{
+  firebaseConfig: {}
+}</code>
+                        </td>
+                    </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <div class="io-description"><p>default firebase configs</p>
+</div>
+                    </td>
+                </tr>
+
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="NgUserManagementConfigToken"></a>
+                        <span class="name">
+                            <b>
+                            NgUserManagementConfigToken</b>
+                            <a href="#NgUserManagementConfigToken"><span class="icon ion-ios-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Default value : </i><code>new InjectionToken&lt;ngUserManagementConfig&gt;(&#x27;NgUserManagementConfigToken&#x27;)</code>
+                        </td>
+                    </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <div class="io-description"><p>This token is the official token containing the final configuration; ie. the merge between default and user provided configurations</p>
+</div>
+                    </td>
+                </tr>
+
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="UserProvidedConfigToken"></a>
+                        <span class="name">
+                            <b>
+                            UserProvidedConfigToken</b>
+                            <a href="#UserProvidedConfigToken"><span class="icon ion-ios-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Default value : </i><code>new InjectionToken&lt;ngUserManagementConfig&gt;(&#x27;UserProvidedConfigToken&#x27;)</code>
+                        </td>
+                    </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <div class="io-description"><p>This is an intermediate token containing only user-provided configuration</p>
+</div>
+                    </td>
+                </tr>
+
+            </tbody>
+        </table>
+</section>
+    <h3>libs/ng-usermanagement/src/lib/interfaces/snackbar-config.interface.ts</h3>
+    <section>
+    <h3></h3>        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="NgSnackBarToken"></a>
+                        <span class="name">
+                            <b>
+                            NgSnackBarToken</b>
+                            <a href="#NgSnackBarToken"><span class="icon ion-ios-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Default value : </i><code>new InjectionToken&lt;SnackBarInterface&gt;(&#x27;NgSnackBarToken&#x27;)</code>
+                        </td>
+                    </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <div class="io-description"><p>This token is the official token containing the final configuration; ie. the merge between default and user provided configurations</p>
+</div>
+                    </td>
+                </tr>
+
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="UserProvidedSnackBarToken"></a>
+                        <span class="name">
+                            <b>
+                            UserProvidedSnackBarToken</b>
+                            <a href="#UserProvidedSnackBarToken"><span class="icon ion-ios-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Default value : </i><code>new InjectionToken&lt;SnackBarInterface&gt;(&#x27;UserProvidedSnackBarToken&#x27;)</code>
+                        </td>
+                    </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <div class="io-description"><p>This is an intermediate token containing only user-provided configuration</p>
+</div>
+                    </td>
+                </tr>
+
+            </tbody>
+        </table>
+</section>
+    <h3>libs/ng-usermanagement/src/lib/validation-message/validators.ts</h3>
+    <section>
+    <h3></h3>        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="verifyPassword"></a>
+                        <span class="name">
+                            <b>
+                            verifyPassword</b>
+                            <a href="#verifyPassword"><span class="icon ion-ios-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Type : </i>        <code><a href="https://angular.io/api/forms/ValidatorFn" target="_blank" >ValidatorFn</a></code>
+
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Default value : </i><code>(group: FormGroup): ValidationErrors | null &#x3D;&gt; {
+  const pass &#x3D; group.get(&#x27;password&#x27;).value;
+  const confirmPass &#x3D; group.get(&#x27;confirmPassword&#x27;).value;
+  if (!(pass &#x3D;&#x3D;&#x3D; confirmPass)) {
+      return { &#x27;verifyPassword&#x27;: true };
+  }
+  else return null;
+}</code>
+                        </td>
+                    </tr>
+
+
+            </tbody>
+        </table>
+</section>
+
+
+
+                   </div><div class="search-results">
+    <div class="has-results">
+        <h1 class="search-results-title"><span class='search-results-count'></span> result-matching "<span class='search-query'></span>"</h1>
+        <ul class="search-results-list"></ul>
+    </div>
+    <div class="no-results">
+        <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+    </div>
+</div>
+</div>
+               <!-- END CONTENT -->
+           </div>
+       </div>
+
+       <script>
+            var COMPODOC_CURRENT_PAGE_DEPTH = 1;
+            var COMPODOC_CURRENT_PAGE_CONTEXT = 'miscellaneous-variables';
+            var COMPODOC_CURRENT_PAGE_URL = 'variables.html';
+            var MAX_SEARCH_RESULTS = 15;
+       </script>
+
+       <script src="../js/libs/custom-elements.min.js"></script>
+       <script src="../js/libs/lit-html.js"></script>
+       <!-- Required to polyfill modern browsers as code is ES5 for IE... -->
+       <script src="../js/libs/custom-elements-es5-adapter.js" charset="utf-8" defer></script>
+       <script src="../js/menu-wc.js" defer></script>
+
+       <script src="../js/libs/bootstrap-native.js"></script>
+
+       <script src="../js/libs/es6-shim.min.js"></script>
+       <script src="../js/libs/EventDispatcher.js"></script>
+       <script src="../js/libs/promise.min.js"></script>
+       <script src="../js/libs/zepto.min.js"></script>
+
+       <script src="../js/compodoc.js"></script>
+
+       <script src="../js/tabs.js"></script>
+       <script src="../js/menu.js"></script>
+       <script src="../js/libs/clipboard.min.js"></script>
+       <script src="../js/libs/prism.js"></script>
+       <script src="../js/sourceCode.js"></script>
+          <script src="../js/search/search.js"></script>
+          <script src="../js/search/lunr.min.js"></script>
+          <script src="../js/search/search-lunr.js"></script>
+          <script src="../js/search/search_index.js"></script>
+       <script src="../js/lazy-load-graphs.js"></script>
+
+
+    </body>
+</html>

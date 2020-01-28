@@ -10,6 +10,9 @@ import { AdminPopupService } from '../settings/admin/admin-popup/admin-popup.ser
 })
 export class AuthenticationService {
 
+  /**
+   * Custom user token of the admin
+   */
   private adminToken: string = '';
   
   constructor(
@@ -32,7 +35,6 @@ export class AuthenticationService {
    *  .then((userCredentials) => console.log('succesfull login'))
    * ```
    */
-
   async createAccount(email: string, password: string, extraUserData?: any): Promise<auth.UserCredential>{
     try {
       const credentials = await this.secondaryApp.auth().createUserWithEmailAndPassword(email, password)
@@ -83,12 +85,21 @@ export class AuthenticationService {
     return this.angularFireAuth.auth.signInWithPopup(authProvider);
   }
 
+  /**
+   * Login with a Custom user token
+   * @param uid 
+   * @param adminToken 
+   */
   public loginWithCustomToken(uid: string, adminToken?: string): Promise<auth.UserCredential> {
     this.adminToken = adminToken ? adminToken : '';
     return firebase.auth().signInWithCustomToken(uid)
   }
 
 
+  /**
+   * Log the current user out
+   * If it was an impersonation of an admin he will be logged in againt
+   */
   async logout(): Promise<void> {
     return await this.angularFireAuth.auth.signOut()
       .then(() => {

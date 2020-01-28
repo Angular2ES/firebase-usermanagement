@@ -11,7 +11,14 @@ import { GroupService } from '../../services/group.service';
 
 export class GroupSettingsComponent {
   
+  /**
+   * Add extra group data on updating the user settings
+   */
   @Input() extraGroupData: Object;
+
+  /**
+   * The current group
+   */
   @Input() currentGroup: Group;
 
   loading: boolean = false;
@@ -20,6 +27,10 @@ export class GroupSettingsComponent {
     @Inject(NgSnackBarToken) public snackBar: SnackBarInterface) {
   }
   
+  /**
+   * Update the current group data
+   * @param groupData 
+   */
   public updateGroupData(groupData: Object): Promise<void> {
     this.loading = true;
     groupData = { ...groupData, ...this.extraGroupData }
@@ -31,6 +42,9 @@ export class GroupSettingsComponent {
     .catch((err) => this.errorHandler(err.message));
   }
 
+  /**
+   * Delete the current group
+   */
   public deleteGroup(): Promise<void> {
     this.loading = true;
     return this.groupService.deleteGroup(this.currentGroup.groupId)
@@ -41,6 +55,10 @@ export class GroupSettingsComponent {
     .catch((err) => this.errorHandler(err.message));
   }
 
+  /**
+   * remove the loading and show a snackbar of the error
+   * @param errorMessage - An error message
+   */
   private errorHandler(errorMessage: string){
     this.loading = false;
     this.snackBar.open(errorMessage, '', { duration: 2000 });

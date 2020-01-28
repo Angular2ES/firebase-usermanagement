@@ -12,26 +12,46 @@ import { verifyPassword } from '../validation-message/validators';
 })
 export class RegisterComponent {
 
+  /**
+   * Redirect the user after a succesfully creating an account
+   */
   @Input() redirectOnSucces: string;
+
+  /**
+   * Add extra data to the database on creating an account
+   */
   @Input() addExtraData: any;
 
+  /**
+   * Sends an event after succesfully creating an account
+   */
   @Output() private onSuccesCreateAccount = new EventEmitter<any>();
 
   public loading: Boolean = false;
+
+  /**
+   * register form group
+   */
   public registerForm: FormGroup;
   
   constructor(
     private authService: AuthenticationService,
     @Inject(NgSnackBarToken) public snackBar: SnackBarInterface,
-    private router: Router) 
+    private router: Router,
+    private fb: FormBuilder) 
   { 
-    this.registerForm = new FormBuilder().group({
+    this.registerForm = fb.group({
       email: new FormControl('', {updateOn: 'blur', validators: [Validators.required, Validators.email]}),
       password: new FormControl('', {updateOn: 'blur', validators: [Validators.required]}),
       confirmPassword: new FormControl('', {updateOn: 'blur', validators: [Validators.required]})
     }, {updateOn: 'blur', validators: verifyPassword})
   }
 
+  /**
+   * Register an user with an email and password
+   * @param email 
+   * @param password 
+   */
   async registerUser(email: string, password: string): Promise<void> {
     try {
       this.loading = true;

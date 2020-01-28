@@ -34,6 +34,9 @@ export class LoginGoogleComponent{
    */
   @Output() onFailed: EventEmitter<string> = new EventEmitter();
 
+  /**
+   * An reference to the google provider
+   */
   private googleProvider: auth.GoogleAuthProvider;
   
   constructor(
@@ -52,25 +55,36 @@ export class LoginGoogleComponent{
     }).catch(error => this.errorHandler(error));
   }
 
+  /**
+   * Login with google
+   */
   loginWithGoogle(){
     if (this.authenticationFlowGoogle === AuthenticationFlow.redirect) this.signInWithRedirect();
     else this.signInWithPopup()
   }
 
-  // Start a sign in process for an unauthenticated user.
-  // with redirect to google login service
+  /**
+   * Start a sign in process for an unauthenticated user
+   * with redirect to google login service
+   */
   signInWithRedirect(){
     this.authService.loginWithRedirect(this.googleProvider)
     .catch(error => this.errorHandler(error));
   }
 
-  // Using a popup.
+  /**
+   * Sign in with a poup
+   */
   signInWithPopup(){
     this.authService.loginWithPopup(this.googleProvider)
     .then((Credential) => this.resultHandler(Credential))
     .catch(error => this.errorHandler(error));
   }
 
+  /**
+   * Result handler after an succesfull promise result
+   * @param result 
+   */
   private resultHandler(result: auth.UserCredential): auth.UserCredential{
     //Check if we have a user
     if (result.user) {
@@ -84,6 +98,10 @@ export class LoginGoogleComponent{
     return result;
   }
 
+  /**
+   * Result handler after an failed promise result
+   * @param result 
+   */
   private errorHandler(error: any): void {
     this.onFailed.next(error.message);
     this.snackBar.open(error.message, '', { duration: 2000 });

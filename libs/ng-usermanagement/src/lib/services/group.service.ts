@@ -10,6 +10,9 @@ import { Group } from '../models/group.model';
 })
 export class GroupService {
 
+  /**
+   * Group collection of firestore
+   */
   private groupCol: AngularFirestoreCollection = this.db.collection('groups');
 
   constructor(private db: AngularFirestore) {}
@@ -42,6 +45,7 @@ export class GroupService {
   }
   
   /**
+   * Get a group with an group Id
    * @param groupId
    */
   public getGroup(groupId: string): Observable<Group> {
@@ -51,6 +55,7 @@ export class GroupService {
   }
 
   /**
+   * Update group data
    * @param groupId
    * @param data
    * 
@@ -68,6 +73,7 @@ export class GroupService {
   }
 
   /**
+   * Add an user to a group
    * @param userId
    * @param role
    * @param groupId
@@ -110,6 +116,7 @@ export class GroupService {
   }
 
   /**
+   * Delete a group with an Id
    * @param groupId
    */
   async deleteGroup(groupId: string): Promise<void> {

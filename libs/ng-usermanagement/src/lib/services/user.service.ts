@@ -9,7 +9,14 @@ import { UserModel } from '../models/user.model';
   providedIn: 'root'
 })
 export class UserService {
+  /**
+   * Current logged in user
+   */
   public readonly user$: Observable<UserModel>;
+
+  /**
+   * user collection in firestore
+   */
   private userCollection: AngularFirestoreCollection = this.db.collection('users');
   
   constructor(
@@ -24,15 +31,16 @@ export class UserService {
   }
 
   /**
+   * Update the user data in firestore
    * @param uid 
    * @param userData 
    */ 
-  public updateUser(uid: string, userData: any): Promise<void> {
+  public updateUser(uid: string, userData: Object): Promise<void> {
     return this.userCollection.doc(uid).update(userData);
   }
 
   /**
-   * Get user data with Id
+   * Get user data from firestore with the Id
    * @param userId 
    */
   public getUserWithId(uid: string): Observable<UserModel> {

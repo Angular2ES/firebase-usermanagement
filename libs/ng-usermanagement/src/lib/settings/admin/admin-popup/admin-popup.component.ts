@@ -13,7 +13,13 @@ import { AuthenticationService } from '../../../services/auth.service';
 
 export class AdminPopupComponent implements AfterViewInit, OnDestroy {
   
+  /**
+   * Current user
+   */
   public currentUser$: Observable<UserModel>;
+  /**
+   * The email of the current user
+   */
   public userEmail: string;
   
   constructor(
@@ -29,6 +35,9 @@ export class AdminPopupComponent implements AfterViewInit, OnDestroy {
 
   ngOnDestroy(): void {}
 
+  /**
+   * return the admin to his account
+   */
   public returnToAdminAccount(): void {
     this.authService.logout();
   }
