@@ -1,5 +1,5 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { MatSnackBar } from '@angular/material';
+import { Component, Inject, Input } from '@angular/core';
+import { NgSnackBarToken, SnackBarInterface } from '../../interfaces/snackbar-config.interface';
 import { Group } from '../../models/group.model';
 import { GroupService } from '../../services/group.service';
 
@@ -17,7 +17,7 @@ export class GroupSettingsComponent {
   loading: boolean = false;
 
   constructor(private groupService: GroupService, 
-    private snackBar: MatSnackBar) {
+    @Inject(NgSnackBarToken) public snackBar: SnackBarInterface) {
   }
   
   public updateGroupData(groupData: Object): Promise<void> {

@@ -1,7 +1,7 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { MatSnackBar } from '@angular/material';
+import { Component, EventEmitter, Inject, Input, Output } from '@angular/core';
 import { Router } from '@angular/router';
 import { auth } from 'firebase';
+import { NgSnackBarToken, SnackBarInterface } from '../../../interfaces/snackbar-config.interface';
 import { AuthenticationService } from '../../../services/auth.service';
 
 export enum AuthenticationFlow {
@@ -38,7 +38,7 @@ export class LoginGoogleComponent{
   
   constructor(
     private authService: AuthenticationService,
-    private snackBar: MatSnackBar,
+    @Inject(NgSnackBarToken) public snackBar: SnackBarInterface,
     private router: Router
     ) {
 

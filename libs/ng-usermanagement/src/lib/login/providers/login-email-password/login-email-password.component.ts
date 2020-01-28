@@ -1,8 +1,8 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Inject, Input, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { MatSnackBar } from '@angular/material';
 import { Router } from '@angular/router';
 import { auth } from 'firebase';
+import { NgSnackBarToken, SnackBarInterface } from '../../../interfaces/snackbar-config.interface';
 import { AuthenticationService } from '../../../services/auth.service';
 
 @Component({
@@ -34,7 +34,7 @@ export class LoginEmailPasswordComponent {
     public authService: AuthenticationService,
     private formBuilder: FormBuilder,
     private router: Router,
-    private snackBar: MatSnackBar
+    @Inject(NgSnackBarToken) public snackBar: SnackBarInterface,
   ) { 
     this.loginForm = this.formBuilder.group ({
       email: ['',[Validators.email, Validators.required]],

@@ -1,16 +1,16 @@
-import { Injectable } from '@angular/core';
-import { CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
+import { Inject, Injectable } from '@angular/core';
+import { ActivatedRouteSnapshot, CanActivate, RouterStateSnapshot } from '@angular/router';
 import { Observable } from 'rxjs';
 import { map, tap } from 'rxjs/operators';
+import { NgSnackBarToken, SnackBarInterface } from '../interfaces/snackbar-config.interface';
 import { UserService } from '../services/user.service';
-import { MatSnackBar } from '@angular/material';
 
 @Injectable()
 export class UserAuthGuardService implements CanActivate {
 
   constructor(
     private userService: UserService, 
-    private snackBar: MatSnackBar) {
+    @Inject(NgSnackBarToken) public snackBar: SnackBarInterface) {
   }
 
   canActivate(next: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> {
