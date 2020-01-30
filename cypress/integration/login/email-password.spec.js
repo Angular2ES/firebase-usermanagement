@@ -7,27 +7,28 @@ context('Actions', () => {
   })
 
   it('Login with fake account', () => {
-    cy.get('[formcontrolname="email"]')
+    cy.get('#mat-input-0')
       .type('fake@email.com')
 
-    cy.get('[formcontrolname="password"]')
+    cy.get('#mat-input-1')
       .type('password')
 
-    cy.get('form.ng-dirty > .waves-effect').click()
-    cy.on('window:alert', (str) => {
+    cy.get('form.ng-dirty > .mat-button > .mat-button-wrapper').click()
+
+    cy.on('.mat-snack-bar-container', (str) => {
       expect(str).to.equal(`There is no user record corresponding to this identifier. The user may have been deleted.`)
     })
   })
 
   it('Login with real account', () => {
-    cy.get('[formcontrolname="email"]')
+    cy.get('#mat-input-0')
       .type('test@email.com')
 
-    cy.get('[formcontrolname="password"]')      
+    cy.get('#mat-input-1')     
       .type('123123')
 
-    cy.get('form.ng-dirty > .waves-effect').click()
-    cy.on('window:alert', (str) => {
+    cy.get('form.ng-dirty > .mat-button > .mat-button-wrapper').click()
+    cy.on('.mat-snack-bar-container', (str) => {
       expect(str).to.equal(`Welcome`)
     })
   })

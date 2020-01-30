@@ -18,7 +18,7 @@ context('Actions', () => {
 
     cy.on('window:alert', (str) => {
       expect(str).to.equal(`update succesful`)
-    })    
+    })
   })
 
   it('logout user', () => {

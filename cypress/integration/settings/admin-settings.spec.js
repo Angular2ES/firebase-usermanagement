@@ -4,6 +4,10 @@ context('Actions', () => {
     cy.login()
   })
 
+  afterEach(() => {
+    cy.logout()
+  })
+
   it('update user settings', () => {
     cy.visit('http://localhost:4200/adminSettings')
     
@@ -34,11 +38,9 @@ context('Actions', () => {
 
     cy.get('.admin-popup')
 
-    cy.visit('http://localhost:4200/home')
+    cy.on('window:alert', (str) => {
+      expect(str).to.equal(`login succesful`)
+    })
 
-    cy.get('.form-control')
-      .invoke('val')
-      .then(sometext => expect(sometext).to.equal(`new name`));
-    cy.logout()
   })
 })
