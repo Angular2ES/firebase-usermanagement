@@ -69,7 +69,7 @@ export class AdminAuthService {
   
   /**
    * Show a snackbar of the error
-   * @param {any} error - An error Object with an message
+   * @param error - An error Object with an message
    */
   private errorHandler(error: any): void {
     this.snackBar.open(error.message, '', { duration: 2000 });
